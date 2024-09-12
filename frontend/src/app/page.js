@@ -1,13 +1,19 @@
+import HomeProfile from "@/components/Home/HomeProfile";
+import ContainMargin from "@/components/shared/ContainMargin";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="w-full h-screen relative">
-      <div className="absolute top-0">
-        <p className="p-20 select-none">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta labore a eos, vero accusamus adipisci nemo et architecto. Culpa, doloremque. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat adipisci quidem, doloremque, cupiditate ipsum cum rem quibusdam autem voluptatibus magni sit deleniti in dignissimos magnam consequatur laboriosam ex quos! Exercitationem incidunt minima totam dignissimos in sequi quaerat excepturi alias magnam similique consequuntur rerum necessitatibus cupiditate natus sed dolore sapiente ducimus voluptas eaque, quas laudantium cumque maiores, suscipit officiis? Nemo, unde! Fuga, autem assumenda asperiores vitae ut corporis eligendi ducimus omnis error alias dolorum, harum nesciunt cum veniam illum esse est voluptatibus veritatis molestiae animi. Doloremque odit hic pariatur libero maiores numquam nam quaerat, illum quis error explicabo consectetur. A laborum quidem veniam dolorum assumenda nisi possimus labore esse? Assumenda, repellendus molestiae voluptatibus autem exercitationem inventore voluptatum, alias facilis quam quidem fugiat ipsam nihil error ad ea laborum ex consequuntur unde numquam veritatis praesentium sint illum distinctio. Animi ad dolores ipsa impedit voluptates consequuntur maxime error excepturi nobis accusantium, unde in non similique illum, quae minima laudantium suscipit maiores asperiores aspernatur dignissimos iure deserunt! Voluptates, a vitae molestias doloremque beatae fuga architecto maxime sequi magni, quam quasi consequatur possimus culpa dolore soluta praesentium voluptatibus consectetur veniam? Eum, ipsa voluptatem ad, eligendi, temporibus iste sunt sapiente corporis excepturi nulla nemo illo explicabo dolores quaerat expedita ullam accusantium suscipit animi. Laboriosam, natus dolor autem hic harum nisi ipsam reiciendis? Sequi quam vero beatae consectetur voluptate. Quam porro quis cupiditate id doloribus praesentium accusamus officia iusto, exercitationem ipsa commodi, saepe ab unde architecto itaque debitis nostrum eveniet voluptates! Officia aut dolor dolore culpa amet minus magnam corrupti quod nam atque maxime molestias, odio consequatur tempore vero rerum dolorem vitae sequi possimus aperiam facere iure aliquam repudiandae libero. Esse rerum fugiat perspiciatis nesciunt ipsum harum quos eius, a corrupti modi quis, similique odio recusandae accusamus vel, amet cum omnis ab eveniet porro. Qui, quod mollitia.
-        </p>
-      </div>
+    <div className="bg-background min-h-screen pt-16">
+      <ContainMargin>
+        <div className="flex">
+          <div className="w-[15%] p-1 mt-5 max-h-[90vh] scroll-pr-14 overflow-y-scroll static top-20 scrollbar-thumb-rounded">
+            <HomeProfile></HomeProfile>
+          </div>
+          <div className="border-x-[1px] border-primary w-[70%]"></div>
+          <div className="w-[15%]"></div>
+        </div>
+      </ContainMargin>
     </div>
   );
 }

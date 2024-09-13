@@ -2,8 +2,25 @@
 import Link from 'next/link';
 import React from 'react';
 import ContainMargin from './ContainMargin';
+import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
+    const pathname = usePathname()
+    const navmenu = [
+        {
+            title: "Home",
+            url: '/',
+        },
+        {
+            title: "Login",
+            url: '/login',
+        },
+        {
+            title: "Signup",
+            url: '/signup',
+        }
+    ]
+
     return (
         <nav className='bg-background fixed w-full border-b-[1px] z-20 border-primary'>
             <ContainMargin>
@@ -13,15 +30,13 @@ const Navbar = () => {
                 </div>
                 <div>
                     <ul className='flex items-center justify-center gap-6'>
-                        <li className='text-active'>
-                            <Link href={'/'}>Home</Link>
-                        </li>
-                        <li>
-                            <Link href={'/login'}>Login</Link>
-                        </li>
-                        <li>
-                            <Link href={'/signup'}>Signup</Link>
-                        </li>
+                        {
+                            navmenu.map(navitem => 
+                                <li className={`${pathname.includes(navitem.url) && 'text-active'}`}>
+                                    <Link href={navitem.url}>{navitem.title}</Link>
+                                </li>
+                            )
+                        }
                     </ul>
                 </div>
             </div>

@@ -22,7 +22,7 @@ const Navbar = () => {
     ]
 
     return (
-        <nav className='bg-background fixed w-full border-b-[1px] z-20 border-primary'>
+        <div className='bg-[#ffffff6a] backdrop-blur-md fixed w-full border-b-[1px] z-20 border-primary'>
             <ContainMargin>
             <div className='flex gap-20 items-center py-4'>
                 <div>
@@ -41,7 +41,7 @@ const Navbar = () => {
                 </div>
             </div>
             </ContainMargin>
-        </nav>
+        </div>
     );
 };
 

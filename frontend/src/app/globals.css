@@ -12,23 +12,22 @@ body{
 }
 
 
-/* Add custom scrollbar styles */
-.scrollbar-thumb-rounded {
-  scrollbar-width: thin; /* For Firefox */
-  scrollbar-color: #FF8225 #edf2f7; /* Thumb color and track color */
+.scrollbar-custom {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #ff83257c #edf2f7; /* Thumb and track colors for Firefox */
 }
 
-.scrollbar-thumb-rounded::-webkit-scrollbar {
-  width: 2px; /* Width of the scrollbar */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
 }
 
-.scrollbar-thumb-rounded::-webkit-scrollbar-track {
+.scrollbar-custom::-webkit-scrollbar-track {
   background: #edf2f7; /* Track color */
-  border-radius: 2px; /* Rounded corners for the track */
+  border-radius: 8px; /* Optional: rounded corners */
 }
 
-.scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
+.scrollbar-custom::-webkit-scrollbar-thumb {
   background-color: #4a5568; /* Thumb color */
-  border-radius: 5px; /* Rounded corners for the thumb */
-  border: 2px solid #edf2f7; /* Optional: add border for thumb */
+  border-radius: 8px; /* Rounded corners for the thumb */
+  border: 2px solid #edf2f7; /* Optional: border around thumb */
 }

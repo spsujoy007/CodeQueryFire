@@ -1,6 +1,13 @@
 import LoginPage from '@/components/Authentication/LoginPage';
+import useSiteName from '@/Hooks/useSiteName';
 import Link from 'next/link';
 import React from 'react';
+const {name, htmlname} = useSiteName() 
+
+export const metadata = {
+    title: `Login - ${name}`,
+    description: `Welcome back to ${name}`
+}
 
 const page = () => {
     return (
@@ -8,7 +15,7 @@ const page = () => {
             <div className='flex items-center justify-center  w-full'>
                 <div className='w-[50%] text-center'>
                     <h1 className='text-[80px] uppercase'><span className="text-primary font-bold">Welcome</span> back</h1>
-                    <p className='text-xl'>in <span className="text-primary font-bold">Code</span>QueryFire</p>
+                    <p className='text-xl'>in {htmlname}</p>
                     <Link href={'/'}><button className='mt-5 bg-black text-white hover:bg-white hover:text-black duration-200 py-1 rounded-md w-[250px]'>Back to home</button></Link>
                 </div>
                 <div className='w-[50%]'>

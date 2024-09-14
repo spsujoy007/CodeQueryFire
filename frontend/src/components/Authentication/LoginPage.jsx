@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 const LoginPage = () => {
+    
     const [viewPass, setViewPass] = useState(false)
     const inputstyle = `border-b-[1px] outline-none border-b-primary placeholder:text-gray-400 placeholder:text-sm w-full px-2 py-[6px] text-md rounded-t-md`
 

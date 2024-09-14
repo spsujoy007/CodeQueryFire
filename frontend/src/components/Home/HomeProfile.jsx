@@ -12,7 +12,7 @@ const HomeProfile = () => {
             {/* profile info */}
             <div>
                 <div className='flex items-center gap-3'>
-                    <Image className='rounded-full ring-1 ring-primary' src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} width={45} height={45}></Image>
+                    <Image alt='avatar' className='rounded-full ring-1 ring-primary' src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} width={45} height={45}></Image>
                     <div>
                         <h5 className='text-sm font-bold'>Sujoy Paul</h5>
                         <p className='text-xs'>Web developer</p>

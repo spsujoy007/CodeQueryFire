@@ -5,6 +5,7 @@ const HomePosts = () => {
 
   const posts = [
     {
+      _id: "42",
       title: "Understanding Async/Await in JavaScript",
       details: `Specifically, if a user navigates 
 to any page besides the home page and refreshes the page, 
@@ -14,7 +15,7 @@ out first before dealing with my custom 404 component. I’m using React and rea
       tags: ["JavaScript", "Async"],
       name: "Alice Walker",
       profilePic: "https://via.placeholder.com/50",
-      postTime: "2024-09-13T09:45:00Z",
+      postTime: "2024-09-14T14:41:46Z",
       link: "https://example.com/async-await",
       likes: 1120,
       dislikes: 2,
@@ -22,6 +23,7 @@ out first before dealing with my custom 404 component. I’m using React and rea
       views: 350,
     },
     {
+      _id: "72",
       title: "Creating a Responsive Grid with CSS Grid",
       details: "A guide on how to create a responsive grid layout using CSS Grid.",
       code: ".grid-container {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));\n  gap: 10px;\n}\n\n.grid-item {\n  background-color: #f1f1f1;\n  padding: 20px;\n  text-align: center;\n}",
@@ -36,6 +38,7 @@ out first before dealing with my custom 404 component. I’m using React and rea
       views: 280,
     },
     {
+      _id: "67",
       title: "Introduction to React Hooks",
       details: "Explore the basics of React Hooks and how they can simplify state management in functional components.",
       code: "import React, { useState } from 'react';\n\nconst Counter = () => {\n  const [count, setCount] = useState(0);\n\n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={() => setCount(count + 1)}>Increment</button>\n    </div>\n  );\n};\n\nexport default Counter;",
@@ -51,6 +54,7 @@ out first before dealing with my custom 404 component. I’m using React and rea
       views: 400,
     },
     {
+      _id: "59",
       title: "Setting Up a Node.js Server",
       details: "Step-by-step instructions on how to set up a basic Node.js server using the http module.",
       code: "const http = require('http');\n\nconst server = http.createServer((req, res) => {\n  res.writeHead(200, {'Content-Type': 'text/plain'});\n  res.end('Hello World');\n});\n\nserver.listen(3000, () => {\n  console.log('Server running at http://localhost:3000/');\n});",

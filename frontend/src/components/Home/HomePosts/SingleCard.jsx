@@ -4,12 +4,14 @@ import Link from "next/link";
 import { AiOutlineEye } from "react-icons/ai";
 import { BiDislike, BiLike } from "react-icons/bi";
 import { LuExternalLink } from "react-icons/lu";
-import { IoIosShareAlt } from "react-icons/io";
+import { MdBookmarkBorder } from "react-icons/md";
 import { FaCode } from "react-icons/fa6";
 import { useState } from "react";
+import moment from "moment";
 
 const SingleCard = ({post}) => {
     const{
+        _id,
         title,
         details,
         code,
@@ -24,6 +26,8 @@ const SingleCard = ({post}) => {
         shares,
         views
     } = post
+
+    const FormatedTime = moment(postTime).startOf('hour').fromNow();
 
     const likeNumberChecker = (num)=>{
         if (num >= 1000000) {
@@ -45,7 +49,7 @@ const SingleCard = ({post}) => {
             <div>
                 <h3 className='text-lg font-semibold'>{title}</h3>
                 <p className="whitespace-pre-wrap text-sm mt-2">{details.length >= 520 ? <>{details.slice(0,550)}... <Link className="underline" href={'/'}>see more</Link></> : details}</p>
-                {link && <p className="text-sm underline flex justify-end md:mt-0 mt-2"><Link className="flex items-center gap-2 bg-black text-white rounded-md px-8 py-1" target="blank" href={link}><LuExternalLink />visit</Link></p>}
+                {link && <p className="text-sm flex justify-end md:mt-0 mt-2"><Link className="flex items-center gap-2 bg-black text-white rounded-md px-8 py-1" target="blank" href={link}><LuExternalLink />visit</Link></p>}
 
             </div>
             {
@@ -77,20 +81,22 @@ const SingleCard = ({post}) => {
                 <button title="views" className="text-2xl w-[120px] flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
                     <AiOutlineEye /> <span className="text-sm font-semibold">{likeNumberChecker(views)}</span>
                 </button>
-                <button title="views" className="text-2xl w-[120px] flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
-                    <IoIosShareAlt /> <span className="text-sm">{likeNumberChecker(shares)}</span>
+                <button title="bookmark" className="text-2xl w-[80px] flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
+                    <MdBookmarkBorder />
                 </button>
 
-                <button title="view post" className="text-xl w-[120px] flex justify-center items-center border-[1px] border-black hover:bg-black hover:text-white duration-100 py-1 rounded-md text-black gap-2">
-                <LuExternalLink /> <span className="text-sm">view post</span>
-                </button>
+                <Link className="" href={`post/${title.split(/[\\/]+/).join(' ')}`}>
+                    <button title="view post" className="text-xl w-[120px] flex justify-center items-center border-[1px] border-black hover:bg-black hover:text-white duration-100 py-1 rounded-md text-black gap-2">
+                        <LuExternalLink /> <span className="text-sm">view post</span>
+                    </button>
+                </Link>
             </div>
 
             <div className="mt-5 flex items-center gap-2">
-                <Image src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} width={35} height={35} className="rounded-full"></Image>
+                <Image alt="avatar" src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} width={35} height={35} className="rounded-full"></Image>
                 <div>
                     <h6 className="text-xs font-semibold">{name}</h6>
-                    <p className="text-xs">{postTime}</p>
+                    <p className="text-xs">{FormatedTime}</p>
                 </div>
             </div>
         </div>

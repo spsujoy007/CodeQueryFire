@@ -26,13 +26,13 @@ const Navbar = () => {
             <ContainMargin>
             <div className='flex gap-20 items-center py-4'>
                 <div>
-                    <h3 className='text-2xl font-bold'><span className='text-primary'>Code</span>QueryFire</h3>
+                    <Link href={'/'}><h3 className='text-2xl font-bold select-none'><span className='text-primary'>Code</span>QueryFire</h3></Link>
                 </div>
                 <div>
                     <ul className='flex items-center justify-center gap-6'>
                         {
-                            navmenu.map(navitem => 
-                                <li className={`${pathname.includes(navitem.url) && 'text-active'}`}>
+                            navmenu.map((navitem, i) => 
+                                <li key={i} className={`${pathname.includes(navitem.url) && 'text-active'}`}>
                                     <Link href={navitem.url}>{navitem.title}</Link>
                                 </li>
                             )

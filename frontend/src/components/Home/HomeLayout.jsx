@@ -6,10 +6,10 @@ import Navbar from '../shared/Navbar';
 import { useState } from 'react';
 
 const HomeLayout = ({children}) => {
-    const paths = ['/', '/saved']
+    const paths = ['/', '/saved', '/post/']
     const pathname = usePathname()
+    console.log(pathname);
     const showContent = paths.includes(pathname);
-    console.log(showContent, pathname);
 
     const [openMenu, setOpenMenu] = useState(false)
     return (

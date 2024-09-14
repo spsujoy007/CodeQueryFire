@@ -8,7 +8,7 @@ import React from 'react';
 const HomeProfile = () => {
     const pathname = usePathname();
     return (
-        <main>
+        <main className='md:pr-4'>
             {/* profile info */}
             <div>
                 <div className='flex items-center gap-3'>

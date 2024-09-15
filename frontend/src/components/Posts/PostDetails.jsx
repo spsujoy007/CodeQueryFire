@@ -9,6 +9,7 @@ import { BiDislike, BiLike } from "react-icons/bi";
 import { MdBookmarkBorder } from "react-icons/md";
 import { FaCode } from "react-icons/fa6";
 import moment from 'moment';
+import { BiShare } from "react-icons/bi";
 
 const PostDetails = ({post}) => {
     const likeNumberChecker = (num)=>{
@@ -44,7 +45,7 @@ const PostDetails = ({post}) => {
     const FormatedTime = moment(postTime).startOf('hour').fromNow();
 
     return (
-        <div className='py-20'>
+        <div className='py-20 '>
                 <ContainMargin>
                     <h1 className='text-3xl font-bold'>{title}</h1>
                     
@@ -65,7 +66,9 @@ const PostDetails = ({post}) => {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-1 mt-10 ml-4">
+                    {
+                        tags && 
+                        <div className="flex items-center gap-1 mt-10 ml-4">
                         <span className="text-md text-black font-semibold">topics:</span>
                         <div className="flex flex-wrap gap-2 ">
                             {
@@ -73,35 +76,42 @@ const PostDetails = ({post}) => {
                             }
                         </div>
                     </div>
+                    }
                     
                     {
                         code && 
                             <div className='rounded-xl overflow-hidden mt-2 border-[1px] border-gray-300'>
-                            <SyntaxHighlighter wrapLines={true}  showLineNumbers  language={"javascript"} style={docco}>
+                            <SyntaxHighlighter wrapLines={true}  showLineNumbers language={code_language} style={docco}>
                                 {code}
                             </SyntaxHighlighter>
+                            <p className='py-2 pl-4 w-full bg-gray-100 font-bold'>language: <span className='text-primary capitalize font-normal'>{code_language}</span> </p>
                             </div>
                     }
 
                     <div className="mt-4 flex items-center gap-2">
                         <button title="likes" className="text-2xl w-[120px] flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
-                            <BiLike /> <span className="text-sm">{likeNumberChecker(likes)}</span>
+                            <BiLike /> <span className="text-sm font-semibold">{likeNumberChecker(likes)}</span>
                         </button>
                         
                         <button title="dislikes" className="text-2xl w-[120px] flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
-                            <BiDislike /> <span className="text-sm font-semibold">{likeNumberChecker(dislikes)}</span>
+                            <BiDislike /> <span className="text-sm">{likeNumberChecker(dislikes)}</span>
                         </button>
 
                         <button title="views" className="text-2xl w-[120px] flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
                             <AiOutlineEye /> <span className="text-sm font-semibold">{likeNumberChecker(views)}</span>
                         </button>
-                        <button title="bookmark" className="text-2xl w-[80px] flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
-                            <MdBookmarkBorder />
+
+                        <button title="views" className="text-2xl w-[120px] flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
+                            <BiShare /> <span className="text-sm font-semibold">{likeNumberChecker(shares)}</span>
+                        </button>
+
+                        <button title="bookmark" className="text-2xl w-[130px] flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 rounded-md py-1 text-gray-500 gap-2">
+                            <MdBookmarkBorder /> <span className="text-sm ">Bookmark</span>
                         </button>
                     </div>
 
                     <div className="mt-10 flex items-center gap-3">
-                        <Image alt="avatar" src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} width={45} height={45} className="rounded-full"></Image>
+                        <Image priority  alt="avatar" src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} width={45} height={45} className="rounded-full"></Image>
                         <div>
                             <h6 className="text-sm font-semibold">{name}</h6>
                             <p className="text-sm">{FormatedTime}</p>

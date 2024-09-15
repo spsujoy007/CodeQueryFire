@@ -56,13 +56,14 @@ const SingleCard = ({post}) => {
                             {details.length >= 520 ? <>{details.slice(0,550)}... <button className="underline" onClick={() => setSeeMore(!seeMore)}>see more</button></> : details}
                         </>
                         :
-                        <>{details}</>
+                        <span onClick={()=>setSeeMore(!seeMore)}>{details}</span>
                     }
                 </p>
 
-                {link && <p className="text-sm flex justify-end md:mt-5"><Link className="flex items-center gap-2 bg-black text-white rounded-md px-8 py-1" target="blank" href={link}><LuExternalLink />visit</Link></p>}
+                {link && <p className="text-sm flex justify-end md:mt-5"><Link className="flex items-center gap-2  text-black underline font-semibold rounded-md px-8 py-1" target="blank" href={link}><LuExternalLink />source</Link></p>}
 
             </div>
+
             {/* {
                 code && 
                 <div className="mt-3">
@@ -73,6 +74,7 @@ const SingleCard = ({post}) => {
                     </div>
                 </div>
             } */}
+
             <div className="flex items-center gap-1 mt-2">
                 <span className="text-sm text-primary font-semibold">topics:</span>
                 <div className="flex flex-wrap gap-2 ">
@@ -97,7 +99,7 @@ const SingleCard = ({post}) => {
                 </button>
 
                 <Link className="" href={`post/${title.split(/[\\/]+/).join(' ')}`}>
-                    <button title="view post" className="text-xl w-[120px] flex justify-center items-center border-[1px] border-black hover:bg-black hover:text-white duration-100 py-1 rounded-md text-black gap-2">
+                    <button title="view post" className="text-xl w-[120px] flex justify-center items-center border-[1px] border-black bg-black hover:bg-background text-white duration-200 py-1 rounded-md hover:text-black gap-2">
                         <LuExternalLink /> <span className="text-sm">view post</span>
                     </button>
                 </Link>

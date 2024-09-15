@@ -23,7 +23,7 @@ const Navbar = () => {
     ]
 
     return (
-        <div className='bg-[#ffffff6a] backdrop-blur-md fixed w-full border-b-[1px] z-20 border-primary'>
+        <div className='bg-[#ffffffbf] backdrop-blur-md fixed w-full border-b-[1px] z-20 border-primary'>
             <ContainMargin>
             <div className='flex gap-20 items-center py-4'>
                 <div>

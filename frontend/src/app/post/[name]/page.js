@@ -3,7 +3,7 @@ import Navbar from '@/components/shared/Navbar';
 import React from 'react';
 
 const page = async({params}) => {
-    const res = await fetch('https://mocki.io/v1/89fe5add-1ac4-4616-88b5-7e89c82f29d3');
+    const res = await fetch('https://mocki.io/v1/4f69807c-4aa7-426f-884d-d51554599b80');
     const data = await res.json();
 
     const gettitle = params.name

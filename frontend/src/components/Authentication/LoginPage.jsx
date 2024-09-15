@@ -1,8 +1,10 @@
 "use client"
+import useSiteName from "@/Hooks/useSiteName";
 import Link from "next/link";
 import { useState } from "react";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 const LoginPage = () => {
+    const {htmlname} = useSiteName()
     
     const [viewPass, setViewPass] = useState(false)
     const inputstyle = `border-b-[1px] outline-none border-b-primary placeholder:text-gray-400 placeholder:text-sm w-full px-2 py-[6px] text-md rounded-t-md`
@@ -34,7 +36,7 @@ const LoginPage = () => {
                 <div>
                     <input className="w-full cursor-pointer text-white bg-primary hover:bg-white hover:text-primary duration-300 py-2 rounded-md" type="submit" />
 
-                    <p className='mt-3 text-sm'>New in <span className="text-primary font-bold">Code</span>QueryFire? Please <Link href="/signup" className="text-primary underline font-bold uppercase">Join now</Link> </p>
+                    <p className='mt-3 text-sm'>New in {htmlname}? Please <Link href="/signup" className="text-primary underline font-bold uppercase">Join now</Link> </p>
                 </div>
             </form>
             </div>

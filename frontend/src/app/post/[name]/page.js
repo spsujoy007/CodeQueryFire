@@ -76,7 +76,7 @@ const page = ({params}) => {
                     <h1 className='text-3xl'>{title}</h1>
                     
                     <p className='mt-4 text-lg text-justify'><span className='text-primary font-bold'>Details: </span>{details}</p>
-                    
+
                     {
                         link && <p className='mt-2'>
                         <Link href={link} target='blank'>Source: <span className='underline text-orange-700'>{link}</span></Link>
@@ -91,9 +91,9 @@ const page = ({params}) => {
                             }
                         </div>
                     </div>
-
+                    
                     <div className='rounded-xl overflow-hidden mt-2 border-[1px] border-gray-300'>
-                    <SyntaxHighlighter language={code_language} style={docco}>
+                    <SyntaxHighlighter showLineNumbers  language={code_language} style={docco}>
                         {code}
                     </SyntaxHighlighter>
                     </div>

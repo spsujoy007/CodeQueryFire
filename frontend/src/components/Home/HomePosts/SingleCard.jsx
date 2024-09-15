@@ -27,7 +27,7 @@ const SingleCard = ({post}) => {
         views
     } = post
 
-    const FormatedTime = moment(postTime).startOf('hour').fromNow();
+    const FormatedTime = moment(postTime).startOf('hour').fromNow(); // format the time for UX
 
     const likeNumberChecker = (num)=>{
         if (num >= 1000000) {
@@ -42,17 +42,28 @@ const SingleCard = ({post}) => {
     }
 
     const [viewCode, setViewCode] = useState(false)
+    const [seeMore, setSeeMore] = useState(false)
 
     return (
         <div className='w-full  px-3 pt-3 pb-6 border-b-[1px] border-primary'>
             {/* navigate details page  */}
             <div>
                 <h3 className='text-lg font-semibold'>{title}</h3>
-                <p className="whitespace-pre-wrap text-sm mt-2">{details.length >= 520 ? <>{details.slice(0,550)}... <Link className="underline" href={'/'}>see more</Link></> : details}</p>
-                {link && <p className="text-sm flex justify-end md:mt-0 mt-2"><Link className="flex items-center gap-2 bg-black text-white rounded-md px-8 py-1" target="blank" href={link}><LuExternalLink />visit</Link></p>}
+                <p className="whitespace-pre-wrap text-sm mt-2">
+                    {
+                        !seeMore ? 
+                        <>
+                            {details.length >= 520 ? <>{details.slice(0,550)}... <button className="underline" onClick={() => setSeeMore(!seeMore)}>see more</button></> : details}
+                        </>
+                        :
+                        <>{details}</>
+                    }
+                </p>
+
+                {link && <p className="text-sm flex justify-end md:mt-5"><Link className="flex items-center gap-2 bg-black text-white rounded-md px-8 py-1" target="blank" href={link}><LuExternalLink />visit</Link></p>}
 
             </div>
-            {
+            {/* {
                 code && 
                 <div className="mt-3">
                     <h5 onClick={() =>setViewCode(!viewCode)} className="whitespace-pre-wrap flex items-center gap-2 underline cursor-pointer select-none"><FaCode />view code</h5>
@@ -61,7 +72,7 @@ const SingleCard = ({post}) => {
                         <p className="whitespace-pre-wrap">{code}</p>
                     </div>
                 </div>
-            }
+            } */}
             <div className="flex items-center gap-1 mt-2">
                 <span className="text-sm text-primary font-semibold">topics:</span>
                 <div className="flex flex-wrap gap-2 ">

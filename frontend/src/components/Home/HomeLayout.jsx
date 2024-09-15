@@ -8,7 +8,6 @@ import { useState } from 'react';
 const HomeLayout = ({children}) => {
     const paths = ['/', '/saved', '/post/']
     const pathname = usePathname()
-    console.log(pathname);
     const showContent = paths.includes(pathname);
 
     const [openMenu, setOpenMenu] = useState(false)

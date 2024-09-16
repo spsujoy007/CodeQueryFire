@@ -2,16 +2,19 @@
 import ContainMargin from '@/components/shared/ContainMargin';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { AiOutlineEye } from "react-icons/ai";
 import { BiDislike, BiLike } from "react-icons/bi";
 import { MdBookmarkBorder } from "react-icons/md";
 import { FaCode } from "react-icons/fa6";
 import moment from 'moment';
 import { BiShare } from "react-icons/bi";
+import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/default-highlight';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { IoClose } from "react-icons/io5";
+import { useState } from 'react';
 
-const PostDetails = ({post}) => {
+const PostDetails = ({post, searchParams}) => {
+    console.log(searchParams);
     const likeNumberChecker = (num)=>{
         if (num >= 1000000) {
             return (num / 1000000).toFixed(1) + 'M';
@@ -43,9 +46,10 @@ const PostDetails = ({post}) => {
     } = post;
 
     const FormatedTime = moment(postTime).startOf('hour').fromNow();
+    const [viewImage, setViewImage] = useState(false)
 
     return (
-        <div className='py-20 '>
+        <div className='py-20 realative h-full'>
                 <ContainMargin>
                     <h1 className='text-3xl font-bold'>{title}</h1>
                     
@@ -57,12 +61,12 @@ const PostDetails = ({post}) => {
                     </p>
                     }
 
-                    <div className='w-full mt-5 flex md:flex-row flex-col  gap-2'>
-                        <div className='md:w-[50%]'>
-                            <Image className='rounded-lg' src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726417737/personal/codes.png'} height={800} width={1200} layout='responsive'></Image>
+                    <div className='w-full mt-5 flex md:flex-row flex-col gap-2'>
+                        <div onClick={()=> setViewImage(!viewImage)} className='md:w-[25%] cursor-pointer'>
+                            <Image alt='post_image' className='rounded-lg' src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726417737/personal/codes.png'} height={200} width={500} layout='responsive'></Image>
                         </div>
-                        <div className='md:w-[50%]'>
-                            <Image className='rounded-lg' src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726417737/personal/codes.png'} height={800} width={1200} ></Image>
+                        <div onClick={()=> setViewImage(!viewImage)} className='md:w-[25%] cursor-pointer'>
+                            <Image alt='post_image' className='rounded-lg' src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726417737/personal/codes.png'} height={200} width={500} layout='responsive'></Image>
                         </div>
                     </div>
 
@@ -118,7 +122,21 @@ const PostDetails = ({post}) => {
                         </div>
                     </div>
 
+
                 </ContainMargin>
+                    {/* // big image preview  */}
+                    {
+                        !viewImage && 
+                        <div className={`viewimage absolute top-0  flex justify-center items-center h-full  backdrop-blur-xl ${viewImage ? 'w-0 duration-300':'w-full duration-300'}`}>
+                            <div className='bg-primary w-[70%]  border-4 border-primary rounded-2xl'>
+                                <div onClick={()=>setViewImage(!viewImage)} className='flex justify-end cursor-pointer items-center text-white py-1 pr-2 gap-1'>
+                                    <IoClose  className=' text-xl bg-primary rounded-tr-xl '/>close
+                                </div>
+                                <Image alt='post_image' className='rounded-b-xl' src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726417737/personal/codes.png'} height={1000} width={2000} layout='responsive'></Image>
+
+                            </div>
+                        </div>
+                    }
             </div>
     );
 };

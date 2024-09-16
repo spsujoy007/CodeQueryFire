@@ -98,7 +98,7 @@ const SingleCard = ({post}) => {
                     <MdBookmarkBorder />
                 </button>
 
-                <Link className="" href={`post/${title.split(/[\\/]+/).join(' ')}`}>
+                <Link className="" href={`post/${title.split(/[\\/]+/).join(' ')}?id=${_id}`}>
                     <button title="view post" className="text-xl w-[120px] flex justify-center items-center border-[1px] border-black bg-black hover:bg-background text-white duration-200 py-1 rounded-md hover:text-black gap-2">
                         <LuExternalLink /> <span className="text-sm">view post</span>
                     </button>

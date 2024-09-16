@@ -49,8 +49,10 @@ const PostDetails = ({post, searchParams}) => {
     const [viewImage, setViewImage] = useState(false)
 
     return (
-        <div className='py-20 realative h-full'>
-                <ContainMargin>
+        <div className='py-20 realative'>
+                {
+                    viewImage &&
+                    <ContainMargin>
                     <h1 className='text-3xl font-bold'>{title}</h1>
                     
                     <p className='mt-4 text-lg text-justify'><span className='text-primary font-bold'>Details: </span>{details}</p>
@@ -124,10 +126,11 @@ const PostDetails = ({post, searchParams}) => {
 
 
                 </ContainMargin>
+                }
                     {/* // big image preview  */}
                     {
                         !viewImage && 
-                        <div className={`viewimage absolute top-0  flex justify-center items-center h-full  backdrop-blur-xl ${viewImage ? 'w-0 duration-300':'w-full duration-300'}`}>
+                        <div className={`viewimage absolute scroll-my-0 h-full top-0 flex justify-center items-center   backdrop-blur-xl ${viewImage ? 'w-0 duration-300':'w-full duration-300'}`}>
                             <div className='bg-primary w-[70%]  border-4 border-primary rounded-2xl'>
                                 <div onClick={()=>setViewImage(!viewImage)} className='flex justify-end cursor-pointer items-center text-white py-1 pr-2 gap-1'>
                                     <IoClose  className=' text-xl bg-primary rounded-tr-xl '/>close

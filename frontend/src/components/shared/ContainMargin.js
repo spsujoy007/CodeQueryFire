@@ -1,8 +1,9 @@
 import React from 'react';
 
-const ContainMargin = ({children}) => {
+const ContainMargin = ({children, width}) => {
+    console.log(width);
     return (
-        <div className='md:w-[92%] w-[96%] mx-auto'>
+        <div className={`md:w-[${width}%] w-[96%] mx-auto`}>
             {children}
         </div>
     );

@@ -18,7 +18,7 @@ const SignupPage = () => {
             <form className="space-y-5 p-5 mt-5">
                 <div>
                     <label className="text-sm text-primary ml-[2px]" htmlFor="name">Full name</label><br />
-                    <input className={inputstyle} name="name" id="name" placeholder="type your name" type="email" />
+                    <input className={inputstyle} name="name" id="name" placeholder="type your name" type="text" />
                 </div>
                 <div>
                     <label className="text-sm text-primary ml-[2px]" htmlFor="email">Email</label><br />

@@ -11,9 +11,11 @@ const page = async({params, searchParams}) => {
 
     
     return (
-        <div className='w-full h-full'>
+        <div className='w-full h-full bg-background'>
             <Navbar></Navbar>
-            <PostDetails post={data} searchParams={searchParams}></PostDetails>
+            <div className=' bg-background'>
+                <PostDetails post={data} searchParams={searchParams}></PostDetails>
+            </div>
         </div>
     );
 };

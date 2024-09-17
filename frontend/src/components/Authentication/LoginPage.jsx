@@ -10,13 +10,13 @@ const LoginPage = () => {
     const inputstyle = `border-b-[1px] outline-none border-b-primary placeholder:text-gray-400 placeholder:text-sm w-full px-2 py-[6px] text-md rounded-t-md`
 
     return (
-        <div className='h-[100vh] mx-auto pt-5 border-primary  border-l-[1px] flex flex-col justify-center '>
-            <div className="w-[50%] mx-auto">
-            <div className="w-[90%] mx-auto">
+        <div className='md:h-[100vh] mx-auto pt-5 border-primary  md:border-l-[1px] flex md:flex-col flex-row justify-center '>
+            <div className="md:w-[50%] mx-auto">
+            <div className="md:w-[90%] mx-auto text-left">
                 <h2 className="text-2xl font-bold">Log In </h2>
                 <p>Stay updated with us</p>
             </div>
-            <form className="space-y-5 p-5 mt-5">
+            <form className="space-y-5 w-full md:p-5 mt-5">
                 <div>
                     <label className="text-sm text-primary ml-[2px]" htmlFor="email">Email</label><br />
                     <input className={inputstyle} name="email" id="email" placeholder="type your email" type="email" />

@@ -16,9 +16,15 @@ const SignupPage = () => {
                 <p>Let's share and learn</p>
             </div>
             <form className="space-y-5 p-5 mt-5">
-                <div>
-                    <label className="text-sm text-primary ml-[2px]" htmlFor="name">Full name</label><br />
-                    <input className={inputstyle} name="name" id="name" placeholder="type your name" type="text" />
+                <div className='flex gap-2'>
+                    <div className='w-[50%]'>
+                        <label className="text-sm text-primary ml-[2px]" htmlFor="firstname">First name</label><br />
+                        <input className={inputstyle} name="firstname" id="firstname" placeholder="type your first name" type="text" />
+                    </div>
+                    <div className='w-[50%]'>
+                        <label className="text-sm text-primary ml-[2px]" htmlFor="lastname">Last name</label><br />
+                        <input className={inputstyle} name="lastname" id="lastname" placeholder="type your lastname" type="text" />
+                    </div>
                 </div>
                 <div>
                     <label className="text-sm text-primary ml-[2px]" htmlFor="email">Email</label><br />

@@ -54,7 +54,7 @@ const PostDetails = ({post, searchParams}) => {
                 {
                     !viewImage &&
                     <>
-                        <ContainMargin width={'60%'}>
+                        <ContainMargin width={90}>
 
                             <h1 className='text-3xl font-bold'>{title}</h1>
 
@@ -89,40 +89,57 @@ const PostDetails = ({post, searchParams}) => {
                             
                             {
                                 code && 
-                                    <div className='rounded-lg overflow-hidden mt-2 border-[1px] border-gray-300 bg-white'>
-                                    <div className='px-5 py-1 text-primary border-b-[1px] border-primary'>
+                                    <div 
+                                    className='rounded-lg overflow-hidden mt-2 border-[1px] border-gray-300 bg-white'>
+                                    <div 
+                                    className='px-5 py-1 text-primary border-b-[1px] border-primary'>
                                         <p>Code:</p>
                                     </div>
                                     <SyntaxHighlighter wrapLines={true}  showLineNumbers language={code_language} style={docco}>
                                         {code}
                                     </SyntaxHighlighter>
-                                    <p className='py-2 pl-4 w-full bg-gray-100 font-bold'>language: <span className='text-primary capitalize font-normal'>{code_language}</span> </p>
+                                    <p 
+                                    className='py-2 pl-4 w-full bg-gray-100 font-bold'>language: <span className='text-primary capitalize font-normal'>{code_language}</span> </p>
                                     </div>
                             }
 
-                            <div className="mt-4 grid md:grid-cols-6 grid-cols-3 gap-2 bg-white p-2 rounded-md">
-                                <button title="likes" className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
+                            <div className="mt-4 grid md:grid-cols-5 border-[1px] border-gray-200 lg:grid-cols-6 grid-cols-3 gap-2 bg-white p-2 rounded-md">
+                                <button 
+                                title="likes" 
+                                className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
                                     <BiLike /> <span className="text-sm font-semibold">{likeNumberChecker(likes)}</span>
                                 </button>
                                 
-                                <button title="dislikes" className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
+                                <button 
+                                title="dislikes" 
+                                className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
                                     <BiDislike /> <span className="text-sm">{likeNumberChecker(dislikes)}</span>
                                 </button>
 
-                                <button title="views" className="text-2xl w-[150px] flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
-                                    <BiCommentDetail className='' /><span className="text-sm font-bold">{likeNumberChecker(shares)}</span> <span className="text-sm">Comments</span>
+                                <button 
+                                title="views" 
+                                className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
+                                    <BiCommentDetail 
+                                    className='' /><span className="text-sm font-bold">{likeNumberChecker(shares)}</span> <span className="text-sm">Comments</span>
                                 </button>
 
-                                <button title="views" className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
+                                <button 
+                                title="views" 
+                                className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
                                     <AiOutlineEye /> <span className="text-sm font-semibold">{likeNumberChecker(views)}</span>
                                 </button>
 
-                                <button title="views" className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
+                                <button 
+                                title="views" 
+                                className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
                                     <BiShare /> <span className="text-sm font-semibold">{likeNumberChecker(shares)}</span>
                                 </button>
 
-                                <button title="bookmark" className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 rounded-md py-1 text-gray-500 gap-2">
-                                    <MdBookmarkBorder /> <span className="text-sm">Bookmark</span>
+                                <button 
+                                title="bookmark" 
+                                className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 rounded-md py-1 text-gray-500 gap-2">
+                                    <MdBookmarkBorder /> 
+                                    <span className="text-sm">Bookmark</span>
                                 </button>
                             </div>
 
@@ -132,8 +149,8 @@ const PostDetails = ({post, searchParams}) => {
                     {/* // big image preview  */}
                     {
                         viewImage && 
-                        <div className={'absolute left-0 w-full h-full top-0 flex justify-center items-center backdrop-blur-xl'}>
-                            <div className='bg-black md:w-[70%] w-[95%]  border-2 border-black rounded-2xl'>
+                        <div className={'absolute left-0 w-full h-full top-0 flex justify-center items-center backdrop-blur-xl '}>
+                            <div className={`bg-black md:w-[70%] w-[95%] border-2 border-black rounded-2xl`}>
                                 <div onClick={()=>setViewImage(!viewImage)} className='flex justify-end cursor-pointer items-center text-white py-1 pr-2 gap-1'>
                                     <IoClose  className=' text-xl bg-primary rounded-tr-xl '/>close
                                 </div>

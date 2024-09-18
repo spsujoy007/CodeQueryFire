@@ -1,11 +1,11 @@
 import React from 'react';
 
 const ContainMargin = ({children, width}) => {
-    console.log(width);
     return (
-        <div className={`md:max-w-[${width ? width : '90%'}] max-w-[96%] mx-auto`}>
-            {children}
-        </div>
+            <div className={`${width ? `md:w-[${width}%]` : `md:w-[90%]`} w-[96%] mx-auto`}>
+            {/* <div className={`${width ? `md:w-[${width}%]` : `md:w-[90%]`} w-[96%] mx-auto`}> */}
+                {children}
+            </div>
     );
 };
 

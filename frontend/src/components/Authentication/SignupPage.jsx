@@ -1,10 +1,11 @@
 "use client"
+import useSiteName from '@/Hooks/useSiteName';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { LuEye, LuEyeOff } from 'react-icons/lu';
 
 const SignupPage = () => {
-
+    const name = useSiteName()
     const [viewPass, setViewPass] = useState(false)
     const inputstyle = `border-b-[1px] outline-none border-b-primary placeholder:text-gray-400 placeholder:text-sm w-full px-2 py-[6px] text-md rounded-t-md`
 
@@ -13,7 +14,7 @@ const SignupPage = () => {
             <div className="w-[50%] mx-auto">
             <div className="w-[90%] mx-auto">
                 <h2 className="text-2xl font-bold">Sign Up </h2>
-                <p>Let's share and learn</p>
+                <p>Let&apos;s share and learn</p>
             </div>
             <form className="space-y-5 p-5 mt-5">
                 <div className='flex gap-2'>

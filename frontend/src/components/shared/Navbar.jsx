@@ -4,7 +4,7 @@ import React from 'react';
 import ContainMargin from './ContainMargin';
 import { usePathname } from 'next/navigation';
 import useSiteName from '@/Hooks/useSiteName';
-const {htmlname, name} = useSiteName()
+
 const Navbar = () => {
     const pathname = usePathname()
     const navmenu = [
@@ -22,15 +22,17 @@ const Navbar = () => {
         }
     ]
 
+    const name = useSiteName()
+
     return (
         <div className='bg-[#ffffffbf] backdrop-blur-md fixed w-full border-b-[1px] z-20 border-primary'>
-            <ContainMargin>
+            <ContainMargin width={90}>
             <div className='flex gap-20 items-center py-4'>
                 <div>
                     {/* <Link href={'/'}>
                         <div className='w-[200px]'>{htmlname}</div>
                     </Link> */}
-                    <Link href={'/'}><h3 className='text-2xl font-bold select-none'>{htmlname}</h3></Link>
+                    <Link href={'/'}><h3 className='text-2xl font-bold select-none'>{name}</h3></Link>
                 </div>
                 <div>
                     <ul className='flex items-center justify-center gap-6'>

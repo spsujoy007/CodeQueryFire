@@ -18,7 +18,7 @@ const HomeLayout = ({children}) => {
                 <>
                 {/* <button className='' onClick={() => setOpenMenu(!openMenu)}>menu</button> */}
                     <Navbar></Navbar>
-                    <ContainMargin>
+                    <ContainMargin width={90}>
                         <div className="md:flex md:flex-row flex-col">
                             <div className={`md:w-[15%]  w-full p-1 min-h-[90vh] overflow-hidden hid md:max-h-[90vh] scroll-pr-14 overflow-y-scroll top-20 duration-200 scrollbar-custom sticky md:ml-0 ${openMenu ? '-ml-0 bg-white ':'-ml-[500px]'}`}>
                                 <HomeProfile></HomeProfile>

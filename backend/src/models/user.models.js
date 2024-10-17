@@ -3,12 +3,9 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
 const userSchema = new Schema({
-
     username: {
         type: String,
-        required: true,
         unique: true,
-        trim: true,
         lowercase: true,
         index: true
     },
@@ -42,10 +39,13 @@ const userSchema = new Schema({
         type: String,
         maxlength: 150
     },
-    phone: String,
+    phone: {
+        type:  String
+    },
     password: {
         type: String,
-        requiredPaths: [true, "Password is true"]
+        minlength: 6,
+        requiredPaths: [true, "Password must be in 6 charecters of upper"]
     },
     refreshToken: {
         type: String
@@ -56,6 +56,12 @@ const userSchema = new Schema({
 userSchema.pre("save", async function (next) {
     if(!this.isModified("password")) return next()
     this.password = await bcrypt.hash(this.password, 10)
+    next()
+})
+
+userSchema.pre("save", async function (next) {
+    if(!this.isModified("username")) return next()
+    this.username = this.email.split("@")[0]
     next()
 })
 

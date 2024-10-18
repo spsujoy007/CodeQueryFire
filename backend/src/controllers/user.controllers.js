@@ -1,7 +1,7 @@
-import { User } from "../models/user.models";
-import { ApiError } from "../utils/ApiError";
-import { ApiResponse } from "../utils/ApiResponse";
-import { asyncHandler } from "../utils/AsyncHandler";
+import { User } from "../models/users.models.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 const registerUser = asyncHandler( async (req, res) => {
     // 1. get user details from frontend
@@ -42,4 +42,4 @@ const registerUser = asyncHandler( async (req, res) => {
     .json(new ApiResponse(200, created_userdata, "user created successfully"))
 })
 
-export {registerUser}
+export { registerUser }

@@ -18,8 +18,8 @@ app.use(express.static("public"))
 
 // routes import 
 import userRouter from "./routes/users.routes.js";
-app.use("/api/v1/users", userRouter)
 
+app.use("/api/v1/users", userRouter)
 app.use("/", (req, res) => {
     res.send("Server is running")
 })

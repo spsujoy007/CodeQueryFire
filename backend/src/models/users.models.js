@@ -6,8 +6,7 @@ const userSchema = new Schema({
     username: {
         type: String,
         unique: true,
-        lowercase: true,
-        index: true
+        lowercase: true
     },
     email: {
         type: String,
@@ -30,8 +29,7 @@ const userSchema = new Schema({
     },
     avatar: {
         url: {
-            type: String,
-            required: true
+            type: String
         },
         public_id: String
     },
@@ -60,7 +58,7 @@ userSchema.pre("save", async function (next) {
 })
 
 userSchema.pre("save", async function (next) {
-    if(!this.isModified("username")) return next()
+    if(!this.isModified("email")) return next()
     this.username = this.email.split("@")[0]
     next()
 })

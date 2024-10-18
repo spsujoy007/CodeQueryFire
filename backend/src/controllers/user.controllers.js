@@ -3,7 +3,33 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
-const registerUser = asyncHandler( async (req, res) => {
+const options = {
+    httpOnly: true,
+    secure: true
+}
+
+const generateAccessAndRefreshToken = async(userId) => {
+    try {
+        const user = await User.findById(userId)
+        
+        // generate tokens
+        const access_token = user.generateAccessToken()
+        const refresh_token = user.generateRefreshToken()
+
+        // save the refresh token to the database
+        user.refreshToken = refresh_token
+
+        // close all validations before save
+        await user.save({ validationBeforeSave: false })
+
+        return { access_token, refresh_token }
+
+    } catch (error) {
+        throw new ApiError(505, "Something went wrong when generate access and refresh token")
+    }
+}
+
+const registerUser = asyncHandler ( async (req, res) => {
     // 1. get user details from frontend
     // 2. validation - not empty
     // 3. check if user already exists: username, email
@@ -42,4 +68,47 @@ const registerUser = asyncHandler( async (req, res) => {
     .json(new ApiResponse(200, created_userdata, "user created successfully"))
 })
 
-export { registerUser }
+const loginUser = asyncHandler ( async (req, res) => {
+    // 1. get email and password from body
+    // 2. validation: find user
+    // 3. validation: check password
+    // 4. set access and refresh token by cockies
+    // 5. remove password and refreshToken from response
+    // 6. response
+
+    // get user data
+    const { email, password } = req.body;
+    const existUser = await User.findOne({email})
+    console.log("EXISTED USER-------------------", existUser)
+
+    // validation of existed user
+    if(!existUser) throw new ApiError(404, "user with this email does not exist")
+    
+    // validation check password
+    const isPasswordCorrect = await existUser.isPasswordCorrect(password)
+    if(!isPasswordCorrect) throw new ApiError(4041, "invalid user credential")
+
+    // generate access token
+    const { access_token, refresh_token } = await generateAccessAndRefreshToken(existUser._id)
+
+    const loggedInUser = await User.findById(existUser._id).select("-password -refreshToken")
+
+    // response with set access and refresh token in cookies
+    return res
+    .status(200)
+    .cookie("access_token", access_token, options)
+    .cookie("refresh_token", refresh_token, options)
+    .json(
+        new ApiResponse(
+            200,
+            {
+                user: loggedInUser,
+                access_token,
+                refresh_token
+            },
+            "user successfuly logged in"
+        )
+    )
+})
+
+export { registerUser, loginUser }

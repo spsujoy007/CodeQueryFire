@@ -111,4 +111,25 @@ const loginUser = asyncHandler ( async (req, res) => {
     )
 })
 
-export { registerUser, loginUser }
+const changePassword = asyncHandler ( async (req, res) => {
+    // get old and new password
+    // find existed user by token
+    // validate user
+    // change password by method
+    // save user and return
+    const { oldPassword, newPassword } = req.body;
+
+    const user = await User.findById(req.user?._id).select("-password -refresh_token")
+    const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
+
+    if( !isPasswordCorrect ) throw new ApiError(400, "invalid old password")
+
+    user.password = newPassword
+    await user.save({validateBeforeSave: false})
+
+    return res 
+    .status(200)
+    .json( new ApiResponse( 200, {}, "password successfuly changed" ))
+})
+
+export { registerUser, loginUser, changePassword }

@@ -3,7 +3,7 @@ import mongoose, {Schema} from "mongoose";
 const BlogsSchema = new Schema({
     author_id: {
         type: Schema.Types.ObjectId,
-        required: true
+        ref: "User"
     },
     title: {
         type: String,

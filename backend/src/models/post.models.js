@@ -32,7 +32,8 @@ const PostsSchema = new Schema({
         {
             name: {
                 type: String,
-                required: true
+                required: true,
+                maxlength: [25, "Topic name cannot exceed 25 characters."]
             }
         }
     ],

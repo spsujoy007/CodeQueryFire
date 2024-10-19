@@ -14,6 +14,14 @@ const BlogsSchema = new Schema({
         type: String,
         rerqured: false
     },
+    topics: [
+        {
+            name: {
+                type: String,
+                maxlength: [25, "Topic name cannot exceed 25 characters."]
+            }
+        }
+    ],
     image: {
         url: String,
         public_id: String

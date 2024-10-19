@@ -1,4 +1,4 @@
-import mongoose, {mongo, Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
@@ -45,6 +45,12 @@ const userSchema = new Schema({
         minlength: 6,
         requiredPaths: [true, "Password must be in 6 charecters of upper"]
     },
+    posts: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Post"
+        }
+    ],
     refreshToken: {
         type: String
     }

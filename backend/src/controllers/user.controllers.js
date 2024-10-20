@@ -2,6 +2,7 @@ import { User } from "../models/users.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import cookieParser from "cookie-parser";
 
 const options = {
     httpOnly: true,
@@ -46,7 +47,9 @@ const registerUser = asyncHandler ( async (req, res) => {
 
     // STEP 3 _______________________________________________________________
     const existUser = await User.findOne({email})
-    if( existUser ) throw new ApiError(409, "user with this email already exists")
+    if( existUser ) { 
+        throw new ApiError(404, "user with this email already exists")
+    }
     
     // STEP 4 _______________________________________________________________
     const user = await User.create({
@@ -65,7 +68,7 @@ const registerUser = asyncHandler ( async (req, res) => {
     // STEP 7 _______________________________________________________________
     return res
     .status(201)
-    .json(new ApiResponse(200, created_userdata, "user created successfully"))
+    .json(new ApiResponse(200, created_userdata, "account created successfully"))
 })
 
 const loginUser = asyncHandler ( async (req, res) => {
@@ -132,4 +135,16 @@ const changePassword = asyncHandler ( async (req, res) => {
     .json( new ApiResponse( 200, {}, "password successfuly changed" ))
 })
 
-export { registerUser, loginUser, changePassword }
+const loggedInProfile = asyncHandler ( async (req, res) => {
+    const user = await User.aggregate([
+        {
+            $match: {
+                _id: req.user?._id
+            }
+        }
+    ]).select("-password -refresh_token")
+
+    if ( !user ) throw new ApiError(401, "not a valid user")
+})
+
+export { registerUser, loginUser, changePassword, loggedInProfile }

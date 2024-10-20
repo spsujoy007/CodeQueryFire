@@ -57,7 +57,7 @@ const userSchema = new Schema({
             ref: "Blog"
         }
     ],
-    refreshToken: {
+    refresh_token: {
         type: String
     }
 

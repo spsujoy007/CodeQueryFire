@@ -4,6 +4,8 @@ import ContainMargin from '../shared/ContainMargin';
 import HomeProfile from './HomeProfile';
 import Navbar from '../shared/Navbar';
 import { useState } from 'react';
+import axios from 'axios';
+import ServerUrl from '@/Hooks/useServerUrl';
 
 const HomeLayout = ({children}) => {
     const paths = ['/', '/saved', '/post/']
@@ -11,6 +13,9 @@ const HomeLayout = ({children}) => {
     const showContent = paths.includes(pathname);
 
     const [openMenu, setOpenMenu] = useState(false)
+
+    
+
     return (
         <div>
             {

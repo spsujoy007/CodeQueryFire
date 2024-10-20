@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { User } from "../models/users.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -18,7 +19,7 @@ const generateAccessAndRefreshToken = async(userId) => {
         const refresh_token = user.generateRefreshToken()
 
         // save the refresh token to the database
-        user.refreshToken = refresh_token
+        user.refresh_token = refresh_token
 
         // close all validations before save
         await user.save({ validationBeforeSave: false })
@@ -139,12 +140,23 @@ const loggedInProfile = asyncHandler ( async (req, res) => {
     const user = await User.aggregate([
         {
             $match: {
-                _id: req.user?._id
+                _id: new mongoose.Types.ObjectId(req.user?._id)
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                password: 0,
+                refresh_token: 0
             }
         }
-    ]).select("-password -refresh_token")
+    ])
 
-    if ( !user ) throw new ApiError(401, "not a valid user")
+    if ( !user ) throw new ApiError(401, "not a valid user");
+
+    res 
+    .status(200)
+    .json( new ApiResponse(200, user[0], "user profile successfully fetched") )
 })
 
 export { registerUser, loginUser, changePassword, loggedInProfile }

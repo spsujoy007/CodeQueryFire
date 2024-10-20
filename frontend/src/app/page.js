@@ -12,9 +12,6 @@ const Home = async() => {
   const res = await fetch('https://mocki.io/v1/604ce093-9ffa-45d5-aaa7-b637fbf69778')
   const data = await res.json()
 
-  const cookie = cookies()
-  console.log("Token", cookie.getAll())
-
   return (
     <div className="">
       <HomePosts posts={data}></HomePosts>

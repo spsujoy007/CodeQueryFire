@@ -7,8 +7,8 @@ const HomePosts = ({posts}) => {
     return (
         <div className='space-y-2 mt-0'>
             {
-                posts.map((post, i) => 
-                  <SingleCard key={i} post={post}></SingleCard>
+                posts.map(post => 
+                  <SingleCard key={post.id} post={post}></SingleCard>
               )
             }
         </div>

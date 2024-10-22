@@ -79,7 +79,7 @@ const SingleCard = ({post}) => {
                 <span className="text-sm text-primary font-semibold">topics:</span>
                 <div className="flex flex-wrap gap-2 ">
                     {
-                        tags.map((tag, i) => <button title={`tag: ${tag}`} key={i} className="border-[1px] border-primary text-primary px-2 rounded-md text-xs">{tag}</button>)
+                        tags.map(tag => <button title={`tag: ${tag}`} key={tag} className="border-[1px] border-primary text-primary px-2 rounded-md text-xs">{tag}</button>)
                     }
                 </div>
             </div>

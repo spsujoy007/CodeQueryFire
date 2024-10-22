@@ -13,6 +13,10 @@ const Navbar = () => {
             url: '/',
         },
         {
+            title: "Profile",
+            url: '/profile',
+        },
+        {
             title: "Login",
             url: '/login',
         },
@@ -23,9 +27,10 @@ const Navbar = () => {
     ]
 
     const name = useSiteName()
+    // const activeRoute = navmenu.includes(pathname)
 
     return (
-        <div className='bg-[#ffffffbf] backdrop-blur-md fixed w-full border-b-[1px] z-20 border-primary'>
+        <div className='bg-[#ffffffbf] backdrop-blur-md fixed top-0 w-full border-b-[1px] z-20 border-primary'>
             <ContainMargin width={90}>
             <div className='flex gap-20 items-center py-4'>
                 <div>
@@ -37,8 +42,8 @@ const Navbar = () => {
                 <div>
                     <ul className='flex items-center justify-center gap-6'>
                         {
-                            navmenu.map((navitem, i) => 
-                                <li key={i} className={`${pathname.includes(navitem.url) && 'text-active'}`}>
+                            navmenu.map(navitem => 
+                                <li key={navitem.url} className={`${navitem.url === pathname ? 'text-active': 'text-black'}`}>
                                     <Link href={navitem.url}>{navitem.title}</Link>
                                 </li>
                             )

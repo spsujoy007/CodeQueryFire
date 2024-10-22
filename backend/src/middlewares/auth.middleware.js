@@ -1,13 +1,13 @@
 import { User } from "../models/users.models.js";
 import { ApiError } from "../utils/ApiError.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
+import { asyncHandler } from "../utils/AsyncHandler.js";
 import jwt from 'jsonwebtoken'
 
 export const verifyJWT = asyncHandler ( async ( req, res, next ) => {
     try {
         const token = req.cookies?.access_token || req.headers("Authorization")?.replace("Bearer", "")
     
-        if(!token) throw new ApiError(401, "unauthorized request");
+        if(!token) throw new ApiError(401, "unauthorized request or token was expired");
     
         const decodedInfo = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
     

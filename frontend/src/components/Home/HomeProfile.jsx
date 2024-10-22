@@ -1,47 +1,31 @@
 "use client"
+import LoadingPage from '@/app/loading';
+import useAuthenticated from '@/Hooks/useAuthenticated';
 import ServerUrl from '@/Hooks/useServerUrl';
 import axios from 'axios';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
 
 const HomeProfile = () => {
     const pathname = usePathname();
-
-    // console.log('url', `${ServerUrl()}/users/loggedin-profile`)
-
-    // GET request for remote image in node.js
-    const [
-        {
-            first_name,
-            last_name,
-            bio,
-            email
-        }, setProfile] = useState([])
-    const [loading, setLoading] = useState(true)
-    useEffect(() => {
-        axios({
-            method: 'get',
-            url: `${ServerUrl()}/users/loggedin-profile`,
-            withCredentials: true
-        })
-        .then(res => {
-            console.log(res.data.data)
-            setProfile(res.data.data)
-            setLoading(false)
-        })
-        .catch(err => {
-            console.log(err)
-            setLoading(false)
-        })
-    }, [])
+    
+    
+    const {user, loading} = useAuthenticated()
+    const {
+        first_name,
+        last_name,
+        bio,
+        email
+    } = user
 
     return (
         <>
             {
-                !loading &&
+                loading ?
+                <LoadingPage></LoadingPage>
+                :
                 <main className='md:pr-4'>
                 {/* profile info */}
                 <div>

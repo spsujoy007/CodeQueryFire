@@ -1,4 +1,11 @@
 
+export async function generateMetadata() {
+  return {
+    title: "Sujoy Paul",
+    details: ""
+  }
+}
+
 const page = () => {
     return (
         <div>

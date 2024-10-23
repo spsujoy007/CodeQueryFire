@@ -24,7 +24,20 @@ const HomeProfile = () => {
         <>
             {
                 loading ?
-                <LoadingPage></LoadingPage>
+                <main className='md:pr-4'>
+                    {/* profile info */}
+                    <div className='animate-pulse duration-150'>
+                        <div className='flex items-center gap-3'>
+                            <div className='w-[45px] h-[45px] rounded-full bg-gray-200'></div>
+                            <div className='w-[65%]'>
+                                {/* <h5 className='text-sm font-bold'>{first_name + " " + last_name}</h5> */}
+                                <div className='h-[20px] w-full bg-gray-200 rounded-full'></div>
+                                <div className='mt-2 h-[10px] w-full bg-gray-200 rounded-full'></div>
+                            </div>
+                        </div>
+                        <div className='mt-2 w-full h-[10px] bg-gray-200 rounded-xl'></div>
+                    </div>
+                </main>
                 :
                 <main className='md:pr-4'>
                 {/* profile info */}

@@ -1,4 +1,4 @@
-import LoginPage from '@/components/Authentication/LoginPage';
+import LoginPageComponent from '@/components/Authentication/LoginPageComponent';
 import Link from 'next/link';
 import React from 'react';
 
@@ -7,21 +7,12 @@ export const metadata = {
     description: `Welcome back to CodeQueryFire`
 }
 
-const page = () => {
+const LoginPage = () => {
     return (
         <div className='bg-background w-full h-full md:flex items-center justify-center'>
-            <div className='flex md:flex-row flex-col items-center justify-center  w-full'>
-                <div className='md:w-[50%] md:text-center md:my-0 mt-20 mb-5'>
-                    <h1 className='md:text-[100px] text-[50px] uppercase'><span className="text-primary font-bold">Welcome</span> back</h1>
-                    <p className='text-xl'>in CodeQueryFire</p>
-                    <Link href={'/'}><button className='mt-5 bg-black text-white hover:bg-white hover:text-black duration-200 py-1 rounded-md w-[250px] text-sm md:text-md'>Back to home</button></Link>
-                </div>
-                <div className='md:w-[50%]'>
-                    <LoginPage></LoginPage>
-                </div>
-            </div>
+            <LoginPageComponent></LoginPageComponent>
         </div>
     );
 };
 
-export default page;
+export default LoginPage;

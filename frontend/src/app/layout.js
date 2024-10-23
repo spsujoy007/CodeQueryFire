@@ -13,8 +13,8 @@ import { usePathname } from "next/navigation";
 export default function RootLayout({ children }) {
 
   const route = usePathname()
-  const showNavRoutes = ['/', '/saved','/profile']
-  const isShowNav =  showNavRoutes.some((path) => path === route || route.startsWith(path))
+  const showNavRoutes = ['/signup', '/login']
+  const isShowNav =  showNavRoutes.some((path) => path === route)
   // const isShowNav = showNavRoutes.includes(route)
 
   console.log(route, isShowNav)
@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`antialiased`}>
         {
-          isShowNav && 
+          !isShowNav && 
           <Navbar></Navbar>
         }
         <HomeLayout>{children}</HomeLayout>

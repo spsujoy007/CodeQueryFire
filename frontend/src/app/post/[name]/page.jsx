@@ -6,9 +6,34 @@ export async function generateMetadata({ params, searchParams }) {
     const gettitle = params.name
     let decodedString = decodeURIComponent(gettitle);
 
-    const res = await fetch('https://mocki.io/v1/4f69807c-4aa7-426f-884d-d51554599b80');
-    const data = await res.json();
+    // const res = await fetch('https://mocki.io/v1/4f69807c-4aa7-426f-884d-d51554599b80');
 
+    // const data = await res.json();
+    const data = {
+        _id: "652f7543cd214dcf9b247b34",
+        author_id: "652f7534d1a6b1bcf8a8b9a1",
+        title: "Understanding Event Loop in JavaScript",
+        details: "This post explains how the event loop works in JavaScript, focusing on async programming and promises.",
+        images: [
+          {
+            url: "https://example.com/image1.jpg",
+            public_id: "image1_public_id"
+          }
+        ],
+        code: "console.log('Hello, World!');",
+        programming_language: "JavaScript",
+        topics: [
+          { name: "JavaScript" },
+          { name: "Async" },
+          { name: "Event Loop" }
+        ],
+        source: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop",
+        createdAt: "2024-10-23T12:34:56.789Z",
+        updatedAt: "2024-10-23T12:34:56.789Z"
+      }
+      
+      
+    // Use the JSON data
     return {
         title: data?.title,
         details: data?.details,
@@ -27,6 +52,7 @@ export async function generateMetadata({ params, searchParams }) {
             ]
         }
     }
+
 }
 
 const PostDetailsPage = async({params, searchParams}) => {
@@ -35,12 +61,35 @@ const PostDetailsPage = async({params, searchParams}) => {
     console.log("SearchParams: ", searchParams.id)
     console.log("Params: ", params)
     
-    const res = await fetch('https://mocki.io/v1/4f69807c-4aa7-426f-884d-d51554599b80');
-    const data = await res.json();
+    // const res = await fetch('https://mocki.io/v1/4f69807c-4aa7-426f-884d-d51554599b80');
+    // const data = await res.json();
+    const data = {
+        _id: "652f7543cd214dcf9b247b34",
+        author_id: "652f7534d1a6b1bcf8a8b9a1",
+        title: "Understanding Event Loop in JavaScript",
+        details: "This post explains how the event loop works in JavaScript, focusing on async programming and promises.",
+        images: [
+          {
+            url: "https://example.com/image1.jpg",
+            public_id: "image1_public_id"
+          }
+        ],
+        code: "console.log('Hello, World!');",
+        programming_language: "JavaScript",
+        topics: [
+          { name: "JavaScript" },
+          { name: "Async" },
+          { name: "Event Loop" }
+        ],
+        source: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop",
+        createdAt: "2024-10-23T12:34:56.789Z",
+        updatedAt: "2024-10-23T12:34:56.789Z"
+      }
+      
 
     
     return (
-        <div className='w-full bg-background pt-16'>
+        <div className='w-full bg-background'>
             <div className=' bg-background'>
                 <PostDetails post={data} searchParams={searchParams}></PostDetails>
             </div>

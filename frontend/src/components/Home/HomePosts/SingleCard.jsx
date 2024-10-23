@@ -16,30 +16,24 @@ const SingleCard = ({post}) => {
         details,
         code,
         image,
-        tags,
-        name,
-        profilePic,
+        topics,
         postTime,
-        link,
-        likes,
-        dislikes,
-        shares,
-        views
+        source,
     } = post
 
     const FormatedTime = moment(postTime).startOf('hour').fromNow(); // format the time for UX
 
-    const likeNumberChecker = (num)=>{
-        if (num >= 1000000) {
-            return (num / 1000000).toFixed(1) + 'M';
-          }
-          else if (num >= 1000) {
-            return (num / 1000).toFixed(1) + 'k';
-          }
-          else {
-            return num.toString();
-          }
-    }
+    // const likeNumberChecker = (num)=>{
+    //     if (num >= 1000000) {
+    //         return (num / 1000000).toFixed(1) + 'M';
+    //       }
+    //       else if (num >= 1000) {
+    //         return (num / 1000).toFixed(1) + 'k';
+    //       }
+    //       else {
+    //         return num.toString();
+    //       }
+    // }
 
     const [viewCode, setViewCode] = useState(false)
     const [seeMore, setSeeMore] = useState(false)
@@ -60,7 +54,7 @@ const SingleCard = ({post}) => {
                     }
                 </p>
 
-                {link && <p className="text-sm flex justify-end md:mt-5"><Link className="flex items-center gap-2  text-black underline font-semibold rounded-md px-8 py-1" target="blank" href={link}><LuExternalLink />source</Link></p>}
+                {source && <p className="text-sm flex justify-end md:mt-5"><Link className="flex items-center gap-2  text-black underline font-semibold rounded-md px-8 py-1" target="blank" href={source}><LuExternalLink />source</Link></p>}
 
             </div>
 
@@ -79,20 +73,20 @@ const SingleCard = ({post}) => {
                 <span className="text-sm text-primary font-semibold">topics:</span>
                 <div className="flex flex-wrap gap-2 ">
                     {
-                        tags.map(tag => <button title={`tag: ${tag}`} key={tag} className="border-[1px] border-primary text-primary px-2 rounded-md text-xs">{tag}</button>)
+                        topics.map(topic => <button title={`topic: ${topic.name}`} key={topic.name} className="border-[1px] border-primary text-primary px-2 rounded-md text-xs">{topic.name}</button>)
                     }
                 </div>
             </div>
 
             <div className="mt-4 flex items-center gap-2">
                 <button title="likes" className="text-2xl w-[120px] flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
-                    <BiLike /> <span className="text-sm">{likeNumberChecker(likes)}</span>
+                    <BiLike /> <span className="text-sm">0</span>
                 </button>
                 {/* <button title="dislikes" className="text-2xl w-[120px] flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
                     <BiDislike /> <span className="text-sm font-semibold">{likeNumberChecker(dislikes)}</span>
                 </button> */}
                 <button title="views" className="text-2xl w-[120px] flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
-                    <AiOutlineEye /> <span className="text-sm font-semibold">{likeNumberChecker(views)}</span>
+                    <AiOutlineEye /> <span className="text-sm font-semibold">0</span>
                 </button>
                 <button title="bookmark" className="text-2xl w-[80px] flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
                     <MdBookmarkBorder />
@@ -108,7 +102,7 @@ const SingleCard = ({post}) => {
             <div className="mt-5 flex items-center gap-2">
                 <Image alt="avatar" src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} width={35} height={35} className="rounded-full"></Image>
                 <div>
-                    <h6 className="text-xs font-semibold">{name}</h6>
+                    <h6 className="text-xs font-semibold">Sujoy</h6>
                     <p className="text-xs">{FormatedTime}</p>
                 </div>
             </div>

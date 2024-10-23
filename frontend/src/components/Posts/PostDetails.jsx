@@ -38,15 +38,11 @@ const PostDetails = ({post, searchParams}) => {
         tags,
         name,
         profilePic,
-        postTime,
-        link,
-        likes,
-        dislikes,
-        shares,
-        views
+        source,
+        createdAt
     } = post;
 
-    const FormatedTime = moment(postTime).startOf('hour').fromNow();
+    const FormatedTime = moment(createdAt).startOf('hour').fromNow();
     const [viewImage, setViewImage] = useState(false)
 
     return (
@@ -61,7 +57,7 @@ const PostDetails = ({post, searchParams}) => {
                             <div className="mt-2 bg-white border-[1px] border-gray-200 p-2 rounded-lg w-full flex items-center gap-3">
                                 <Image priority  alt="avatar" src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} width={45} height={45} className="rounded-full"></Image>
                                 <div>
-                                    <h6 className="text-sm font-semibold">{name}</h6>
+                                    <h6 className="text-sm font-semibold">Sujoy</h6>
                                     <p className="text-sm">{FormatedTime}</p>
                                 </div>
                             </div>
@@ -72,8 +68,8 @@ const PostDetails = ({post, searchParams}) => {
                                 <p className='text-lg text-justify'><span className='text-primary font-bold'>Details: </span>{details}</p>
 
                                 {
-                                    link && <p className='mt-2'>
-                                    <Link href={link} target='blank'>Source: <span className='underline text-orange-700'>{link}</span></Link>
+                                    source && <p className='mt-2'>
+                                    <Link href={source} target='blank'>Source: <span className='underline text-orange-700'>{source}</span></Link>
                                 </p>
                                 }
 
@@ -107,32 +103,32 @@ const PostDetails = ({post, searchParams}) => {
                                 <button 
                                 title="likes" 
                                 className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
-                                    <BiLike /> <span className="text-sm font-semibold">{likeNumberChecker(likes)}</span>
+                                    <BiLike /> <span className="text-sm font-semibold">0</span>
                                 </button>
                                 
                                 <button 
                                 title="dislikes" 
                                 className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
-                                    <BiDislike /> <span className="text-sm">{likeNumberChecker(dislikes)}</span>
+                                    <BiDislike /> <span className="text-sm">0</span>
                                 </button>
 
                                 <button 
                                 title="views" 
                                 className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
                                     <BiCommentDetail 
-                                    className='' /><span className="text-sm font-bold">{likeNumberChecker(shares)}</span> <span className="text-sm">Comments</span>
+                                    className='' /><span className="text-sm font-bold">0</span> <span className="text-sm">Comments</span>
                                 </button>
 
                                 <button 
                                 title="views" 
                                 className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
-                                    <AiOutlineEye /> <span className="text-sm font-semibold">{likeNumberChecker(views)}</span>
+                                    <AiOutlineEye /> <span className="text-sm font-semibold">0</span>
                                 </button>
 
                                 <button 
                                 title="views" 
                                 className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
-                                    <BiShare /> <span className="text-sm font-semibold">{likeNumberChecker(shares)}</span>
+                                    <BiShare /> <span className="text-sm font-semibold">0</span>
                                 </button>
 
                                 <button 

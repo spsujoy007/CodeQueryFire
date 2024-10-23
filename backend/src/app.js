@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors"
 import cookieParser from "cookie-parser";
-
+// `https://codequeryfire.vercel.app`
 const app = express()
 app.use(cors({
-    origin: `http://localhost:3000`,
+    origin: 'http://localhost:3000',
     credentials: true
 }))
 

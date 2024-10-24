@@ -31,7 +31,7 @@ const HomeLayout = ({children}) => {
                                     <HomeProfile></HomeProfile>
                                 }
                             </div>
-                            <div className="border-x-[1px] pt-16 border-primary md:w-[70%] min-h-screen w-full">
+                            <div className="border-x-[1px] border-primary md:w-[70%] min-h-screen w-full">
                                 {children}
                             </div>
                             <div className="md:w-[15%] w-full">

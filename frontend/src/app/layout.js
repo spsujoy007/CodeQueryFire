@@ -26,7 +26,9 @@ export default function RootLayout({ children }) {
           !isShowNav && 
           <Navbar></Navbar>
         }
-        <HomeLayout>{children}</HomeLayout>
+        <section className="pt-[65px]">
+          <HomeLayout>{children}</HomeLayout>
+        </section>
       </body>
     </html>
   );

@@ -89,7 +89,7 @@ const PostDetailsPage = async({params, searchParams}) => {
 
     
     return (
-        <div className='w-full bg-background'>
+        <div className='w-full min-h-screen bg-background'>
             <div className=' bg-background'>
                 <PostDetails post={data} searchParams={searchParams}></PostDetails>
             </div>

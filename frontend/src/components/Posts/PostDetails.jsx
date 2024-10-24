@@ -47,7 +47,7 @@ const PostDetails = ({post, searchParams}) => {
     const [viewImage, setViewImage] = useState(false)
 
     return (
-        <div className='py-24 realative'>
+        <div className='py-24 mt-8 realative'>
                 {
                     !viewImage &&
                     <>

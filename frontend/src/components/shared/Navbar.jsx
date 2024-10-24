@@ -8,7 +8,7 @@ import useAuthenticated from '@/Hooks/useAuthenticated';
 
 const Navbar = () => {
     const {isLoggedIn} = useAuthenticated()
-    console.log("is logged in: ", isLoggedIn)
+    // console.log("is logged in: ", isLoggedIn)
 
     const pathname = usePathname()
     const navmenu = [

@@ -15,7 +15,8 @@ import { BiCommentDetail } from "react-icons/bi";
 import { useState } from 'react';
 
 const PostDetails = ({post, searchParams}) => {
-    console.log(searchParams);
+    // console.log(searchParams);
+    
     const likeNumberChecker = (num)=>{
         if (num >= 1000000) {
             return (num / 1000000).toFixed(1) + 'M';
@@ -50,7 +51,7 @@ const PostDetails = ({post, searchParams}) => {
                 {
                     !viewImage &&
                     <>
-                        <ContainMargin width={90}>
+                        <ContainMargin box_width="sm">
 
                             <h1 className='text-3xl font-bold'>{title}</h1>
 
@@ -75,10 +76,10 @@ const PostDetails = ({post, searchParams}) => {
 
                                 <div className='w-full mt-5 flex md:flex-row flex-col gap-2'>
                                     <div onClick={()=> setViewImage(!viewImage)} className='md:w-[25%] cursor-pointer'>
-                                        <Image alt='post_image' className='rounded-lg' src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726417737/personal/codes.png'} height={200} width={500} layout='responsive'></Image>
+                                        <Image alt='post_image' className='rounded-lg' src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726417737/personal/codes.png'} height={200} width={500}></Image>
                                     </div>
                                     <div onClick={()=> setViewImage(!viewImage)} className='md:w-[25%] cursor-pointer'>
-                                        <Image alt='post_image' className='rounded-lg' src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726417737/personal/codes.png'} height={200} width={500} layout='responsive'></Image>
+                                        <Image alt='post_image' className='rounded-lg' src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726417737/personal/codes.png'} height={200} width={500}></Image>
                                     </div>
                                 </div>
                             </div>

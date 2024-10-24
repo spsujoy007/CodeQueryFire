@@ -17,7 +17,7 @@ export default function useAuthenticated () {
                 withCredentials: true
             })
             .then(res => {
-                console.log(res.data.data)
+                // console.log(res.data.data)
                 setIsLoggedIn(true)
                 setUserData(res.data.data)
                 setLoading(false)

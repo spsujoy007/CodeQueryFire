@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
   const isShowNav =  showNavRoutes.some((path) => path === route)
   // const isShowNav = showNavRoutes.includes(route)
 
-  console.log(route, isShowNav)
+  // console.log(route, isShowNav)
 
   return (
     <html lang="en">

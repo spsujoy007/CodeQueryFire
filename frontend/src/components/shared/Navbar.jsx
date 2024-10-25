@@ -44,12 +44,9 @@ const Navbar = () => {
             <ContainMargin width={90}>
             <div className='flex gap-20 items-center py-4'>
                 <div>
-                    {/* <Link href={'/'}>
-                        <div className='w-[200px]'>{htmlname}</div>
-                    </Link> */}
                     <Link href={'/'}><h3 className='text-2xl font-bold select-none'><span className='text-primary'>Code</span>QueryFire</h3></Link>
                 </div>
-                <div>
+                <div className='flex gap-5 items-center w-full'>
                     <ul className='flex items-center justify-center gap-6'>
                         {
                             isLoggedIn ?
@@ -75,7 +72,12 @@ const Navbar = () => {
                             
                         }
                     </ul>
+
+                    <div className='w-[40%]'>
+                        <input className='text-sm w-full py-2 px-2 border-[1px] border-gray-200 rounded-md outline-none' placeholder='search what you want...' type="text" />
+                    </div>
                 </div>
+                
             </div>
             </ContainMargin>
         </div>

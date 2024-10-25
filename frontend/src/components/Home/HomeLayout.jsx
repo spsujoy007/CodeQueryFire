@@ -32,6 +32,11 @@ const HomeLayout = ({children}) => {
                                 }
                             </div>
                             <div className="border-x-[1px] border-primary md:w-[70%] min-h-screen w-full">
+                                {/* search and post section  */}
+                                <section className='p-4'>
+                                    
+                                </section>
+
                                 {children}
                             </div>
                             <div className="md:w-[15%] w-full">

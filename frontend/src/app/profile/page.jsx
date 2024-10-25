@@ -15,7 +15,6 @@ const ProfilePage = async () => {
 
     return (
         <div className="h-full w-full">
-            {/* <h1 className="text-2xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore consequuntur in dolores possimus vero earum quibusdam maxime asperiores illo impedit.</h1> */}
             <ProfileComponent posts={data}></ProfileComponent>
         </div>
     );

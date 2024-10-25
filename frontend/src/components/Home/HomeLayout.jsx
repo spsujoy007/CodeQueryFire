@@ -5,6 +5,7 @@ import HomeProfile from './HomeProfile';
 import { useState } from 'react';
 import useAuthenticated from '@/Hooks/useAuthenticated';
 import LoadingPage from '@/app/loading';
+import Link from 'next/link';
 
 const HomeLayout = ({children}) => {
     // const params = useSearchParams()
@@ -57,15 +58,29 @@ const HomeLayout = ({children}) => {
 
                                     <div className='px-4'>
                                         <div className='flex gap-1 flex-wrap border-[1px] border-[#ddd] p-1 rounded-md'>
-                                            <button onClick={() => setCategoryNo(0)} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryNo === 0 ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Default</button>
+                                            <Link href={'/'}>
+                                                <button onClick={() => setCategoryNo(0)} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryNo === 0 ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Default</button>
+                                            </Link>
 
-                                            <button onClick={() => setCategoryNo(1)} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryNo === 1 ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Interesting</button>
+                                            <Link href={'/?tab=1'}>
+                                                <button onClick={() => setCategoryNo(1)} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryNo === 1 ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Interesting</button>
+                                            </Link>
 
-                                            <button onClick={() => setCategoryNo(2)} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryNo === 2 ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Todays</button>
+                                            <Link href={'/?tab=2'}>
+                                                <button onClick={() => setCategoryNo(2)} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryNo === 2 ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Todays</button>
+                                            </Link>
 
-                                            <button onClick={() => setCategoryNo(3)} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryNo === 3 ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Week</button>
+                                            <Link href={'/?tab=3'}>
+                                                <button onClick={() => setCategoryNo(3)} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryNo === 3 ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Week</button>
+                                            </Link>
 
-                                            <button onClick={() => setCategoryNo(4)} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryNo === 4 ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Month</button>
+                                            <Link href={'/?tab=4'}>
+                                                <button onClick={() => setCategoryNo(4)} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryNo === 4 ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Month</button>
+                                            </Link>
+
+                                            
+
+                                            
                                         </div>
                                     </div>
                                 </section>

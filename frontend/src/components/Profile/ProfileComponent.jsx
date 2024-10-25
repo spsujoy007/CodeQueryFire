@@ -7,6 +7,7 @@ import LoadingPage from "@/app/loading";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import Link from "next/link";
 import SingleCard from "../Home/HomePosts/SingleCard";
+import { FaFacebook, FaGithub, FaLinkedinIn } from "react-icons/fa6";
 
 const ProfileComponent = ({posts}) => {
     console.log(posts)
@@ -31,7 +32,7 @@ const ProfileComponent = ({posts}) => {
                 <main className="py-10 min-h-screen bg-background">
                     <section>
                     <ContainMargin>
-                        <div className="flex gap-10 items-center">
+                        <section className="flex gap-10 items-center">
                             <Image className="rounded-full ring-2 ring-primary border-4 border-white" width={250} height={250} src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} alt={first_name+last_name || 'user'} layout="fit"></Image>
                             <div>
                                 <h1 className="text-2xl font-bold text-primary">{first_name + ' ' + last_name}</h1>
@@ -57,8 +58,27 @@ const ProfileComponent = ({posts}) => {
                                 </div>
 
                             </div>
-                        </div>
+                        </section>
 
+                        <section className="mt-10 bg-white rounded-xl p-3">
+                            <div className="w-full bg-white text-black font-bold  rounded-t-xl" ><p>Social links: </p></div>
+                            <div className="mt-2 flex items-center flex-wrap gap-1">
+                                {/* maping social links ================ */}
+                                <div className="flex items-center gap-2 text-[#1877F2] hover:bg-[#1877F2] hover:text-white max-w-[140px] rounded-full px-2 py-1 cursor-pointer duration-100">
+                                    <FaFacebook className="text-xl" /> <span>Facebook</span>
+                                </div>
+                                    |
+                                <div className="flex items-center gap-2 text-black max-w-[140px] rounded-full px-2 py-1 hover:bg-black hover:text-white cursor-pointer duration-100">
+                                    <FaGithub className="text-xl" /> <span>Github</span>
+                                </div>
+                                    |
+                                <div className="flex items-center gap-2 text-[#0077B5] max-w-[140px] rounded-full px-2 py-1 hover:bg-[#0077B5] hover:text-white cursor-pointer duration-100">
+                                    <FaLinkedinIn className="text-xl" /> <span>LinkedIn</span>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* post and blogs section  */}
                         <section className="mt-10 flex gap-1">
                             <div className="w-[70%] bg-white min-h-[40%] rounded-b-xl overflow-hidden">
                                 <div className="w-full bg-black text-white font-bold py-1 pl-5 rounded-t-xl" ><p>Posts: </p></div>

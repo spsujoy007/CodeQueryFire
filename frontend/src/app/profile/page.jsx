@@ -9,11 +9,14 @@ export async function generateMetadata() {
   }
 }
 
-const ProfilePage = () => {
+const ProfilePage = async () => {
+    const res = await fetch(`https://mocki.io/v1/f0384dcb-0caf-4366-a692-77fa7de8815e`)
+    const data = await res.json()
+
     return (
-        <div className="min-h-screen w-full">
+        <div className="h-full w-full">
             {/* <h1 className="text-2xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore consequuntur in dolores possimus vero earum quibusdam maxime asperiores illo impedit.</h1> */}
-            <ProfileComponent></ProfileComponent>
+            <ProfileComponent posts={data}></ProfileComponent>
         </div>
     );
 };

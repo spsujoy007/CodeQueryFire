@@ -6,8 +6,10 @@ import ContainMargin from "../shared/ContainMargin";
 import LoadingPage from "@/app/loading";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import Link from "next/link";
+import SingleCard from "../Home/HomePosts/SingleCard";
 
-const ProfileComponent = () => {
+const ProfileComponent = ({posts}) => {
+    console.log(posts)
 
     const { user, loading, isLoggedIn } = useAuthenticated()
     const {
@@ -26,7 +28,8 @@ const ProfileComponent = () => {
                 </section>
                 :
                 <>
-                <section className="pt-5 min-h-screen">
+                <main className="py-10 min-h-screen bg-background">
+                    <section>
                     <ContainMargin>
                         <div className="flex gap-10 items-center">
                             <Image className="rounded-full ring-2 ring-primary border-4 border-white" width={250} height={250} src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} alt={first_name+last_name || 'user'} layout="fit"></Image>
@@ -55,8 +58,22 @@ const ProfileComponent = () => {
 
                             </div>
                         </div>
+
+                        <section className="mt-10 flex gap-1">
+                            <div className="w-[70%] bg-white min-h-[40%] rounded-b-xl overflow-hidden">
+                                <div className="w-full bg-black text-white font-bold py-1 pl-5 rounded-t-xl" ><p>Posts: </p></div>
+                                {
+                                    posts.map((post) => <SingleCard key={post._id} post={post}></SingleCard>)
+                                }
+                            </div>
+                            <div className="w-[30%] bg-white min-h-[40%] rounded-b-xl overflow-hidden">
+                                <div className="w-full bg-black text-white font-bold py-1 pl-5 rounded-t-xl "><p>Blogs: </p></div>
+                                    <p className="p-2 mt-5 text-sm text-center">No blogs yet....</p>
+                            </div>
+                        </section>
                     </ContainMargin>
-                </section>
+                    </section>
+                </main>
                 </>
             }
         </div>

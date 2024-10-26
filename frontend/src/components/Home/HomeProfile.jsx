@@ -1,5 +1,5 @@
 "use client"
-import useAuthenticated from '@/Hooks/useAuthenticated';
+// import useAuthenticated from '@/Hooks/useAuthenticated';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -11,17 +11,19 @@ const HomeProfile = () => {
     const router = useRouter
     
     
-    const {user, loading, isLoggedIn} = useAuthenticated()
-    const {
-        first_name,
-        last_name,
-        email
-    } = user
+    // const {user, loading, isLoggedIn} = useAuthenticated()
+    // const {
+    //     first_name,
+    //     last_name,
+    //     email
+    // } = user
 
 
     // useEffect(() => {
     //     router.reload
     // }, [loading, isLoggedIn, user, router])
+    const loading = false
+    const isLoggedIn = false
 
     return (
         <>

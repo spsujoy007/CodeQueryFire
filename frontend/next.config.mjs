@@ -3,7 +3,8 @@ const nextConfig = {
     images: {
         domains: [
           'res.cloudinary.com',
-          'via.placeholder.com'
+          'via.placeholder.com',
+          '/favicon.ico'
         ], // Add Cloudinary's domain here
       },
 };

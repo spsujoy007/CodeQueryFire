@@ -146,7 +146,7 @@ const PostDetails = ({post, searchParams}) => {
                     {/* // big image preview  */}
                     {
                         viewImage && 
-                        <div className={'absolute left-0 w-full h-full top-0 flex justify-center items-center backdrop-blur-xl '}>
+                        <div className={'absolute z-[100] left-0 w-full h-full top-0 flex justify-center items-center backdrop-blur-xl '}>
                             <div className={`bg-black md:w-[70%] w-[95%] border-2 border-black rounded-2xl`}>
                                 <div onClick={()=>setViewImage(!viewImage)} className='flex justify-end cursor-pointer items-center text-white py-1 pr-2 gap-1'>
                                     <IoClose  className=' text-xl bg-primary rounded-tr-xl '/>close

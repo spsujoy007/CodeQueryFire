@@ -1,6 +1,6 @@
 'use client'
 
-import useAuthenticated from "@/Hooks/useAuthenticated";
+// import useAuthenticated from "@/Hooks/useAuthenticated";
 import Image from "next/image";
 import ContainMargin from "../shared/ContainMargin";
 import LoadingPage from "@/app/loading";
@@ -10,15 +10,15 @@ import SingleCard from "../Home/HomePosts/SingleCard";
 import { FaFacebook, FaGithub, FaLinkedinIn } from "react-icons/fa6";
 
 const ProfileComponent = ({posts}) => {
-    console.log(posts)
+    // console.log(posts)
 
-    const { user, loading, isLoggedIn } = useAuthenticated()
-    const {
-        first_name,
-        last_name,
-        email
-    } = user
-
+    // const { user, loading, isLoggedIn } = useAuthenticated()
+    // const {
+    //     first_name,
+    //     last_name,
+    //     email
+    // } = user
+    const loading = false
     
     return (
         <div className="">
@@ -33,9 +33,9 @@ const ProfileComponent = ({posts}) => {
                     <section>
                     <ContainMargin>
                         <section className="flex gap-10 items-center">
-                            <Image className="rounded-full ring-2 ring-primary border-4 border-white" width={250} height={250} src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} alt={first_name+last_name || 'user'} layout="fit"></Image>
+                            <Image className="rounded-full ring-2 ring-primary border-4 border-white" width={250} height={250} src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} alt={'user'} layout="fit"></Image>
                             <div>
-                                <h1 className="text-2xl font-bold text-primary">{first_name + ' ' + last_name}</h1>
+                                <h1 className="text-2xl font-bold text-primary">Alan Walker</h1>
                                 <p className="text-sm mt-1 w-[70%]">Some ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, ullam!</p>
 
                                 {/* some followers pic  */}

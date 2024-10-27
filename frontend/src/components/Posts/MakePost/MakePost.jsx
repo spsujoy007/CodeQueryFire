@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import Tiptap from './Tiptap';
 import ContainMargin from '@/components/shared/ContainMargin';
 import { IoClose } from "react-icons/io5";
+import InnerHTML from 'dangerously-set-html-content'
+import DOMPurify from 'dompurify';
 
 const MakePost = () => {
     const [content, setContent] = useState("")
@@ -10,13 +12,13 @@ const MakePost = () => {
     // Table posts {
     //     _id string PK
     //     author_id string
-    //     title string
-    //     details string
-    //     images strings
-    //     code string
-    //     topics array
-    //     p_language strintg
-    //     source string
+    //     title string **
+    //     details string *
+    //     images strings *
+    //     code string **
+    //     p_language strintg **
+    //     topics array **
+    //     source string **
     //     createdAt timestamp
     //   }
 
@@ -79,6 +81,7 @@ const MakePost = () => {
     const handleSelectTopic = (e) => {
         setTopicError(false)
         if(e.key === 'Enter'){
+
             if(topics.length < 5) {
 
                 // validate same topic 
@@ -89,10 +92,12 @@ const MakePost = () => {
                     setTopicErrorMsg("This topic has already been added. Please enter a different topic.")
                 }
                 else{
-                    const newTopic = {name: e.target.value}
-                    setTopics([...topics, newTopic])
-                    setTopicError(false)
-                    e.target.value = ""
+                    if(e.target.value.trim() !== "") {
+                        const newTopic = {name: e.target.value.trim()}
+                        setTopics([...topics, newTopic])
+                        setTopicError(false)
+                        e.target.value = ""
+                    }
                 }
             }
             else{
@@ -104,7 +109,6 @@ const MakePost = () => {
 
     const handleDeselect = (name) => {
         const deselectedTopics = topics.filter( selected_topic  => selected_topic.name !== name )
-        console.log(deselectedTopics)
         setTopics(deselectedTopics)
     }
       
@@ -119,7 +123,18 @@ const MakePost = () => {
                         <input className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md' id='title' name='title' placeholder='create a title' type="text" />
                     </div>
 
-                    {/* // topics ------------------ */}
+                    <div className='mt-2 p-2 border-[1px] border-gray-200 rounded-lg'>
+                        <label className='text-sm ml-1 text-primary' htmlFor="details">Details</label><br />
+                        <div className='border-[1px] border-gray-200 rounded-lg'>
+                            <Tiptap 
+                                id="details"
+                                content={content}
+                                onChange={(newContent) => setContent(newContent)}
+                            ></Tiptap>
+                        </div>
+                    </div>
+
+                    {/* // choose topics ------------------ */}
                     <div className='mt-3 p-2 border-[1px] border-gray-200 rounded-lg'>
                         <div className=''>
                                 <label className='text-sm ml-1 text-primary' htmlFor="topics">Topics</label><br />
@@ -141,12 +156,18 @@ const MakePost = () => {
                         {topicError && <p className='text-red-500 text-sm mt-1'>{topicErrorMsg}</p>}
                     </div>
 
+                    {/* source of this post  */}
+                    <div className='mt-2 p-2 border-[1px] border-gray-200 rounded-lg'>
+                        <label className='text-sm ml-1 text-primary' htmlFor="source">Source</label><br />
+                        <input className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md' id='source' name='source' placeholder='type source link only' type="url" />
+                    </div>
+
                     {/* code and language ******** */}
                     <div className='p-2 mt-3 border-[1px] border-gray-200 rounded-lg'>
                         <div className=''>
                             <label className='text-sm ml-1 text-primary' htmlFor="coding_language">Programming language</label><br />
-                            <select id='coding_language' value={coding_language} onChange={(e) => setCodingLanguage(e.target.value)} className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-sm'>
-                                <option value="none">-- Select an option --</option>
+                            <select required id='coding_language' value={coding_language} onChange={(e) => setCodingLanguage(e.target.value)} className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-sm'>
+                                <option value="none">-- Select an language --</option>
                                 {
                                     programming_languages.map(({id, name}) => (
                                         <option value={name} key={id}>{name}</option>
@@ -160,10 +181,10 @@ const MakePost = () => {
                         </div>
                     </div>
                 </div>
-                {/* <Tiptap 
-                    content={content}
-                    onChange={(newContent) => setContent(newContent)}
-                ></Tiptap> */}
+                
+                
+                
+                {/* <div dangerouslySetInnerHTML={{__html: content}}></div> */}
             </ContainMargin>
         </section>
     );

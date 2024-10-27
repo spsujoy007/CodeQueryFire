@@ -18,10 +18,11 @@ export default function RootLayout({ children }) {
   // const isShowNav = showNavRoutes.includes(route)
 
   // console.log(route, isShowNav)
+  window.scroll(0, 0)
 
   return (
     <html lang="en">
-      <body className={`antialiased`}>
+      <body>
         {
           !isShowNav && 
           <Navbar></Navbar>

@@ -31,7 +31,7 @@ const ProfileComponent = ({posts}) => {
                 <>
                 <main className="py-10 min-h-screen bg-background">
                     <section>
-                    <ContainMargin>
+                    <ContainMargin box_width={'md'}>
                         <section className="flex gap-10 items-center">
                             <Image className="rounded-full ring-2 ring-primary border-4 border-white" width={250} height={250} src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} alt={'user'} layout="fit"></Image>
                             <div>

@@ -34,7 +34,7 @@ const HomeLayout = ({children}) => {
                 showContent ? 
                 <>
                 {/* <button className='' onClick={() => setOpenMenu(!openMenu)}>menu</button> */}
-                    <ContainMargin width={90}>
+                    <ContainMargin box_width={'md'}>
                         <div className="md:flex md:flex-row flex-col">
                             <div className={`md:w-[15%]  w-full p-1 min-h-[90vh] overflow-hidden hid md:max-h-[90vh] scroll-pr-14 overflow-y-scroll top-20 duration-200 scrollbar-custom sticky md:ml-0 ${openMenu ? '-ml-0 bg-white ':'-ml-[500px]'}`}>
                                 {
@@ -52,7 +52,7 @@ const HomeLayout = ({children}) => {
                                             <p>Ask a question or share your opinion</p>
 
                                         <div className='flex justify-end items-center gap-2'>
-                                            <button className='bg-primary border-background border-2 ring-[1px] ring-primary hover:bg-primary_hover text-white font-bold px-5 py-2 rounded-md'>Make a Post</button>
+                                            <Link href={'/post/makepost'} className='bg-primary border-background border-2 ring-[1px] ring-primary hover:bg-primary_hover text-white font-bold px-5 py-2 rounded-md'>Make a Post</Link>
                                         </div>
                                     </div>
 
@@ -77,9 +77,6 @@ const HomeLayout = ({children}) => {
                                             <Link href={'/?tab=4'}>
                                                 <button onClick={() => setCategoryNo(4)} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryNo === 4 ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Month</button>
                                             </Link>
-
-                                            
-
                                             
                                         </div>
                                     </div>

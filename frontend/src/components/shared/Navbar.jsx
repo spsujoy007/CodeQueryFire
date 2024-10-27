@@ -42,7 +42,7 @@ const Navbar = () => {
 
     return (
         <div className='bg-[#ffffffbf] backdrop-blur-md fixed top-0 w-full border-b-[1px] z-20 border-primary'>
-            <ContainMargin width={90}>
+            <ContainMargin box_width={'md'}>
             <div className='flex gap-20 items-center py-4'>
                 <div>
                     <Link href={'/'}><h3 className='text-2xl font-bold select-none'><span className='text-primary'>Code</span>QueryFire</h3></Link>

@@ -3,17 +3,29 @@ import React, { useState } from 'react';
 import Tiptap from './Tiptap';
 import ContainMargin from '@/components/shared/ContainMargin';
 import { IoClose, IoCloseCircle } from "react-icons/io5";
-import InnerHTML from 'dangerously-set-html-content'
-import DOMPurify from 'dompurify';
 import { LuSend } from 'react-icons/lu';
-import { FaAngleDown, FaAngleUp, FaPlus } from 'react-icons/fa6';
+import { FaAngleDown, FaPlus } from 'react-icons/fa6';
 import Image from 'next/image';
 
 const MakePost = () => {
-    const [content, setContent] = useState("")
+
+    // #### details of post #### //
+    const [content, setContent] = useState("") // ** details ** //
     const [coding_language, setCodingLanguage] = useState(null)
     const [activeOptional, setActiveOptional] = useState(false)
-    
+
+    // #### topics of post #### //
+    const [topics, setTopics] = useState([]) // ** topics ** //
+    const [topicError, setTopicError] = useState(false)
+    const [topicErrorMsg, setTopicErrorMsg] = useState('')
+
+    // #### images of post #### //
+    const [tempImageFile, setTempImageFile] = useState([])
+    const [tempImageLink, setTempImageLink] = useState([])
+    const [imageError, setImageError] = useState(false)
+    const [imageErrorMsg, setImageErrorMsg] = useState('')
+
+    // **** coding language and frameworks **** //
     const programming_languages = [
         // Most commonly used languages and frameworks
         { name: "JavaScript", id: 1 },
@@ -88,12 +100,9 @@ const MakePost = () => {
         { name: "ABAP", id: 66 },
         { name: "VHDL", id: 67 }
     ];
-    
 
-    const [topics, setTopics] = useState([])
-    const [topicError, setTopicError] = useState(false)
-    const [topicErrorMsg, setTopicErrorMsg] = useState('')
 
+    // -- Select Topic Method -- //
     const handleSelectTopic = (e) => {
         setTopicError(false)
         if(e.key === 'Enter'){
@@ -123,15 +132,13 @@ const MakePost = () => {
         }
     }
 
-    const handleDeselect = (name) => {
+    // -- Delete Topic Method -- //
+    const handleDeselectTopic = (name) => {
         const deselectedTopics = topics.filter( selected_topic  => selected_topic.name !== name )
         setTopics(deselectedTopics)
     }
-
-    const [tempImageFile, setTempImageFile] = useState([])
-    const [tempImageLink, setTempImageLink] = useState([])
-    const [imageError, setImageError] = useState(false)
-    const [imageErrorMsg, setImageErrorMsg] = useState('')
+    
+    // -- Select Images Method -- //
     const handleSelectImages = (e) => {
         e.preventDefault()
         if(tempImageFile.length <= 2) {
@@ -147,6 +154,7 @@ const MakePost = () => {
         }
     }
     
+    // -- Deselect Image Method -- //
     const handleRemoveSelectedImage = (name) => {
         setImageError(false)
         const removeImage = tempImageLink.filter(img => img.name !== name)
@@ -160,49 +168,35 @@ const MakePost = () => {
             setTempImageLink([])
         }
     }
+
+
+    // the biggest one submit post  ////////////////////////////////////////////////////////////////
+    const handleSubmitPost = (e) => {
+        e.preventDefault()
+        const {title, source, code} = e.target
+        console.log(
+            {
+                title: title?.value || null,
+                source: source?.value || null, 
+                code: code?.value || null
+        }
+        )
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
       
     return (
         <section className='py-10 bg-background min-h-screen'>
             <ContainMargin box_width={''}>
-                <div className='mb-10 bg-white p-2 rounded-lg'>
+                <form onSubmit={handleSubmitPost} className='mb-10 bg-white p-2 rounded-lg'>
                     
                     <div className='p-2 border-[1px] border-gray-200 rounded-lg'>
                         <label className='text-sm ml-1 text-primary' htmlFor="title">Title</label><br />
-                        <input className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md' id='title' name='title' placeholder='create a title' type="text" />
+                        <input 
+                        required 
+                        oninvalid="this.setCustomValidity('Please enter a title')"
+                        oninput="this.setCustomValidity('')"
+                        className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md' id='title' name='title' placeholder='create a title' type="text" />
                     </div>
-                    
-                    {/* select image section  */}
-                    <section className='mt-3 space-y-1 p-2 border-[1px] border-gray-200 rounded-lg'>
-                        <p className='text-sm ml-1 text-primary'>Images</p>
-                        <div className='flex flex-wrap space-x-2 md:space-y-0 space-y-2 items-center'>
-                            <div className='border-[1px] border-gray-200 rounded-xl'>
-                                <label htmlFor="images" className='w-[200px] h-[110px] bg-gray-100 flex justify-center items-center rounded-xl'>
-                                    <FaPlus className='text-2xl' />
-                                </label>
-                                <input onChange={handleSelectImages} id='images' className='hidden none' type="file" accept='.jpg, .png' />
-                            </div>
-                            <div className='flex flex-wrap items-start gap-2'>
-                                {
-                                    tempImageLink.map((img, i) => 
-                                        <div key={i} className='relative group duration-200'>
-                                            <div className='max-w-[200px] max-h-[110px] flex justify-center items-center overflow-hidden rounded-xl'>
-                                                <Image quality={10} layout='fixed' width={200} height={110} className='min-w-[200px] min-h-[110px]  bg-gray-100 flex justify-center items-center rounded-xl' src={img.url} alt='images'></Image>
-                                            </div>
-
-                                            <button onClick={() => handleRemoveSelectedImage(img.name)} className='hidden  group-hover:flex top-0 left-0 absolute w-full h-full text-3xl text-white  rounded-xl justify-center items-center bg-[#000000b2]'>
-                                                <IoCloseCircle  />
-                                            </button>
-                                        </div>
-                                    )
-                                }
-                            </div>
-                        </div>
-
-                        {/* validation msg for select images */}
-                        {
-                            imageError && <p className='text-sm ml-1 text-red-500'>{imageErrorMsg}</p>
-                        }
-                    </section>
 
                     {/* details rich text editor ------------------- */}
                     <div className='mt-2 p-2 border-[1px] border-gray-200 rounded-lg'>
@@ -230,7 +224,7 @@ const MakePost = () => {
                                 topics.map(({name}, id) => 
                                 <div key={id} className='px-2 py-1 bg-gray-100 flex items-center gap-1 rounded-md w-fit'>
                                     <span className='' >{name}</span>
-                                    <button onClick={() => handleDeselect(name)}><IoClose /></button>
+                                    <button onClick={() => handleDeselectTopic(name)}><IoClose /></button>
                                 </div>
                             )}
                         </div>
@@ -244,6 +238,43 @@ const MakePost = () => {
                        activeOptional &&
                         <section>
                             <p className='mt-5 ml-2 font-bold mb-1'>Optionals</p>
+
+                            {/* select image section  */}
+                            <section className='mt-3 space-y-1 p-2 border-[1px] border-gray-200 rounded-lg'>
+                                <p className='text-sm ml-1 text-primary'>Images</p>
+                                <div className='flex flex-wrap space-x-2 md:space-y-0 space-y-2 items-center'>
+                                    {/* validate show and hide for select only 3 images  */}
+                                    {
+                                        tempImageFile.length <= 2 &&
+                                        <div className='border-[1px] border-gray-200 rounded-xl'>
+                                            <label htmlFor="images" className={`w-[200px] h-[110px] bg-gray-100 text-black flex justify-center items-center rounded-xl`}>
+                                                <FaPlus className='text-2xl' />
+                                            </label>
+                                            <input onChange={handleSelectImages} id='images' className='hidden none' type="file" accept='.jpg, .png' />
+                                        </div>
+                                    }
+                                    <div className='flex flex-wrap items-start gap-2'>
+                                        {
+                                            tempImageLink.map((img, i) => 
+                                                <div key={i} className='relative group duration-200'>
+                                                    <div className='max-w-[200px] max-h-[110px] flex justify-center items-center overflow-hidden rounded-xl'>
+                                                        <Image quality={10} layout='fixed' width={200} height={110} className='min-w-[200px] min-h-[110px]  bg-gray-100 flex justify-center items-center rounded-xl' src={img.url} alt='images'></Image>
+                                                    </div>
+
+                                                    <button onClick={() => handleRemoveSelectedImage(img.name)} className='hidden  group-hover:flex top-0 left-0 absolute w-full h-full text-3xl text-white  rounded-xl justify-center items-center bg-[#000000b2]'>
+                                                        <IoCloseCircle  />
+                                                    </button>
+                                                </div>
+                                            )
+                                        }
+                                    </div>
+                                </div>
+
+                                {/* validation msg for select images */}
+                                {
+                                    imageError && <p className='text-sm ml-1 text-red-500'>{imageErrorMsg}</p>
+                                }
+                            </section>
 
                             {/* source of this post  */}
                             <div className='mt-2 p-2 border-[1px] border-gray-200 rounded-lg'>
@@ -298,23 +329,20 @@ const MakePost = () => {
                         <div className='flex justify-center'>
                             {
                                 !activeOptional &&
-                                <button onClick={() => setActiveOptional(true)} className='text-black hover:text-primary text-sm flex flex-col items-center gap-1'>Add more details <FaAngleDown /></button>
+                                <button onClick={() => setActiveOptional(true)} className='text-black hover:text-primary text-sm flex flex-col items-center gap-1'>Add more details or images <FaAngleDown /></button>
                             }
                             
                         </div>
                     </div>
 
                     <div className='mt-3 flex justify-end'>
-                        <button className='bg-primary text-white w-[180px] py-1 rounded-md flex items-center justify-center gap-2'>
+                        <button className='bg-primary hover:bg-primary_hover text-white w-[180px] py-1 rounded-md flex items-center justify-center gap-2'>
                             <LuSend />
                             Post
                         </button>
                     </div>
-                </div>
+                </form>
                 
-                
-                
-                {/* <div dangerouslySetInnerHTML={{__html: content}}></div> */}
             </ContainMargin>
         </section>
     );

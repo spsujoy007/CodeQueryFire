@@ -27,7 +27,7 @@ const Tiptap = ({content, onChange}) => {
     ],
     editorProps: {
       attributes: {
-        class: 'bg-gray-100 outline-none min-h-[200px] max-h-[400px] overflow-y-scroll',
+        class: 'bg-gray-100 p-2 outline-none min-h-[200px] max-h-[400px] overflow-y-scroll appearance-none tiptap-style',
       }
     },
     onUpdate: ({editor}) => {

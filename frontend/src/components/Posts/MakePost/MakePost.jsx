@@ -23,57 +23,80 @@ const MakePost = () => {
     //   }
 
     const programming_languages = [
+        // Most commonly used languages and frameworks
         { name: "JavaScript", id: 1 },
-        { name: "Python", id: 2 },
-        { name: "Java", id: 3 },
-        { name: "C#", id: 4 },
-        { name: "C++", id: 5 },
-        { name: "TypeScript", id: 6 },
-        { name: "PHP", id: 7 },
-        { name: "Swift", id: 8 },
-        { name: "Ruby", id: 9 },
-        { name: "Go", id: 10 },
-        { name: "Rust", id: 11 },
-        { name: "Kotlin", id: 12 },
-        { name: "Objective-C", id: 13 },
-        { name: "Scala", id: 14 },
-        { name: "Shell", id: 15 },
+        { name: "HTML", id: 2 },
+        { name: "CSS", id: 3 },
+        { name: "Python", id: 4 },
+        { name: "Java", id: 5 },
+        { name: "C#", id: 6 },
+        { name: "C++", id: 7 },
+        { name: "TypeScript", id: 8 },
+        { name: "PHP", id: 9 },
+        { name: "Swift", id: 10 },
+        { name: "Ruby", id: 11 },
+        { name: "Go", id: 12 },
+        { name: "Rust", id: 13 },
+        { name: "Kotlin", id: 14 },
+        { name: "SQL", id: 15 },
         { name: "R", id: 16 },
         { name: "MATLAB", id: 17 },
-        { name: "Dart", id: 18 },
-        { name: "Perl", id: 19 },
-        { name: "Haskell", id: 20 },
-        { name: "Lua", id: 21 },
-        { name: "Groovy", id: 22 },
-        { name: "Visual Basic", id: 23 },
-        { name: "Elixir", id: 24 },
-        { name: "Julia", id: 25 },
-        { name: "F#", id: 26 },
-        { name: "Clojure", id: 27 },
-        { name: "Fortran", id: 28 },
-        { name: "Erlang", id: 29 },
-        { name: "Ada", id: 30 },
-        { name: "COBOL", id: 31 },
-        { name: "Lisp", id: 32 },
-        { name: "Prolog", id: 33 },
-        { name: "Solidity", id: 34 },
-        { name: "Tcl", id: 35 },
-        { name: "Hack", id: 36 },
-        { name: "Crystal", id: 37 },
-        { name: "Nim", id: 38 },
-        { name: "Smalltalk", id: 39 },
-        { name: "VBScript", id: 40 },
-        { name: "Racket", id: 41 },
-        { name: "ActionScript", id: 42 },
-        { name: "Q#", id: 43 },
-        { name: "Assembly", id: 44 },
-        { name: "Bash", id: 45 },
-        { name: "SAS", id: 46 },
-        { name: "APL", id: 47 },
-        { name: "Forth", id: 48 },
-        { name: "ABAP", id: 49 },
-        { name: "VHDL", id: 50 },
+    
+        // Popular frameworks and libraries
+        { name: "React", id: 18 },
+        { name: "Angular", id: 19 },
+        { name: "Vue", id: 20 },
+        { name: "Django", id: 21 },
+        { name: "Flask", id: 22 },
+        { name: "Spring", id: 23 },
+        { name: "Express", id: 24 },
+        { name: "ASP.NET", id: 25 },
+        { name: "Laravel", id: 26 },
+        { name: "Ruby on Rails", id: 27 },
+        { name: "Bootstrap", id: 28 },
+        { name: "Svelte", id: 29 },
+        { name: "TensorFlow", id: 30 },
+        { name: "Pandas", id: 31 },
+    
+        // Other programming languages
+        { name: "Objective-C", id: 32 },
+        { name: "Scala", id: 33 },
+        { name: "Shell", id: 34 },
+        { name: "Dart", id: 35 },
+        { name: "Perl", id: 36 },
+        { name: "Haskell", id: 37 },
+        { name: "Lua", id: 38 },
+        { name: "Groovy", id: 39 },
+        { name: "Visual Basic", id: 40 },
+        { name: "Elixir", id: 41 },
+        { name: "Julia", id: 42 },
+        { name: "F#", id: 43 },
+        { name: "Clojure", id: 44 },
+        { name: "Fortran", id: 45 },
+        { name: "Erlang", id: 46 },
+        { name: "Ada", id: 47 },
+        { name: "COBOL", id: 48 },
+        { name: "Lisp", id: 49 },
+        { name: "Prolog", id: 50 },
+        { name: "Solidity", id: 51 },
+        { name: "Tcl", id: 52 },
+        { name: "Hack", id: 53 },
+        { name: "Crystal", id: 54 },
+        { name: "Nim", id: 55 },
+        { name: "Smalltalk", id: 56 },
+        { name: "VBScript", id: 57 },
+        { name: "Racket", id: 58 },
+        { name: "ActionScript", id: 59 },
+        { name: "Q#", id: 60 },
+        { name: "Assembly", id: 61 },
+        { name: "Bash", id: 62 },
+        { name: "SAS", id: 63 },
+        { name: "APL", id: 64 },
+        { name: "Forth", id: 65 },
+        { name: "ABAP", id: 66 },
+        { name: "VHDL", id: 67 }
     ];
+    
 
     const [topics, setTopics] = useState([])
     const [topicError, setTopicError] = useState(false)
@@ -123,6 +146,7 @@ const MakePost = () => {
                         <input className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md' id='title' name='title' placeholder='create a title' type="text" />
                     </div>
 
+                    {/* details rich text editor ------------------- */}
                     <div className='mt-2 p-2 border-[1px] border-gray-200 rounded-lg'>
                         <label className='text-sm ml-1 text-primary' htmlFor="details">Details</label><br />
                         <div className='border-[1px] border-gray-200 rounded-lg'>
@@ -131,6 +155,7 @@ const MakePost = () => {
                                 content={content}
                                 onChange={(newContent) => setContent(newContent)}
                             ></Tiptap>
+                            {/* {content} */}
                         </div>
                     </div>
 
@@ -168,16 +193,38 @@ const MakePost = () => {
                             <label className='text-sm ml-1 text-primary' htmlFor="coding_language">Programming language</label><br />
                             <select required id='coding_language' value={coding_language} onChange={(e) => setCodingLanguage(e.target.value)} className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-sm'>
                                 <option value="none">-- Select an language --</option>
-                                {
-                                    programming_languages.map(({id, name}) => (
-                                        <option value={name} key={id}>{name}</option>
-                                    ))
-                                }
+
+                                <optgroup label="Most Commonly Used Languages">
+                                    {
+                                        programming_languages.slice(0, 17).map(({id, name}) => (
+                                            <option value={name} key={id}>{name}</option>
+                                        ))
+                                    }
+                                </optgroup>
+
+                                <optgroup label="Popular Frameworks and Libraries">
+                                    {
+                                        programming_languages.slice(17, 31).map(({id, name}) => (
+                                            <option value={name} key={id}>{name}</option>
+                                        ))
+                                    }
+                                </optgroup>
+
+                                <optgroup label="Other Programming Languages">
+                                    {
+                                        programming_languages.slice(31).map(({id, name}) => (
+                                            <option value={name} key={id}>{name}</option>
+                                        ))
+                                    }
+                                </optgroup>
+
                             </select>
                         </div>
                         <div className='mt-3'>
                             <label className='text-sm ml-1 text-primary' htmlFor="code">Code</label><br />
-                            <textarea rows={'8'} className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md' id='code' name='code' placeholder='type your code here...' type="text" />
+                            <code>
+                                <textarea rows={'8'} className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md' id='code' name='code' placeholder='type your code here...' type="text" />
+                            </code>
                         </div>
                     </div>
                 </div>

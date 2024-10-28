@@ -8,8 +8,8 @@ import LoadingPage from '@/app/loading';
 import Link from 'next/link';
 
 const HomeLayout = ({children}) => {
-    // const params = useSearchParams()
-    // console.log(params.get('tab'))
+    const params = useSearchParams()
+    const currentTab = params.get('tab')
 
     const paths = ['/', '/saved', '/post']
     const pathname = usePathname()
@@ -19,7 +19,7 @@ const HomeLayout = ({children}) => {
 
     const { isLoggedIn, loading } = useAuthenticated()
 
-    const [categoryNo, setCategoryNo] = useState(0)
+    const [categoryNo, setCategoryNo] = useState(Number(currentTab) || 0)
     const DynamicTitles = [
         "Recent posts",
         "Top posts",

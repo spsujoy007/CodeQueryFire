@@ -5,10 +5,13 @@ import ContainMargin from '@/components/shared/ContainMargin';
 import { IoClose } from "react-icons/io5";
 import InnerHTML from 'dangerously-set-html-content'
 import DOMPurify from 'dompurify';
+import { LuSend } from 'react-icons/lu';
+import { FaAngleDown, FaAngleUp } from 'react-icons/fa6';
 
 const MakePost = () => {
     const [content, setContent] = useState("")
     const [coding_language, setCodingLanguage] = useState('Nothing')
+    const [activeOptional, setActiveOptional] = useState(false)
     // Table posts {
     //     _id string PK
     //     author_id string
@@ -137,7 +140,7 @@ const MakePost = () => {
       
       
     return (
-        <section className='pt-10 bg-background min-h-screen'>
+        <section className='py-10 bg-background min-h-screen'>
             <ContainMargin box_width={''}>
                 <div className='mb-10 bg-white p-2 rounded-lg'>
                     
@@ -160,7 +163,7 @@ const MakePost = () => {
                     </div>
 
                     {/* // choose topics ------------------ */}
-                    <div className='mt-3 p-2 border-[1px] border-gray-200 rounded-lg'>
+                    <div className='p-2 mt-3 border-[1px] border-gray-200 rounded-lg'>
                         <div className=''>
                                 <label className='text-sm ml-1 text-primary' htmlFor="topics">Topics</label><br />
                                 <input 
@@ -176,56 +179,81 @@ const MakePost = () => {
                                 </div>
                             )}
                         </div>
-
+                    
                         {/* validation message for select only 5 topics  */}
                         {topicError && <p className='text-red-500 text-sm mt-1'>{topicErrorMsg}</p>}
                     </div>
 
-                    {/* source of this post  */}
-                    <div className='mt-2 p-2 border-[1px] border-gray-200 rounded-lg'>
-                        <label className='text-sm ml-1 text-primary' htmlFor="source">Source</label><br />
-                        <input className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md' id='source' name='source' placeholder='type source link only' type="url" />
+                    {/* optional details of post but important for SEO  */}
+                    {
+                        activeOptional &&
+                        <section>
+                            <p className='mt-5 ml-2 font-bold mb-1'>Optionals</p>
+
+                            {/* source of this post  */}
+                            <div className='mt-2 p-2 border-[1px] border-gray-200 rounded-lg'>
+                                <label className='text-sm ml-1 text-primary' htmlFor="source">Source</label><br />
+                                <input className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md' id='source' name='source' placeholder='type source link only' type="url" />
+                            </div>
+
+                            {/* code and language ******** */}
+                            <div className='p-2 mt-3 border-[1px] border-gray-200 rounded-lg'>
+                                <div className=''>
+                                    <label className='text-sm ml-1 text-primary' htmlFor="coding_language">Programming language or framework</label><br />
+                                    <select required id='coding_language' value={coding_language} onChange={(e) => setCodingLanguage(e.target.value)} className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-sm'>
+                                        <option value="none">-- Select an language --</option>
+
+                                        <optgroup label="Most Commonly Used Languages">
+                                            {
+                                                programming_languages.slice(0, 17).map(({id, name}) => (
+                                                    <option value={name} key={id}>{name}</option>
+                                                ))
+                                            }
+                                        </optgroup>
+
+                                        <optgroup label="Popular Frameworks and Libraries">
+                                            {
+                                                programming_languages.slice(17, 31).map(({id, name}) => (
+                                                    <option value={name} key={id}>{name}</option>
+                                                ))
+                                            }
+                                        </optgroup>
+
+                                        <optgroup label="Other Programming Languages">
+                                            {
+                                                programming_languages.slice(31).map(({id, name}) => (
+                                                    <option value={name} key={id}>{name}</option>
+                                                ))
+                                            }
+                                        </optgroup>
+
+                                    </select>
+                                </div>
+                                <div className='mt-3'>
+                                    <label className='text-sm ml-1 text-primary' htmlFor="code">Code</label><br />
+                                    <code>
+                                        <textarea rows={'8'} className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md' id='code' name='code' placeholder='type your code here...' type="text" />
+                                    </code>
+                                </div>
+                            </div>
+                        </section>
+                    }
+
+                    <div className='mt-3'>
+                        <div className='flex justify-center'>
+                            {
+                                !activeOptional &&
+                                <button onClick={() => setActiveOptional(true)} className='text-black hover:text-primary text-sm flex flex-col items-center gap-1'>Add more details <FaAngleDown /></button>
+                            }
+                            
+                        </div>
                     </div>
 
-                    {/* code and language ******** */}
-                    <div className='p-2 mt-3 border-[1px] border-gray-200 rounded-lg'>
-                        <div className=''>
-                            <label className='text-sm ml-1 text-primary' htmlFor="coding_language">Programming language</label><br />
-                            <select required id='coding_language' value={coding_language} onChange={(e) => setCodingLanguage(e.target.value)} className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-sm'>
-                                <option value="none">-- Select an language --</option>
-
-                                <optgroup label="Most Commonly Used Languages">
-                                    {
-                                        programming_languages.slice(0, 17).map(({id, name}) => (
-                                            <option value={name} key={id}>{name}</option>
-                                        ))
-                                    }
-                                </optgroup>
-
-                                <optgroup label="Popular Frameworks and Libraries">
-                                    {
-                                        programming_languages.slice(17, 31).map(({id, name}) => (
-                                            <option value={name} key={id}>{name}</option>
-                                        ))
-                                    }
-                                </optgroup>
-
-                                <optgroup label="Other Programming Languages">
-                                    {
-                                        programming_languages.slice(31).map(({id, name}) => (
-                                            <option value={name} key={id}>{name}</option>
-                                        ))
-                                    }
-                                </optgroup>
-
-                            </select>
-                        </div>
-                        <div className='mt-3'>
-                            <label className='text-sm ml-1 text-primary' htmlFor="code">Code</label><br />
-                            <code>
-                                <textarea rows={'8'} className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md' id='code' name='code' placeholder='type your code here...' type="text" />
-                            </code>
-                        </div>
+                    <div className='mt-3 flex justify-end'>
+                        <button className='bg-primary text-white w-[180px] py-1 rounded-md flex items-center justify-center gap-2'>
+                            <LuSend />
+                            Post
+                        </button>
                     </div>
                 </div>
                 

@@ -8,45 +8,6 @@ const Toolbar = ({editor, content}) => {
     if(!editor) {
         return null
     }
-    
-    const toolmenuItems = [
-        {
-            name: 'bold',
-            icon: <FaBold/>
-        },
-        {
-            name: 'italic',
-            icon: <FaItalic/>
-        },
-        {
-            name: 'underline',
-            icon: <FaUnderline/>
-        },
-        {
-            name: 'strikethrough',
-            icon: <FaStrikethrough/>
-        },
-        {
-            name: 'heading',
-            icon: <LuHeading2/>
-        },
-        {
-            name: 'bulletList',
-            icon: <FaList/>
-        },
-        {
-            name: 'orderedList',
-            icon: <FaListOl/>
-        },
-        {
-            name: 'blockquote',
-            icon: <FaQuot/>
-        },
-        {
-            name: 'codeBlock',
-            icon: <FaCode/>
-        }
-    ]
 
     return (
         <div className='flex justify-start items-center gap-2'>

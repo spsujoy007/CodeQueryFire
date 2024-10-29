@@ -6,6 +6,8 @@ import { IoClose, IoCloseCircle } from "react-icons/io5";
 import { LuSend } from 'react-icons/lu';
 import { FaAngleDown, FaPlus } from 'react-icons/fa6';
 import Image from 'next/image';
+import axios from 'axios';
+import ServerUrl from '@/Hooks/useServerUrl';
 
 const MakePost = () => {
 
@@ -173,14 +175,37 @@ const MakePost = () => {
     // the biggest one submit post  ////////////////////////////////////////////////////////////////
     const handleSubmitPost = (e) => {
         e.preventDefault()
-        const {title, source, code} = e.target
-        console.log(
-            {
-                title: title?.value || null,
-                source: source?.value || null, 
-                code: code?.value || null
+        if(topics.length < 1) {
+            setTopicError(true)
+            setTopicErrorMsg("You need to choose at least one topic.")
+            return
         }
-        )
+
+        if (!topicError && !imageError) {
+            const {title, source, code} = e.target
+            const post_object = {
+                title: title?.value || null,
+                details: content,
+                images: tempImageFile,
+                code: code?.value || null,
+                topics: topics,
+                p_language: coding_language,
+                source: source?.value || null, 
+            }
+            axios({
+                method: 'POST',
+                url: `${ServerUrl}/`,
+                data: post_object,
+                withCredentials: true
+            })
+            .then(res => {
+                console.log(res)
+            })
+            alert('OKK')
+        }
+        else{
+            return
+        }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
       
@@ -195,7 +220,8 @@ const MakePost = () => {
                         required 
                         oninvalid="this.setCustomValidity('Please enter a title')"
                         oninput="this.setCustomValidity('')"
-                        className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md' id='title' name='title' placeholder='create a title' type="text" />
+                        autoFocus
+                        className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md border-[1px] border-gray-200' id='title' name='title' placeholder='create a title' type="text" />
                     </div>
 
                     {/* details rich text editor ------------------- */}
@@ -217,7 +243,7 @@ const MakePost = () => {
                                 <label className='text-sm ml-1 text-primary' htmlFor="topics">Topics</label><br />
                                 <input 
                                 onKeyDown={handleSelectTopic}
-                                className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md' id='topics' name='topics' placeholder='select topics' type="text" />
+                                className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md border-[1px] border-gray-200' id='topics' name='topics' placeholder='select topics' type="text" />
                         </div>
                         <div className='mt-1 flex flex-wrap gap-1 items-center'>
                             {
@@ -279,14 +305,14 @@ const MakePost = () => {
                             {/* source of this post  */}
                             <div className='mt-2 p-2 border-[1px] border-gray-200 rounded-lg'>
                                 <label className='text-sm ml-1 text-primary' htmlFor="source">Source</label><br />
-                                <input className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md' id='source' name='source' placeholder='type source link only' type="url" />
+                                <input className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md border-[1px] border-gray-200' id='source' name='source' placeholder='type source link only' type="url" />
                             </div>
 
                             {/* code and language ******** */}
                             <div className='p-2 mt-3 border-[1px] border-gray-200 rounded-lg'>
                                 <div className=''>
                                     <label className='text-sm ml-1 text-primary' htmlFor="coding_language">Programming language or framework</label><br />
-                                    <select required id='coding_language' value={coding_language} onChange={(e) => setCodingLanguage(e.target.value)} className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-sm'>
+                                    <select required id='coding_language' value={coding_language} onChange={(e) => setCodingLanguage(e.target.value)} className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-sm border-[1px] border-gray-200'>
                                         <option value="none">-- Select an language --</option>
 
                                         <optgroup label="Most Commonly Used Languages">
@@ -318,7 +344,7 @@ const MakePost = () => {
                                 <div className='mt-3'>
                                     <label className='text-sm ml-1 text-primary' htmlFor="code">Code</label><br />
                                     <code>
-                                        <textarea rows={'8'} className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md' id='code' name='code' placeholder='type your code here...' type="text" />
+                                        <textarea rows={'8'} className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md border-[1px] border-gray-200 max-h-[500px]' id='code' name='code' placeholder='place your <code/> here...' type="text" />
                                     </code>
                                 </div>
                             </div>

@@ -3,6 +3,7 @@ import Navbar from "@/components/shared/Navbar";
 import "./globals.css";
 import HomeLayout from "@/components/Home/HomeLayout";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
  
 // export const metadata = {
@@ -18,7 +19,9 @@ export default function RootLayout({ children }) {
   // const isShowNav = showNavRoutes.includes(route)
 
   // console.log(route, isShowNav)
-  window.scroll(0, 0)
+  useEffect(() => {
+    window.scroll(0, 0)
+  }, [])
 
   return (
     <html lang="en">

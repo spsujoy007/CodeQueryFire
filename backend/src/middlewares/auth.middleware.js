@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken'
 export const verifyJWT = asyncHandler ( async ( req, res, next ) => {
     try {
         
-        const token = req.cookies?.access_token || req.headers['authorization'].replace('Bearer ', "")
+        const token = req.cookies?.access_token || (req.headers['authorization'] ? req.headers['authorization'].replace('Bearer ', '') : '');
         
         if(!token) throw new ApiError(401, "unauthorized request or token was expired");
         

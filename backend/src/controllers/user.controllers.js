@@ -159,4 +159,5 @@ const loggedInProfile = asyncHandler ( async (req, res) => {
     .json( new ApiResponse(200, user[0], "user profile successfully fetched") )
 })
 
+
 export { registerUser, loginUser, changePassword, loggedInProfile }

@@ -28,7 +28,7 @@ const MakePost = () => {
     const [imageErrorMsg, setImageErrorMsg] = useState('')
 
     // **** coding language and frameworks **** //
-    const programming_languages = [
+    const programming_languages_list = [
         // Most commonly used languages and frameworks
         { name: "JavaScript", id: 1 },
         { name: "HTML", id: 2 },
@@ -189,7 +189,7 @@ const MakePost = () => {
                 images: tempImageFile,
                 code: code?.value || null,
                 topics: topics,
-                p_language: coding_language,
+                programming_language: coding_language,
                 source: source?.value || null, 
             }
             axios({
@@ -317,7 +317,7 @@ const MakePost = () => {
 
                                         <optgroup label="Most Commonly Used Languages">
                                             {
-                                                programming_languages.slice(0, 17).map(({id, name}) => (
+                                                programming_languages_list.slice(0, 17).map(({id, name}) => (
                                                     <option value={name} key={id}>{name}</option>
                                                 ))
                                             }
@@ -325,7 +325,7 @@ const MakePost = () => {
 
                                         <optgroup label="Popular Frameworks and Libraries">
                                             {
-                                                programming_languages.slice(17, 31).map(({id, name}) => (
+                                                programming_languages_list.slice(17, 31).map(({id, name}) => (
                                                     <option value={name} key={id}>{name}</option>
                                                 ))
                                             }
@@ -333,7 +333,7 @@ const MakePost = () => {
 
                                         <optgroup label="Other Programming Languages">
                                             {
-                                                programming_languages.slice(31).map(({id, name}) => (
+                                                programming_languages_list.slice(31).map(({id, name}) => (
                                                     <option value={name} key={id}>{name}</option>
                                                 ))
                                             }

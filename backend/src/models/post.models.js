@@ -39,7 +39,13 @@ const PostsSchema = new Schema({
     ],
     source: {
         type: String,
-        required: false
+        required: false,
+        validate: {
+            validator: function (value) {
+                return !value.startsWith('https://' || 'http://' || 'www')
+            },
+            message: "source must be starts with https://, http or www."
+        }
     }
 
 }, {timestamps: true})
@@ -48,8 +54,12 @@ PostsSchema.path('topics').validate( function (value) {
     return value.length <= 5
 }, "you can add only 5 topics")
 
-PostsSchema.validate( function () {
-    if ( this.code.length > 0 && this.programming_language.length) return
+PostsSchema.path('code').validate({
+    validator: function(){
+        if(this.code.length <= 0) return true
+        else return this.code.length > 0 && this.programming_language.length > 0
+    },
+    message: "Both code and programming language must be specified."
 } )
 
 export const Post = mongoose.model("Post", PostsSchema)

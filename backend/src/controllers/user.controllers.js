@@ -7,7 +7,16 @@ import { asyncHandler } from "../utils/AsyncHandler.js";
 const options = {
     httpOnly: true,
     secure: true,
-    sameSite: 'None'
+    sameSite: 'None',
+    // maxAge: 24 * 60 * 60 * 1000 // for 1 day browser accept
+    maxAge: 2 * 60 * 1000 // for 2 minute browser accept
+}
+
+const refreshtokenOptions = {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'None',
+    maxAge: 30 * 24 * 60 * 60 * 1000
 }
 
 const generateAccessAndRefreshToken = async(userId) => {
@@ -101,7 +110,7 @@ const loginUser = asyncHandler ( async (req, res) => {
     return res
     .status(200)
     .cookie("access_token", access_token, options)
-    .cookie("refresh_token", refresh_token, options)
+    .cookie("refresh_token", refresh_token, refreshtokenOptions)
     .json(
         new ApiResponse(
             200,

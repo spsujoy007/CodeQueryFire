@@ -28,8 +28,8 @@ export const verifyJWT = asyncHandler ( async ( req, res, next ) => {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'None',
-                // maxAge: 24 * 60 * 60 * 1000 // for 1 day browser accept
-                maxAge: 2 * 60 * 1000 // for 2 minute browser accept
+                maxAge: 24 * 60 * 60 * 1000 // for 1 day browser accept
+                // maxAge: 2 * 60 * 1000 // for 2 minute browser accept
             }
 
             res

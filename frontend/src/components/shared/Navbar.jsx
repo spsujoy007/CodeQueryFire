@@ -8,7 +8,7 @@ import useAuthenticated from '@/Hooks/useAuthenticated';
 import Image from 'next/image';
 
 const Navbar = () => {
-    const {isLoggedIn, user} = useAuthenticated()
+    const {isLoggedIn, user, loading} = useAuthenticated()
     // console.log("is logged in: ", isLoggedIn)
 
     const pathname = usePathname()
@@ -50,27 +50,34 @@ const Navbar = () => {
                 <div className='flex gap-5 items-center w-full justify-between'>
                     <ul className='flex items-center justify-center gap-6'>
                         {
-                            isLoggedIn ?
-                            <>
-                                {
-                                    loggedInMenuItems.map(navitem => 
-                                        <li key={navitem.url} className={`${navitem.url === pathname ? 'text-active': 'text-black'}`}>
-                                            <Link href={navitem.url}>{navitem.title}</Link>
-                                        </li>
-                                    )
-                                }
-                            </>
+                            loading ?
+                            <></>
                             :
                             <>
                                 {
-                                    navmenu.map(navitem => 
-                                        <li key={navitem.url} className={`${navitem.url === pathname ? 'text-active': 'text-black'}`}>
-                                            <Link href={navitem.url}>{navitem.title}</Link>
-                                        </li>
-                                    )
+                                    isLoggedIn ?
+                                    <>
+                                        {
+                                            loggedInMenuItems.map(navitem => 
+                                                <li key={navitem.url} className={`${navitem.url === pathname ? 'text-active': 'text-black'}`}>
+                                                    <Link href={navitem.url}>{navitem.title}</Link>
+                                                </li>
+                                            )
+                                        }
+                                    </>
+                                    :
+                                    <>
+                                        {
+                                            navmenu.map(navitem => 
+                                                <li key={navitem.url} className={`${navitem.url === pathname ? 'text-active': 'text-black'}`}>
+                                                    <Link href={navitem.url}>{navitem.title}</Link>
+                                                </li>
+                                            )
+                                        }
+                                    </>
+                                    
                                 }
                             </>
-                            
                         }
                     </ul>
 

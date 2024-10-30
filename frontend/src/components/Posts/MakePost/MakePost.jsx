@@ -146,9 +146,11 @@ const MakePost = () => {
         if(tempImageFile.length <= 2) {
             const file = e.target.files[0]
             console.log(file)
-            const url = URL.createObjectURL(file)
-            setTempImageFile([...tempImageFile, file])
-            setTempImageLink([...tempImageLink, {url, name: file.name}])
+            if(file) {
+                const url = URL.createObjectURL(file)
+                setTempImageFile([...tempImageFile, file])
+                setTempImageLink([...tempImageLink, {url, name: file.name}])
+            }
         }
         else{
             setImageError(true)
@@ -175,6 +177,7 @@ const MakePost = () => {
     // the biggest one submit post  ////////////////////////////////////////////////////////////////
     const handleSubmitPost = (e) => {
         e.preventDefault()
+        console.log(tempImageFile)
         if(topics.length < 1) {
             setTopicError(true)
             setTopicErrorMsg("You need to choose at least one topic.")
@@ -182,26 +185,45 @@ const MakePost = () => {
         }
 
         if (!topicError && !imageError) {
-            const {title, source, code} = e.target
+            const {title, source, code, images} = e.target
+            const formData = new FormData();
+            
             const post_object = {
-                title: title?.value || null,
-                details: content,
-                images: tempImageFile,
-                code: code?.value || null,
-                topics: topics,
-                programming_language: coding_language,
-                source: source?.value || null, 
+                "title": title?.value || null,
+                "details": content,
+                "images": tempImageFile,
+                "code": code?.value || null,
+                "topics": topics,
+                "programming_language": coding_language,
+                "source": source?.value || null, 
             }
-            axios({
-                method: 'POST',
-                url: `${ServerUrl}/`,
-                data: post_object,
-                withCredentials: true
+            
+            
+            tempImageFile.forEach((file) => {
+                formData.append("images", file); // 'images' should match the field name in multer setup
+            });
+            
+            // Append other data fields from `post_object`
+            formData.append("title", post_object.title);
+            formData.append("details", post_object.details);
+            formData.append("code", post_object.code);
+            formData.append("programming_language", post_object.programming_language);
+            formData.append("source", post_object.source);
+            post_object.topics.forEach((topic, index) => {
+                formData.append(`topics[${index}]`, topic); // For arrays, append each item separately
+            });
+            
+            // Send the FormData with axios
+            axios.post(`${ServerUrl()}/post/makepost`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data", // Ensure axios uses the correct encoding
+                },
+                withCredentials: true,
             })
             .then(res => {
-                console.log(res)
+                console.log(res);
             })
-            alert('OKK')
+            .catch(err => console.log(err));
         }
         else{
             return
@@ -217,11 +239,13 @@ const MakePost = () => {
                     <div className='p-2 border-[1px] border-gray-200 rounded-lg'>
                         <label className='text-sm ml-1 text-primary' htmlFor="title">Title</label><br />
                         <input 
-                        required 
-                        oninvalid="this.setCustomValidity('Please enter a title')"
-                        oninput="this.setCustomValidity('')"
+                        required
                         autoFocus
-                        className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md border-[1px] border-gray-200' id='title' name='title' placeholder='create a title' type="text" />
+                        id='title'
+                        name='title'
+                        placeholder='create a title'
+                        type="text"
+                        className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md border-[1px] border-gray-200'/>
                     </div>
 
                     {/* details rich text editor ------------------- */}
@@ -276,7 +300,7 @@ const MakePost = () => {
                                             <label htmlFor="images" className={`w-[200px] h-[110px] bg-gray-100 text-black flex justify-center items-center rounded-xl`}>
                                                 <FaPlus className='text-2xl' />
                                             </label>
-                                            <input onChange={handleSelectImages} id='images' className='hidden none' type="file" accept='.jpg, .png' />
+                                            <input onChange={handleSelectImages} id='images' className='hidden none' name='images' type="file" accept='.jpg, .png' />
                                         </div>
                                     }
                                     <div className='flex flex-wrap items-start gap-2'>

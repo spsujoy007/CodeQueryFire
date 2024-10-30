@@ -7,7 +7,6 @@ export const verifyJWT = asyncHandler ( async ( req, res, next ) => {
     try {
         
         const token = req.cookies?.access_token || (req.headers['authorization'] ? req.headers['authorization'].replace('Bearer ', '') : '');
-
         // refresh token
         if ( !token ) {
             //when access_token expired then request through the refresh token.
@@ -52,6 +51,6 @@ export const verifyJWT = asyncHandler ( async ( req, res, next ) => {
         req.user = user;
         next()
     } catch (error) {
-        throw new ApiError( 401, error?.message || "Invalid access token")
+        throw new ApiError( 401, error?.message, "Invalid access token")
     }
 })

@@ -1,6 +1,7 @@
 import HomePosts from "@/components/Home/HomePosts/HomePosts";
 import HomeProfile from "@/components/Home/HomeProfile";
 import ContainMargin from "@/components/shared/ContainMargin";
+import ServerUrl from "@/Hooks/useServerUrl";
 import { cookies } from "next/headers";
 import Image from "next/image";
 
@@ -8,9 +9,20 @@ export const metadata = {
   title: `Home - CodeQueryFire`,
   description: `Answer and post your problem's with CodeQueryFire`,
 }
-const Home = async () => {
-  const res = await fetch('https://mocki.io/v1/f0384dcb-0caf-4366-a692-77fa7de8815e')
-  const data = await res.json()
+const Home = () => {
+  // const res = await fetch('https://mocki.io/v1/f0384dcb-0caf-4366-a692-77fa7de8815e')
+  // const data = await res.json()
+//   const res = await fetch(`http://localhost:5000/api/v1/post/viewposts`, 
+//   {
+//     method: 'get'
+//   },
+//   {
+//     cache: 'force-cache' | 'no-store'
+//   }
+// )
+//   const data = await res.json()
+//   console.log(data.data.posts)
+
   // const data = [
   //   {
   //     _id: "652f7543cd214dcf9b247b34",
@@ -113,7 +125,7 @@ const Home = async () => {
 
   return (
     <div className="">
-      <HomePosts posts={data}></HomePosts>
+      <HomePosts></HomePosts>
     </div>
   );
 }

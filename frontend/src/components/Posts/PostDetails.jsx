@@ -12,10 +12,24 @@ import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/default-highlig
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { IoClose } from "react-icons/io5";
 import { BiCommentDetail } from "react-icons/bi";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import ServerUrl from '@/Hooks/useServerUrl';
 
-const PostDetails = ({post, searchParams}) => {
-    // console.log(searchParams);
+const PostDetails = ({searchParams}) => {
+    const {id} = searchParams
+    console.log(id);
+    const [post, setPost] = useState({})
+
+    useEffect(() => {
+        axios.get(`${ServerUrl()}/post/post_details?id=${id}`)
+        .then(res => {
+            console.log(res)
+            setPost(res.data.data.post)
+        })
+
+    }, [id])
+
     
     const likeNumberChecker = (num)=>{
         if (num >= 1000000) {
@@ -34,7 +48,7 @@ const PostDetails = ({post, searchParams}) => {
         title,
         details,
         code,
-        code_language,
+        programming_language,
         image,
         tags,
         name,
@@ -66,7 +80,8 @@ const PostDetails = ({post, searchParams}) => {
 
                             {/* details images and source  */}
                             <div className='bg-white border-[1px] border-gray-200 p-4 rounded-lg mt-2'>
-                                <p className='text-lg text-justify'><span className='text-primary font-bold'>Details: </span>{details}</p>
+                                <div className='tiptap-style' dangerouslySetInnerHTML={{__html: details}}></div>
+                                {/* <p className='text-lg text-justify'><span className='text-primary font-bold'></span>{details}</p> */}
 
                                 {
                                     source && <p className='mt-2'>
@@ -92,11 +107,11 @@ const PostDetails = ({post, searchParams}) => {
                                     className='px-5 py-1 text-primary border-b-[1px] border-primary'>
                                         <p>Code:</p>
                                     </div>
-                                    <SyntaxHighlighter wrapLines={true}  showLineNumbers language={code_language} style={docco}>
+                                    <SyntaxHighlighter wrapLines={true}  showLineNumbers language={programming_language} style={docco}>
                                         {code}
                                     </SyntaxHighlighter>
                                     <p 
-                                    className='py-2 pl-4 w-full bg-gray-100 font-bold'>language: <span className='text-primary capitalize font-normal'>{code_language}</span> </p>
+                                    className='py-2 pl-4 w-full bg-gray-100 font-bold'>language: <span className='text-primary capitalize font-normal'>{programming_language}</span> </p>
                                     </div>
                             }
 

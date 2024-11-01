@@ -101,3 +101,16 @@ body{
   50%    {transform:scale(var(--s,1)) perspective(150px) rotateX(-90deg) ;filter:grayscale(0.8)}
   100%   {transform:scale(var(--s,1)) perspective(150px) rotateX(-180deg);filter:grayscale(0.8)}
 }
+
+
+/* miniLoader  */
+/* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
+.mini-loader {
+  width: 25px;
+  aspect-ratio: 4;
+  background: radial-gradient(circle closest-side,#ffffff 90%,#ffffff00) 0/calc(100%/3) 100% space;
+  clip-path: inset(0 100% 0 0);
+  animation: l1 1s steps(4) infinite;
+}
+@keyframes l1 {to{clip-path: inset(0 -34% 0 0)}}

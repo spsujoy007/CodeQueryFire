@@ -6,6 +6,7 @@ import { useState } from 'react';
 import useAuthenticated from '@/Hooks/useAuthenticated';
 import LoadingPage from '@/app/loading';
 import Link from 'next/link';
+import { Toaster } from 'react-hot-toast';
 
 const HomeLayout = ({children}) => {
     const params = useSearchParams()
@@ -30,6 +31,10 @@ const HomeLayout = ({children}) => {
 
     return (
         <div>
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+                />
             {
                 showContent ? 
                 <>

@@ -59,31 +59,46 @@ const Toolbar = ({editor, content}) => {
             </button> */}
 
             <button 
-                onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+                onClick={(e) => {
+                    e.preventDefault()
+                    editor.chain().focus().toggleHeading({ level: 2 }).run()
+                }}
                 className={`${editor.isActive('heading', { level: 2 }) ? 'bg-black text-white' : 'bg-white text-black '} p-2 rounded-md select-none`}
                 > <LuHeading2/> 
             </button>
 
             <button 
-                onClick={() => editor.chain().focus().toggleBulletList().run()}
+                onClick={(e) => {
+                    e.preventDefault()
+                    editor.chain().focus().toggleBulletList().run()
+                }}
                 className={`${editor.isActive('bulletList') ? 'bg-black text-white' : 'bg-white text-black '} p-2 rounded-md select-none`}
                 > <FaList/> 
             </button>
 
             <button 
-                onClick={() => editor.chain().focus().toggleOrderedList().run()}
+                onClick={(e) => {
+                    e.preventDefault()
+                    editor.chain().focus().toggleOrderedList().run()
+                }}
                 className={`${editor.isActive('orderedList') ? 'bg-black text-white' : 'bg-white text-black '} p-2 rounded-md select-none`}
                 > <FaListOl/> 
             </button>
 
             <button 
-                onClick={() => editor.chain().focus().toggleBlockquote().run()}
+                onClick={(e) => {
+                    e.preventDefault()
+                    editor.chain().focus().toggleBlockquote().run()
+                }}
                 className={`${editor.isActive('blockquote') ? 'bg-black text-white' : 'bg-white text-black '} p-2 rounded-md select-none`}
                 > <FaQuoteLeft/> 
             </button>
 
             <button 
-                onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+                onClick={(e) => {
+                    e.preventDefault()
+                    editor.chain().focus().toggleCodeBlock().run()
+                }}
                 className={`${editor.isActive('codeBlock') ? 'bg-black text-white' : 'bg-white text-black '} p-2 rounded-md select-none`}
                 > <FaCode/> 
             </button>

@@ -1,5 +1,15 @@
 import mongoose, {Schema} from "mongoose";
 
+const topicSchema = new mongoose.Schema({
+    _id: false,
+    name: {
+        type: String,
+        required: true,
+        maxlength: [25, "Topic name cannot exceed 25 characters."]
+    }
+});
+
+
 const PostsSchema = new Schema({
     author_id: {
         type: Schema.Types.ObjectId,
@@ -16,6 +26,7 @@ const PostsSchema = new Schema({
     },
     images: [
         {
+            _id: false,
             url: String,
             public_id: String
         }
@@ -28,24 +39,10 @@ const PostsSchema = new Schema({
         type: String,
         required: false
     },
-    topics: [
-        {
-            name: {
-                type: String,
-                required: true,
-                maxlength: [25, "Topic name cannot exceed 25 characters."]
-            }
-        }
-    ],
+    topics: [topicSchema],
     source: {
         type: String,
         required: false,
-        validate: {
-            validator: function (value) {
-                return !value.startsWith('https://' || 'http://' || 'www')
-            },
-            message: "source must be starts with https://, http or www."
-        }
     }
 
 }, {timestamps: true})

@@ -10,7 +10,7 @@ import { Toaster } from 'react-hot-toast';
 
 const HomeLayout = ({children}) => {
     const params = useSearchParams()
-    const currentTab = params.get('tab')
+    const currentCategory = params.get('category')
 
     const paths = ['/', '/saved', '/post']
     const pathname = usePathname()
@@ -20,7 +20,7 @@ const HomeLayout = ({children}) => {
 
     const { isLoggedIn, loading } = useAuthenticated()
 
-    const [categoryNo, setCategoryNo] = useState(Number(currentTab) || 0)
+    const [categoryName, setcategoryName] = useState(currentCategory || "")
     const DynamicTitles = [
         "Recent posts",
         "Top posts",
@@ -28,6 +28,10 @@ const HomeLayout = ({children}) => {
         "This week",
         "This month",
     ]
+
+    const handleSortDataByCategory= async () => {
+        
+    }
 
     return (
         <div>
@@ -53,7 +57,7 @@ const HomeLayout = ({children}) => {
                                 {/* search and post section  */}
                                 <section className=''>
                                     <div className='p-4 bg-background m-3 rounded-md'>
-                                        <h1 className='text-[3em] uppercase'>{DynamicTitles[categoryNo]}</h1>
+                                        <h1 className='text-[3em] uppercase'>{DynamicTitles[categoryName]}</h1>
                                             <p>Ask a question or share your opinion</p>
 
                                         <div className='flex justify-end items-center gap-2'>
@@ -64,23 +68,23 @@ const HomeLayout = ({children}) => {
                                     <div className='px-4'>
                                         <div className='flex gap-1 flex-wrap border-[1px] border-[#ddd] p-1 rounded-md'>
                                             <Link href={'/'}>
-                                                <button onClick={() => setCategoryNo(0)} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryNo === 0 ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Default</button>
+                                                <button onClick={() => setcategoryName("")} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === "" ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Default</button>
                                             </Link>
 
-                                            <Link href={'/?tab=1'}>
-                                                <button onClick={() => setCategoryNo(1)} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryNo === 1 ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Interesting</button>
+                                            <Link href={'/?category=interesting'}>
+                                                <button onClick={() => setcategoryName('interesting')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'interesting' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Interesting</button>
                                             </Link>
 
-                                            <Link href={'/?tab=2'}>
-                                                <button onClick={() => setCategoryNo(2)} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryNo === 2 ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Todays</button>
+                                            <Link href={'/?category=todays'}>
+                                                <button onClick={() => setcategoryName('todays')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'todays' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Todays</button>
                                             </Link>
 
-                                            <Link href={'/?tab=3'}>
-                                                <button onClick={() => setCategoryNo(3)} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryNo === 3 ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Week</button>
+                                            <Link href={'/?category=week'}>
+                                                <button onClick={() => setcategoryName('week')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'week' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Week</button>
                                             </Link>
 
-                                            <Link href={'/?tab=4'}>
-                                                <button onClick={() => setCategoryNo(4)} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryNo === 4 ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Month</button>
+                                            <Link href={'/?category=month'}>
+                                                <button onClick={() => setcategoryName('month')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'month' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Month</button>
                                             </Link>
                                             
                                         </div>

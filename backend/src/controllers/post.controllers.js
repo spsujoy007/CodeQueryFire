@@ -50,17 +50,16 @@ const post_Question = asyncHandler ( async (req, res) => {
     }
     
     const newPost = await Post.create({
+        author_id: req.user?._id,
         title,
         details,
-        code: code || null,
-        topics: newTopics || null,
-        programming_language: programming_language || null,
-        source: source || null,
-        images: imageLinksByCloudinary || null
+        code: code,
+        topics: newTopics,
+        programming_language: programming_language,
+        source: source,
+        images: imageLinksByCloudinary
     })
     console.log(newPost)
-
-    // newPost.save()
     
     if(!newPost) {
         return res.send("ERRR")
@@ -73,6 +72,14 @@ const post_Question = asyncHandler ( async (req, res) => {
     )
 
 } )
+
+
+const ViewHomePosts = asyncHandler ( async (req, res) => {
+    const query = req.query
+    const posts = await Post.find({
+        createdAt
+    })
+})
 
 export {
     post_Question

@@ -49,47 +49,17 @@ const SingleCard = ({post}) => {
                     <span className="text-sm text-primary font-semibold">topics:</span>
                     <div className="flex flex-wrap gap-2 ">
                         {
-                            topics.map(topic => <button title={`topic: ${topic.name}`} key={topic.name} className="border-[1px] border-primary text-primary px-2 rounded-md text-xs">{topic.name}</button>)
+                            topics.map(topic => <button title={`topic: ${topic.name}`} key={topic.name} className="border-[1px] border-primary text-primary font-semibold px-2 rounded-md text-xs">{topic.name}</button>)
                         }
                     </div>
                 </div>
-                <div className="mt-5">
-                    <div dangerouslySetInnerHTML={{__html: details.slice(0, 450)}} className="whitespace-pre-wrap text-sm mt-2 tiptap-style">
-                        {/* {
-                            !seeMore ? 
-                            <>
-                                {details.length >= 520 ? <>{details.slice(0,550)}... <button className="underline" onClick={() => setSeeMore(!seeMore)}>see more</button></> : details}
-                            </>
-                            :
-                            <span onClick={()=>setSeeMore(!seeMore)}>{details}</span>
-                        } */}
-                    </div>
-                </div>
-
-                {/* {source !== null && <p className="text-sm flex justify-end md:mt-5"><Link className="flex items-center gap-2  text-black underline font-semibold rounded-md px-8 py-1" target="blank" href={source}><LuExternalLink />source</Link></p>} */}
-
             </div>
 
-            {/* {
-                code && 
-                <div className="mt-3">
-                    <h5 onClick={() =>setViewCode(!viewCode)} className="whitespace-pre-wrap flex items-center gap-2 underline cursor-pointer select-none"><FaCode />view code</h5>
 
-                    <div className={`bg-[#1d1d1d] text-white p-4 ${viewCode ? "min-h-[200px] max-h-[800px] duration-300 block":"min-h-[0px] hidden max-h-[0px] overflow-hidden duration-300"} `}>
-                        <p className="whitespace-pre-wrap">{code}</p>
-                    </div>
-                </div>
-            } */}
-
-
-            <div className="mt-4 flex items-center gap-2">
+            {/* <div className="mt-4 flex items-center gap-2">
                 <button title="likes" className="text-2xl w-[120px] flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
                     <BiLike /> <span className="text-sm">0</span>
                 </button>
-
-                {/* <button title="dislikes" className="text-2xl w-[120px] flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
-                    <BiDislike /> <span className="text-sm font-semibold">{likeNumberChecker(dislikes)}</span>
-                </button> */}
 
                 <button title="views" className="text-2xl w-[120px] flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
                     <AiOutlineEye /> <span className="text-sm font-semibold">0</span>
@@ -104,7 +74,7 @@ const SingleCard = ({post}) => {
                         <LuExternalLink /> <span className="text-sm">view post</span>
                     </button>
                 </Link>
-            </div>
+            </div> */}
 
             <div className="mt-5 flex items-center gap-2">
                 <Image alt="avatar" src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} width={35} height={35} className="rounded-full"></Image>

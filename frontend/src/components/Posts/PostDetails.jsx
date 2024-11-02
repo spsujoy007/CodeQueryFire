@@ -15,6 +15,7 @@ import { BiCommentDetail } from "react-icons/bi";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ServerUrl from '@/Hooks/useServerUrl';
+import './postdesign.css'
 
 const PostDetails = ({searchParams}) => {
     const {id} = searchParams
@@ -80,7 +81,7 @@ const PostDetails = ({searchParams}) => {
 
                             {/* details images and source  */}
                             <div className='bg-white border-[1px] border-gray-200 p-4 rounded-lg mt-2'>
-                                <div className='tiptap-style' dangerouslySetInnerHTML={{__html: details}}></div>
+                                <div className='tiptap-style-home' dangerouslySetInnerHTML={{__html: details}}></div>
                                 {/* <p className='text-lg text-justify'><span className='text-primary font-bold'></span>{details}</p> */}
 
                                 {

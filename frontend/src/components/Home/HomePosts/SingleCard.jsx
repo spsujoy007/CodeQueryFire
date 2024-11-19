@@ -43,7 +43,9 @@ const SingleCard = ({post}) => {
         <div className='w-full  px-3 pt-3 pb-6 border-b-[1px] border-primary'>
             {/* navigate details page  */}
             <div>
-                <h3 className='text-lg font-semibold'>{title}</h3>
+                <Link href={`post/${title.split(/[\\/]+/).join(' ')}?id=${_id}`}>
+                    <h3 className='text-md text-black hover:text-primary duration-100 hover:underline'>{title}</h3>
+                </Link>
                 
                 <div className="flex items-center gap-1 mt-1">
                     <span className="text-sm text-primary font-semibold">topics:</span>

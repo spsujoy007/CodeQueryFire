@@ -2,8 +2,8 @@
 import Navbar from "@/components/shared/Navbar";
 import "./globals.css";
 import HomeLayout from "@/components/Home/HomeLayout";
+import { Suspense, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
 
  
 // export const metadata = {
@@ -12,6 +12,7 @@ import { useEffect } from "react";
 // }
 
 export default function RootLayout({ children }) {
+  // console.log(searchParams.get("category"))
 
   const route = usePathname()
   const showNavRoutes = ['/signup', '/login']
@@ -26,13 +27,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
+        <Suspense>
         {
           !isShowNav && 
           <Navbar></Navbar>
         }
-        <section className={`${!isShowNav && 'pt-[65px]'}`}>
-          <HomeLayout>{children}</HomeLayout>
-        </section>
+          <section className={`${!isShowNav && 'pt-[65px]'}`}>
+            <HomeLayout>{children}</HomeLayout>
+          </section>
+        </Suspense>
       </body>
     </html>
   );

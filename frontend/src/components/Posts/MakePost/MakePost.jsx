@@ -9,10 +9,8 @@ import Image from 'next/image';
 import axios from 'axios';
 import ServerUrl from '@/Hooks/useServerUrl';
 import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
 
 const MakePost = () => {
-    const router = useRouter()
 
     // #### details of post #### //
     const [content, setContent] = useState("") // ** details ** //

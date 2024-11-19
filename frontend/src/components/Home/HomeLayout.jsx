@@ -1,33 +1,38 @@
 "use client"
-import { usePathname, useSearchParams } from 'next/navigation';
 import ContainMargin from '../shared/ContainMargin';
 import HomeProfile from './HomeProfile';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import useAuthenticated from '@/Hooks/useAuthenticated';
 import LoadingPage from '@/app/loading';
 import Link from 'next/link';
 import { Toaster } from 'react-hot-toast';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 const HomeLayout = ({children}) => {
-    const params = useSearchParams()
-    const currentCategory = params.get('category')
-
+    const searchParams = useSearchParams()
+    const query_name = searchParams.get("category") || ""
+    
     const paths = ['/', '/saved', '/post']
-    const pathname = usePathname()
-    const showContent = paths.includes(pathname);
+    let pathname = usePathname()
+    let showContent = paths.includes(pathname);
+    // let pathname = '/'
 
     const [openMenu, setOpenMenu] = useState(false)
 
     const { isLoggedIn, loading } = useAuthenticated()
 
-    const [categoryName, setcategoryName] = useState(currentCategory || "")
+    const [categoryName, setcategoryName] = useState(query_name || "")
+
     const DynamicTitles = [
-        "Recent posts",
-        "Top posts",
-        "Todays hot posts",
-        "This week",
-        "This month",
+        {title: {name: "", tag:"Recent posts"}},
+        {title: {name: "interesting", tag:"Top posts"}},
+        {title: {name: "todays", tag:"Todays hot posts"}},
+        {title: {name: "week", tag:"This week"}},
+        {title: {name: "month", tag:"This month"}},
     ]
+
+    const mainTitle = DynamicTitles.find(item => item.title.name === query_name)
+    console.log("Title is: ", mainTitle)
 
     const handleSortDataByCategory= async () => {
         
@@ -57,11 +62,11 @@ const HomeLayout = ({children}) => {
                                 {/* search and post section  */}
                                 <section className=''>
                                     <div className='p-4 bg-background m-3 rounded-md'>
-                                        <h1 className='text-[3em] uppercase'>{DynamicTitles[categoryName]}</h1>
+                                        <h1 className='text-[3em] uppercase'>{mainTitle?.title?.tag}</h1>
                                             <p>Ask a question or share your opinion</p>
 
                                         <div className='flex justify-end items-center gap-2'>
-                                            <Link href={'/post/makepost'} className='bg-primary border-background border-2 ring-[1px] ring-primary hover:bg-primary_hover text-white font-bold px-5 py-2 rounded-md'>Make a Post</Link>
+                                            <Link href={'/post/makepost'} className='bg-primary border-background border-2 ring-[1px] ring-primary hover:bg-primary_hover text-white font-bold px-5 py-2 rounded-md'>Ask Question</Link>
                                         </div>
                                     </div>
 

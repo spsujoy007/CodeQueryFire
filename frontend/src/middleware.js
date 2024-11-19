@@ -24,7 +24,6 @@ export async function middleware(request) {
 
     // Proceed if response is successful
     const userData = await res.json();
-    console.log("User data: ", userData);
 
     // Optionally, you can pass data to the response if needed
     return NextResponse.next();

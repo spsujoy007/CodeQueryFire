@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import ContainMargin from '@/components/shared/ContainMargin';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -18,19 +18,17 @@ import ServerUrl from '@/Hooks/useServerUrl';
 import './postdesign.css'
 
 const PostDetails = ({searchParams}) => {
-    const {id} = searchParams
-    console.log(id);
-    const [post, setPost] = useState({})
+
+    const { id } = searchParams
+    const [post, setPost] = useState({});
 
     useEffect(() => {
         axios.get(`${ServerUrl()}/post/post_details?id=${id}`)
-        .then(res => {
-            console.log(res)
-            setPost(res.data.data.post)
-        })
-
-    }, [id])
-
+            .then(res => {
+                setPost(res.data.data.post);
+            })
+            .catch(error => console.error("Error fetching post details:", error));
+    }, [id]);
     
     const likeNumberChecker = (num)=>{
         if (num >= 1000000) {
@@ -62,14 +60,14 @@ const PostDetails = ({searchParams}) => {
     const [viewImage, setViewImage] = useState(false)
 
     return (
-        <div className='mt-8 realative'>
+        <div className='py-8 realative '>
                 {
                     !viewImage &&
                     <>
                         <ContainMargin box_width="sm">
-
+                            <div>
+                            
                             <h1 className='text-3xl font-bold'>{title}</h1>
-
                             <div className="mt-2 bg-white border-[1px] border-gray-200 p-2 rounded-lg w-full flex items-center gap-3">
                                 <Image priority  alt="avatar" src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} width={45} height={45} className="rounded-full"></Image>
                                 <div>
@@ -77,7 +75,7 @@ const PostDetails = ({searchParams}) => {
                                     <p className="text-sm">{FormatedTime}</p>
                                 </div>
                             </div>
-                            
+
 
                             {/* details images and source  */}
                             <div className='bg-white border-[1px] border-gray-200 p-4 rounded-lg mt-2'>
@@ -99,7 +97,7 @@ const PostDetails = ({searchParams}) => {
                                     </div>
                                 </div>
                             </div>
-                            
+
                             {
                                 code && 
                                     <div 
@@ -155,8 +153,8 @@ const PostDetails = ({searchParams}) => {
                                     <span className="text-sm">Bookmark</span>
                                 </button>
                             </div>
-
-                            </ContainMargin>
+                            </div>
+                        </ContainMargin>
                     </>
                 }
                     {/* // big image preview  */}

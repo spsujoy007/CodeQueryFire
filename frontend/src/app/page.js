@@ -9,7 +9,7 @@ export const metadata = {
   title: `Home - CodeQueryFire`,
   description: `Answer and post your problem's with CodeQueryFire`,
 }
-const Home = () => {
+const Home = ({searchParams}) => {
   // const res = await fetch('https://mocki.io/v1/f0384dcb-0caf-4366-a692-77fa7de8815e')
   // const data = await res.json()
 //   const res = await fetch(`http://localhost:5000/api/v1/post/viewposts`, 
@@ -125,7 +125,7 @@ const Home = () => {
 
   return (
     <div className="">
-      <HomePosts></HomePosts>
+      <HomePosts searchParams={searchParams}></HomePosts>
     </div>
   );
 }

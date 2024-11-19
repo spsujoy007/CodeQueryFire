@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 
-const notfound = () => {
+const NotFound = () => {
     return (
         <div>
             <p className='text-xl text-center'>The page does not exists <br />
@@ -10,4 +10,4 @@ const notfound = () => {
     );
 };
 
-export default notfound;
+export default NotFound;

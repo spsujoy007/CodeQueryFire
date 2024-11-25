@@ -1,5 +1,5 @@
 const ServerUrl = () => {
-    const url = 'http://localhost:5000/api/v1'
+    const url = 'https://cqf-be.onrender.com/api/v1'
     return url
 }
 

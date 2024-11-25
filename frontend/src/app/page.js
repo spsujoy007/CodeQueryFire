@@ -12,7 +12,7 @@ export const metadata = {
 const Home = ({searchParams}) => {
   // const res = await fetch('https://mocki.io/v1/f0384dcb-0caf-4366-a692-77fa7de8815e')
   // const data = await res.json()
-//   const res = await fetch(`http://localhost:5000/api/v1/post/viewposts`, 
+//   const res = await fetch(`https://cqf-be.onrender.com/api/v1/post/viewposts`, 
 //   {
 //     method: 'get'
 //   },

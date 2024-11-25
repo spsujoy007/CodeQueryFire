@@ -22,7 +22,7 @@ export default function useAuthenticated () {
                 setLoading(false)
             })
             .catch(err => {
-                console.log(err)
+                // console.log(err)
                 setIsLoggedIn(false)
                 setError(err)
                 setLoading(false)

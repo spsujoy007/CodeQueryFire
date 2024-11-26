@@ -10,12 +10,12 @@ export async function generateMetadata() {
 }
 
 const ProfilePage = async () => {
-    const res = await fetch(`https://mocki.io/v1/f0384dcb-0caf-4366-a692-77fa7de8815e`)
+    const res = await fetch(`http://localhost:5000/api/v1/post/viewposts`)
     const data = await res.json()
-
+    console.log(data)
     return (
         <div className="h-full w-full">
-            <ProfileComponent posts={data}></ProfileComponent>
+            <ProfileComponent posts={data?.data?.posts}></ProfileComponent>
         </div>
     );
 };

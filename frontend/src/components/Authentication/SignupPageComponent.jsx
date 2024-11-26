@@ -32,7 +32,7 @@ const SignupPageComponent = () => {
 
         axios({
             method: 'POST',
-            url: 'https://cqf-be.onrender.com/api/v1/users/register',
+            url: 'http://localhost:5000/api/v1/users/register',
             data: {
                 first_name: firstname, 
                 last_name: lastname,

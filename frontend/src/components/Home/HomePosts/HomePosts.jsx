@@ -8,7 +8,11 @@ const HomePosts = () => {
     const [posts, setPosts] = useState([])
     
     useEffect(() => {
-        axios.get(`${ServerUrl()}/post/viewposts`)
+        axios({
+            method: 'GET',
+            url: `${ServerUrl()}/post/viewposts`,
+            withCredentials: true,
+        })
         .then(res => {
             setPosts(res.data.data.posts)
         })

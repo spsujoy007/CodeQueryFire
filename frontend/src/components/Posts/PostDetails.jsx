@@ -15,6 +15,7 @@ import { BiCommentDetail } from "react-icons/bi";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ServerUrl from '@/Hooks/useServerUrl';
+const imgPlaceholderView = "/images/placeholdeImageView.jpg"
 import './postdesign.css'
 
 const PostDetails = ({searchParams}) => {
@@ -51,6 +52,7 @@ const PostDetails = ({searchParams}) => {
         image,
         tags,
         name,
+        images,
         profilePic,
         source,
         createdAt
@@ -58,9 +60,10 @@ const PostDetails = ({searchParams}) => {
 
     const FormatedTime = moment(createdAt).startOf('hour').fromNow();
     const [viewImage, setViewImage] = useState(false)
+    const [viewImageUrl, setViewImageUrl] = useState("")
 
     return (
-        <div className='py-8 realative '>
+        <div className='py-8 realative'>
                 {
                     !viewImage &&
                     <>
@@ -88,20 +91,40 @@ const PostDetails = ({searchParams}) => {
                                 </p>
                                 }
 
-                                <div className='w-full mt-5 flex md:flex-row flex-col gap-2'>
-                                    <div onClick={()=> setViewImage(!viewImage)} className='md:w-[25%] cursor-pointer'>
-                                        <Image alt='post_image' className='rounded-lg' src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726417737/personal/codes.png'} height={200} width={500}></Image>
+                                
+                                {
+                                    images?.length > 0 &&
+                                    <div className='w-full mt-5 flex md:flex-row flex-col gap-2'>
+                                        {
+                                            images?.map(img => 
+                                            <div key={img?.public_id} 
+                                                onClick={()=> {
+                                                    setViewImageUrl(img?.url)
+                                                    setViewImage(!viewImage)
+                                                }} className='md:w-[25%] cursor-pointer'>
+                                                <Image 
+                                                    alt='post_image' 
+                                                    quality={50}
+                                                    // loader={imgPlaceholder}
+                                                    // placeholder='blur'
+                                                    priority={true}
+                                                    className='rounded-lg' 
+                                                    src={img?.url} 
+                                                    height={200} 
+                                                    width={500}
+                                                ></Image>
+                                            </div>)
+                                        }
                                     </div>
-                                    <div onClick={()=> setViewImage(!viewImage)} className='md:w-[25%] cursor-pointer'>
-                                        <Image alt='post_image' className='rounded-lg' src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726417737/personal/codes.png'} height={200} width={500}></Image>
-                                    </div>
-                                </div>
+                                }
                             </div>
 
+
+                            {/* shared code start ========================================== */}
                             {
                                 code && 
-                                    <div 
-                                    className='rounded-lg overflow-hidden mt-2 border-[1px] border-gray-300 bg-white'>
+                                <div 
+                                className='rounded-lg overflow-hidden mt-2 border-[1px] border-gray-300 bg-white'>
                                     <div 
                                     className='px-5 py-1 text-primary border-b-[1px] border-primary'>
                                         <p>Code:</p>
@@ -113,6 +136,7 @@ const PostDetails = ({searchParams}) => {
                                     className='py-2 pl-4 w-full bg-gray-100 font-bold'>language: <span className='text-primary capitalize font-normal'>{programming_language}</span> </p>
                                     </div>
                             }
+                            {/* shared code end ========================================== */}
 
                             <div className="mt-4 grid md:grid-cols-5 border-[1px] border-gray-200 lg:grid-cols-6 grid-cols-3 gap-2 bg-white p-2 rounded-md">
                                 <button 
@@ -161,12 +185,14 @@ const PostDetails = ({searchParams}) => {
                     {
                         viewImage && 
                         <div className={'absolute z-[100] left-0 w-full h-full top-0 flex justify-center items-center backdrop-blur-xl '}>
-                            <div className={`bg-black md:w-[80%] w-[95%] border-2 border-black rounded-2xl`}>
-                                <div onClick={()=>setViewImage(!viewImage)} className='flex justify-end cursor-pointer items-center text-white py-1 pr-2 gap-1'>
-                                    <IoClose  className=' text-xl bg-primary rounded-tr-xl '/>close
+                            <div className={`bg-black md:w-[80%] h-[95%] aspect-square w-[95%] border-2 border-black rounded-2xl`}>
+                                <div className='flex justify-end  text-white '>
+                                    <div onClick={()=>setViewImage(!viewImage)} className='flex items-center cursor-pointer py-1 pr-2 gap-1'>
+                                        <IoClose   className=' text-xl bg-primary rounded-tr-xl '/>close
+                                    </div>
                                 </div>
 
-                                <Image alt='post_image' className='rounded-b-xl' src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726417737/personal/codes.png'} height={1000} width={2000} layout='responsive'></Image>
+                                <Image alt='post_image' priority={true} quality={100} className='rounded-b-xl w-full h-full' src={viewImageUrl ? viewImageUrl : imgPlaceholderView} height={500} width={1000} layout='responsive'></Image>
                             </div>
                         </div>
                     }

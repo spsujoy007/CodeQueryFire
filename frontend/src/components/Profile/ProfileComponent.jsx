@@ -8,18 +8,25 @@ import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import Link from "next/link";
 import SingleCard from "../Home/HomePosts/SingleCard";
 import { FaFacebook, FaGithub, FaLinkedinIn } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import ServerUrl from "@/Hooks/useServerUrl";
 
-const ProfileComponent = ({posts}) => {
-    // console.log(posts)
-
-    // const { user, loading, isLoggedIn } = useAuthenticated()
-    // const {
-    //     first_name,
-    //     last_name,
-    //     email
-    // } = user
-    const loading = false
+const ProfileComponent = () => {
+    window.scrollTo(0, 0)
+    const [posts, setPosts] = useState([])
     
+    useEffect(() => {
+        axios({
+            method: 'GET',
+            url: `${ServerUrl()}/post/viewposts`,
+            withCredentials: true,
+        })
+        .then(res => {
+            setPosts(res.data.data.posts)
+        })
+    }, [])
+    const loading = false
     return (
         <div className="">
             {

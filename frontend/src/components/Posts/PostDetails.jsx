@@ -19,6 +19,7 @@ const imgPlaceholderView = "/images/placeholdeImageView.jpg"
 import './postdesign.css'
 
 const PostDetails = ({searchParams}) => {
+    window.scrollTo(0, 0)
 
     const { id } = searchParams
     const [post, setPost] = useState({});

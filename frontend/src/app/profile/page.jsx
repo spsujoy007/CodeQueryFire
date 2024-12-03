@@ -1,5 +1,4 @@
 import ProfileComponent from "@/components/Profile/ProfileComponent";
-import axios from "axios";
 
 export async function generateMetadata() {
   
@@ -9,13 +8,10 @@ export async function generateMetadata() {
   }
 }
 
-const ProfilePage = async () => {
-    const res = await fetch(`http://localhost:5000/api/v1/post/viewposts`)
-    const data = await res.json()
-    console.log(data)
+const ProfilePage = () => {
     return (
         <div className="h-full w-full">
-            <ProfileComponent posts={data?.data?.posts}></ProfileComponent>
+            <ProfileComponent ></ProfileComponent>
         </div>
     );
 };

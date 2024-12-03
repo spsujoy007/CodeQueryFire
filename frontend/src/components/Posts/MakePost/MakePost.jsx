@@ -180,17 +180,17 @@ const MakePost = () => {
     // the biggest one submit post  ////////////////////////////////////////////////////////////////
     const handleSubmitPost = (e) => {
         e.preventDefault()
-        setLoading(true)
         if(topics.length < 1) {
             setTopicError(true)
             setTopicErrorMsg("You need to choose at least one topic.")
             return
         }
-
+        
         if (topicError || imageError) {
             return alert('An error founded')
         }
         else{
+            setLoading(true)
             const {title, source, code, images} = e.target
             const formData = new FormData();
             

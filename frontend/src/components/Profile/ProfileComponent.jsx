@@ -11,10 +11,18 @@ import { FaFacebook, FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ServerUrl from "@/Hooks/useServerUrl";
+import ModalBody from "../shared/Modal/ModalBody";
+import Modal from "../shared/Modal/Modal";
+import useModal from "../shared/Modal/useModal";
 
 const ProfileComponent = () => {
-    window.scrollTo(0, 0)
+    useEffect(() => window.scrollTo(0, 0),[])
+    
     const [posts, setPosts] = useState([])
+
+
+    // modal functionalities 
+    const {modal, showModal, closeModal} = useModal()
     
     useEffect(() => {
         axios({
@@ -61,7 +69,8 @@ const ProfileComponent = () => {
 
                                 <div className="mt-4 space-x-2">
                                     {/* <button className="border-[1px] border-black w-[150px] rounded-md py-[3px]">Follow</button> */}
-                                    <button className="border-[1px] border-primary bg-primary text-white w-[155px] rounded-md py-[3px]">Following</button>
+                                    <button onClick={() => showModal()} className="border-[1px] border-primary bg-primary text-white w-[155px] rounded-md py-[3px]">Edit Profile</button>
+                                    <button onClick={() => closeModal()} className="border-[1px] border-primary bg-primary text-white w-[155px] rounded-md py-[3px]">close</button>
                                 </div>
 
                             </div>
@@ -103,6 +112,9 @@ const ProfileComponent = () => {
                 </main>
                 </>
             }
+
+            {/* <Modal>S</Modal> */}
+            <Modal>Hello world</Modal>
         </div>
     );
 };

@@ -32,7 +32,6 @@ const HomeLayout = ({children}) => {
     ]
 
     const mainTitle = DynamicTitles.find(item => item.title.name === query_name)
-    console.log("Title is: ", mainTitle)
 
     const handleSortDataByCategory= async () => {
         

@@ -14,6 +14,7 @@ import ServerUrl from "@/Hooks/useServerUrl";
 import ModalBody from "../shared/Modal/ModalBody";
 import Modal from "../shared/Modal/Modal";
 import useModal from "../shared/Modal/useModal";
+import EditProfile from "../Editable_Components/Profile/EditProfile";
 
 const ProfileComponent = () => {
     useEffect(() => window.scrollTo(0, 0),[])
@@ -22,7 +23,6 @@ const ProfileComponent = () => {
 
 
     // modal functionalities 
-    const {modal, showModal, closeModal} = useModal()
     
     useEffect(() => {
         axios({
@@ -34,6 +34,22 @@ const ProfileComponent = () => {
             setPosts(res.data.data.posts)
         })
     }, [])
+
+    // const {modal, showModal, closeModal} = useModal()
+    const [editProfileModal, setEditProfile] = useState(false)
+    const [avatarModal, setAvatarModel] = useState(false)
+
+
+    const handleEditProfileModal = () => {
+        if( avatarModal ) setAvatarModel(false);
+        setEditProfile(true)
+    }
+
+    const handleAvatarModal = () => {
+        if( editProfileModal ) setAvatarModel(false);
+        setAvatarModel(true)
+    }
+
     const loading = false
     return (
         <div className="">
@@ -48,7 +64,7 @@ const ProfileComponent = () => {
                     <section>
                     <ContainMargin box_width={'md'}>
                         <section className="flex gap-10 items-center">
-                            <Image className="rounded-full ring-2 ring-primary border-4 border-white" width={250} height={250} src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} alt={'user'} layout="fit"></Image>
+                            <Image onClick={handleAvatarModal} className="rounded-full cursor-pointer hover:brightness-90 duration-150 ring-2 ring-primary border-4 border-white" width={250} height={250} src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} alt={'user'} layout="fit"></Image>
                             <div>
                                 <h1 className="text-2xl font-bold text-primary">Alan Walker</h1>
                                 <p className="text-sm mt-1 w-[70%]">Some ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, ullam!</p>
@@ -69,8 +85,7 @@ const ProfileComponent = () => {
 
                                 <div className="mt-4 space-x-2">
                                     {/* <button className="border-[1px] border-black w-[150px] rounded-md py-[3px]">Follow</button> */}
-                                    <button onClick={() => showModal()} className="border-[1px] border-primary bg-primary text-white w-[155px] rounded-md py-[3px]">Edit Profile</button>
-                                    <button onClick={() => closeModal()} className="border-[1px] border-primary bg-primary text-white w-[155px] rounded-md py-[3px]">close</button>
+                                    <button onClick={handleEditProfileModal} className="border-[1px] border-primary bg-primary text-white w-[155px] rounded-md py-[3px]">Edit Profile</button>
                                 </div>
 
                             </div>
@@ -113,8 +128,17 @@ const ProfileComponent = () => {
                 </>
             }
 
-            {/* <Modal>S</Modal> */}
-            <Modal>Hello world</Modal>
+            {
+                editProfileModal &&
+                <Modal handleCloseModal={setEditProfile}>
+                    <EditProfile></EditProfile>
+                </Modal>
+            }
+
+            {
+                avatarModal &&
+                <Modal handleCloseModal={setAvatarModel}>Avatar</Modal> 
+            }
         </div>
     );
 };

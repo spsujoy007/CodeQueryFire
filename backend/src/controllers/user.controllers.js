@@ -4,6 +4,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import removeImageById from "../utils/cloudinary.remove.js";
 
 const options = {
     httpOnly: true,
@@ -191,8 +192,9 @@ const editUserProfile = asyncHandler ( async ( req, res ) => {
 })
 
 const updateUserAvatar = asyncHandler ( async ( req, res ) => {
-    const avatarLocalPath = req.files?.avatar[0]?.path;
+    const olddata = await User.findById(req.user?._id);
 
+    const avatarLocalPath = req.files?.avatar[0]?.path;
     if( !avatarLocalPath ) {
         return res
         .status(404)
@@ -210,6 +212,15 @@ const updateUserAvatar = asyncHandler ( async ( req, res ) => {
     })
     
     updateAvatar.save()
+
+
+    if(olddata?.avatar?.url){
+        const removeOldAvatar = await removeImageById(olddata?.avatar?.public_id);
+        if(removeOldAvatar){
+            console.log('Previous avatar deleted.')
+        }
+
+    }
     
     return res
     .status(200)

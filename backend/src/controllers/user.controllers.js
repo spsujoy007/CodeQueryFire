@@ -3,6 +3,7 @@ import { User } from "../models/users.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 const options = {
     httpOnly: true,
@@ -99,7 +100,7 @@ const loginUser = asyncHandler ( async (req, res) => {
     
     // validation check password
     const isPasswordCorrect = await existUser.isPasswordCorrect(password)
-    if(!isPasswordCorrect) throw new ApiError(4041, "invalid user credential")
+    if(!isPasswordCorrect) throw new ApiError(401, "invalid user credential")
 
     // generate access token
     const { access_token, refresh_token } = await generateAccessAndRefreshToken(existUser._id)
@@ -168,5 +169,60 @@ const loggedInProfile = asyncHandler ( async (req, res) => {
     .json( new ApiResponse(200, user[0], "user profile successfully fetched") )
 })
 
+const editUserProfile = asyncHandler ( async ( req, res ) => {
+    const {
+        first_name,
+        last_name,
+        bio
+    } = req.body;
 
-export { registerUser, loginUser, changePassword, loggedInProfile }
+    const updateUserData = await User.findByIdAndUpdate(req.user?._id, {
+        $set: {
+            first_name,
+            last_name,
+            bio
+        }
+    })
+    updateUserData.save()
+
+    const updatedData = await User.findById(req.user?._id)
+
+    res.send(updatedData)
+})
+
+const updateUserAvatar = asyncHandler ( async ( req, res ) => {
+    const avatarLocalPath = req.files?.avatar[0]?.path;
+
+    if( !avatarLocalPath ) {
+        return res
+        .status(404)
+        .json(new ApiResponse(404, {}, "Avatar file is requireed!"))
+    }
+
+    const uploadImage = await uploadOnCloudinary(avatarLocalPath);
+    console.log(uploadImage)
+    
+    const updateAvatar = await User.findByIdAndUpdate(req.user?._id, {
+        $set: {
+            "avatar.url": uploadImage.url,
+            "avatar.public_id": uploadImage.public_id
+        }
+    })
+    
+    updateAvatar.save()
+    
+    return res
+    .status(200)
+    .json(new ApiResponse(
+        200, 
+        {
+            image: {
+            url: uploadImage.url,
+            public_id: uploadImage.public_id
+        }}, 
+        "Avatar updated successfully."
+    ))
+})
+
+
+export { registerUser, loginUser, changePassword, loggedInProfile, editUserProfile, updateUserAvatar }

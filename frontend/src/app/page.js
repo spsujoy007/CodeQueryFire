@@ -3,11 +3,13 @@ export const metadata = {
   title: `Home - CodeQueryFire`,
   description: `Answer and post your problem's with CodeQueryFire`,
 }
-const Home = ({searchParams}) => {
+const Home = () => {
+
+  
 
   return (
     <div className="">
-      <HomePosts searchParams={searchParams}></HomePosts>
+      {/* <HomePosts></HomePosts> */}
     </div>
   );
 }

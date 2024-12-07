@@ -83,9 +83,23 @@ const post_Question = asyncHandler ( async (req, res) => {
 
 
 const ViewHomePosts = asyncHandler ( async (req, res) => {
-    // const query = req.query
+    const getCategory = req.query.category;
+    console.log("GET: ", getCategory)
+    const categories =  [
+      {name: 'todays', sort_date: 1},
+      {name: 'week', sort_date: 7},
+      {name: 'month', sort_date: 30},
+    ]
+
+    const query = categories.find(cat => cat.name === getCategory)
+    console.log(query)
+    const matchCondition = query && getCategory !== undefined ? { createdAt: { $gte: new Date(new Date().setDate(new Date().getDate() - query.sort_date)) } }
+    : {}; 
     const posts = await Post.aggregate(
         [
+            {
+              $match: matchCondition
+            },
             {
               $lookup: {
                 from: 'users',
@@ -126,6 +140,7 @@ const ViewHomePosts = asyncHandler ( async (req, res) => {
     ])
 
     if(!posts.length){
+      console.log('no posts')
         return res 
         .status(500)
         .json(new ApiResponse(500, {}, "No data founded"))

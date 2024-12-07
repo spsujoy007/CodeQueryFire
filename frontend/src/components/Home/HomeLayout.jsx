@@ -1,14 +1,18 @@
 "use client"
 import ContainMargin from '../shared/ContainMargin';
 import HomeProfile from './HomeProfile';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import useAuthenticated from '@/Hooks/useAuthenticated';
 import LoadingPage from '@/app/loading';
 import Link from 'next/link';
 import { Toaster } from 'react-hot-toast';
 import { usePathname, useSearchParams } from 'next/navigation';
+import HomePosts from './HomePosts/HomePosts';
+import axios from 'axios';
+import ServerUrl from '@/Hooks/useServerUrl';
 
 const HomeLayout = ({children}) => {
+    
     const searchParams = useSearchParams()
     const query_name = searchParams.get("category") || ""
     
@@ -24,7 +28,7 @@ const HomeLayout = ({children}) => {
     const [categoryName, setcategoryName] = useState(query_name || "")
 
     const DynamicTitles = [
-        {title: {name: "", tag:"Recent posts"}},
+        {title: {name: "", tag:"Recent posts", sort_date: 0}},
         {title: {name: "interesting", tag:"Top posts"}},
         {title: {name: "todays", tag:"Todays hot posts"}},
         {title: {name: "week", tag:"This week"}},
@@ -33,9 +37,29 @@ const HomeLayout = ({children}) => {
 
     const mainTitle = DynamicTitles.find(item => item.title.name === query_name)
 
-    const handleSortDataByCategory= async () => {
+
+    const [posts, setPosts] = useState([])
+    
+    
+
+    async function handleSortDataByCategory(reqCategory) {
+        setcategoryName(reqCategory)
         
+        await axios({
+            method: 'GET',
+            url: `${ServerUrl()}/post/viewposts?category=${reqCategory}`,
+            withCredentials: true,
+        })
+        .then(res => {
+            setPosts(res.data.data.posts)
+        })
+        console.log(reqCategory)
     }
+
+    useEffect(() => {
+        handleSortDataByCategory("")
+    }, [])
+    
 
     return (
         <div>
@@ -72,30 +96,31 @@ const HomeLayout = ({children}) => {
                                     <div className='px-4'>
                                         <div className='flex gap-1 flex-wrap border-[1px] border-[#ddd] p-1 rounded-md'>
                                             <Link href={'/'}>
-                                                <button onClick={() => setcategoryName("")} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === "" ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Default</button>
+                                                <button onClick={() => handleSortDataByCategory("")} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === "" ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Default</button>
                                             </Link>
 
                                             <Link href={'/?category=interesting'}>
-                                                <button onClick={() => setcategoryName('interesting')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'interesting' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Interesting</button>
+                                                <button onClick={() => handleSortDataByCategory('interesting')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'interesting' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Interesting</button>
                                             </Link>
 
                                             <Link href={'/?category=todays'}>
-                                                <button onClick={() => setcategoryName('todays')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'todays' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Todays</button>
+                                                <button onClick={() => handleSortDataByCategory('todays')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'todays' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Todays</button>
                                             </Link>
 
                                             <Link href={'/?category=week'}>
-                                                <button onClick={() => setcategoryName('week')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'week' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Week</button>
+                                                <button onClick={() => handleSortDataByCategory('week')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'week' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Week</button>
                                             </Link>
 
                                             <Link href={'/?category=month'}>
-                                                <button onClick={() => setcategoryName('month')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'month' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Month</button>
+                                                <button onClick={() => handleSortDataByCategory('month')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'month' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Month</button>
                                             </Link>
                                             
                                         </div>
                                     </div>
                                 </section>
 
-                                {children}
+                                {/* {children} */}
+                                <HomePosts posts={posts}></HomePosts>
                             </div>
                             <div className="md:w-[15%] w-full">
 

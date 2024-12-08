@@ -41,7 +41,7 @@ const HomeLayout = ({children}) => {
 
 
     const [posts, setPosts] = useState([])
-    const [postPoading, setPostLoading] = useState(true)
+    const [postLoading, setPostLoading] = useState(true)
     
     async function handleSortDataByCategory(reqCategory) {
         setcategoryName(reqCategory)
@@ -55,6 +55,9 @@ const HomeLayout = ({children}) => {
             setPostLoading(false)
             setPosts(res.data.data.posts)
             // window.location.reload()
+        })
+        .catch(e => {
+            setPostLoading(false)
             router.refresh()
         })
     }
@@ -127,10 +130,17 @@ const HomeLayout = ({children}) => {
 
                                 {/* {children} */}
                                 {
-                                    postPoading ?
+                                    postLoading ?
                                     <LoadingPage></LoadingPage>
                                     :
-                                    <HomePosts posts={posts}></HomePosts>
+                                    <>
+                                        {
+                                            posts?.length > 0 ?
+                                            <HomePosts posts={posts}></HomePosts>
+                                            :
+                                            <p className='text-center mt-5'>No posts founded</p>
+                                        }
+                                    </>
                                 }
                             </div>
                             <div className="md:w-[15%] w-full">

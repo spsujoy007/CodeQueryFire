@@ -16,17 +16,19 @@ const UpdateAvatarModal = () => {
         e.preventDefault()
 
         const file = e.target.files[0];
-        const blobUrl = URL.createObjectURL(file)
-        setImageFile(file)
-        setAvatarBlob(blobUrl)
+        if(file){
+            const blobUrl = URL.createObjectURL(file)
+            setImageFile(file)
+            setAvatarBlob(blobUrl)
+        }
     }
 
     const handleSaveAvatar = async () => {
-        setUploadLoading(true)
-
+        
         const formData = new FormData();
         formData.append("avatar", imageFile)
-
+        
+        setUploadLoading(true)
         await axios({
             method: 'patch',
             url: `${ServerUrl()}/users/update_avatar`,
@@ -57,7 +59,7 @@ const UpdateAvatarModal = () => {
                             src={avatarBlob ? avatarBlob : `${user?.avatar?.url ? user?.avatar?.url : null_avatar}`}
                             width={300}
                             height={300}
-                            priority
+                            priority={true}
                         ></Image>
                     </div>
 

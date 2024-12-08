@@ -155,6 +155,18 @@ const loggedInProfile = asyncHandler ( async (req, res) => {
             }
         },
         {
+            $addFields: {
+                full_name: null,
+            }
+        },
+        {
+            $set: {
+                "full_name": {
+                    $concat: ["$first_name", " ", "$last_name"]
+                } 
+            }
+        },
+        {
             $project: {
                 _id: 0,
                 password: 0,
@@ -192,6 +204,7 @@ const editUserProfile = asyncHandler ( async ( req, res ) => {
 })
 
 const updateUserAvatar = asyncHandler ( async ( req, res ) => {
+    console.log('update avatar')
     const olddata = await User.findById(req.user?._id);
 
     const avatarLocalPath = req.files?.avatar[0]?.path;

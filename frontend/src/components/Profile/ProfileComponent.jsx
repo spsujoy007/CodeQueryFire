@@ -15,13 +15,16 @@ import ModalBody from "../shared/Modal/ModalBody";
 import Modal from "../shared/Modal/Modal";
 import useModal from "../shared/Modal/useModal";
 import EditProfile from "../Editable_Components/Profile/EditProfile";
+import useAuthenticated from "@/Hooks/useAuthenticated";
+import UpdateAvatarModal from "../Editable_Components/Profile/UpdateAvatarModal";
+const null_avatar = '/images/null_avatar.jpeg'
 
 const ProfileComponent = () => {
     useEffect(() => window.scrollTo(0, 0),[])
     
     const [posts, setPosts] = useState([])
 
-
+    const {user, loading} = useAuthenticated()
     // modal functionalities 
     
     useEffect(() => {
@@ -50,7 +53,6 @@ const ProfileComponent = () => {
         setAvatarModel(true)
     }
 
-    const loading = false
     return (
         <div className="">
             {
@@ -64,23 +66,23 @@ const ProfileComponent = () => {
                     <section>
                     <ContainMargin box_width={'md'}>
                         <section className="flex gap-10 items-center">
-                            <Image onClick={handleAvatarModal} className="rounded-full cursor-pointer hover:brightness-90 duration-150 ring-2 ring-primary border-4 border-white" width={250} height={250} src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} alt={'user'} layout="fit"></Image>
-                            <div>
-                                <h1 className="text-2xl font-bold text-primary">Alan Walker</h1>
-                                <p className="text-sm mt-1 w-[70%]">Some ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, ullam!</p>
+                            <Image onClick={handleAvatarModal} className="rounded-full cursor-pointer hover:brightness-90 duration-150 ring-2 ring-primary border-4 border-white" width={250} height={250} src={user?.avatar ? user.avatar?.url : null_avatar} alt={user?.full_name} priority layout="fit"></Image>
+                            <div className="w-full">
+                                <h1 className="text-2xl font-bold text-primary">{user.full_name}</h1>
+                                <p className="text-sm mt-1 w-[70%] whitespace-pre-wrap">{user.bio && user.bio}</p>
 
                                 {/* some followers pic  */}
-                                <div className="mt-2 flex -space-x-3">
-                                    <Image className="rounded-full border-2 border-white" width={35} height={35} src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} alt=""></Image>
-                                    <Image className="rounded-full border-2 border-white" width={35} height={35} src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} alt=""></Image>
-                                    <Image className="rounded-full border-2 border-white" width={35} height={35} src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} alt=""></Image>
+                                {/* <div className="mt-2 flex -space-x-3">
+                                    <Image className="rounded-full border-2 border-white" width={35} height={35} src={null_avatar} alt=""></Image>
+                                    <Image className="rounded-full border-2 border-white" width={35} height={35} src={null_avatar} alt=""></Image>
+                                    <Image className="rounded-full border-2 border-white" width={35} height={35} src={null_avatar} alt=""></Image>
                                     <div className="bg-gray-200 w-[35px] h-[35px] border-2 border-gray-400 rounded-full flex justify-center items-center text-gray-400">
                                         <HiOutlineDotsHorizontal />
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <div className="mt-2">
-                                    <p className="font-semibold text-sm"> <Link className="hover:underline" href={''}>Followers: <span className="text-primary">10</span></Link>   |  <Link className="hover:underline" href={''}>Following: <span className="text-primary">14</span></Link> </p>
+                                    <p className="font-semibold text-sm"> <Link className="hover:underline" href={''}>Followers: <span className="text-primary">{user?.followers ? user?.followers : 0}</span></Link>   |  <Link className="hover:underline" href={''}>Following: <span className="text-primary">{user?.following ? user?.following : 0}</span></Link> </p>
                                 </div>
 
                                 <div className="mt-4 space-x-2">
@@ -128,16 +130,24 @@ const ProfileComponent = () => {
                 </>
             }
 
+
+
+            {/* Editable modals //////////////////////////////////////////////// */}
+
+            {/* edit profile details  */}
             {
                 editProfileModal &&
                 <Modal handleCloseModal={setEditProfile}>
-                    <EditProfile></EditProfile>
+                    <EditProfile modal={setEditProfile}></EditProfile>
                 </Modal>
             }
 
+            {/* update avatar  */}
             {
                 avatarModal &&
-                <Modal handleCloseModal={setAvatarModel}>Avatar</Modal> 
+                <Modal size="25" handleCloseModal={setAvatarModel}>
+                    <UpdateAvatarModal></UpdateAvatarModal>
+                </Modal> 
             }
         </div>
     );

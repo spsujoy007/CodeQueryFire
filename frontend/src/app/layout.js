@@ -22,19 +22,13 @@ export default function RootLayout({ children }) {
   // const isShowNav = showNavRoutes.includes(route)
 
   // console.log(route, isShowNav)
-  useEffect(() => {
-    window.scroll(0, 0)
-  }, [])
-
-  // const [modal, setModal] = useState(false)
-
-  // const showModal = () => setModal(true)
-  // const closeModal = () => setModal(false)
-  const {modal} = useModal()
+  // useEffect(() => {
+  //   window.scroll(0, 0)
+  // }, [])
 
   return (
     <html lang="en">
-      <body className={`${modal ? "h-screen overflow-y-hidden" : "h-full overflow-y-visible"} relative`}>
+      <body >
         <Suspense>
             {
               !isShowNav && 
@@ -44,9 +38,6 @@ export default function RootLayout({ children }) {
               <HomeLayout>{children}</HomeLayout>
             </section>
 
-          {/* {
-            modal && <Modal></Modal>
-          } */}
         </Suspense>
       </body>
     </html>

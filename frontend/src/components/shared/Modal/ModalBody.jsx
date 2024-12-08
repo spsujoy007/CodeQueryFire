@@ -1,12 +1,12 @@
-import React from 'react';
+// import React from 'react';
 
-const ModalBody = ({children}) => {
-    return (
-        <>
-            {/* all the modal datas here dynamicly  */}
-            {children}
-        </>
-    );
-};
+// const ModalBody = ({children}) => {
+//     return (
+//         <>
+//             {/* all the modal datas here dynamicly  */}
+//             {children}
+//         </>
+//     );
+// };
 
-export default ModalBody;
+// export default ModalBody;

@@ -6,13 +6,15 @@ import useAuthenticated from '@/Hooks/useAuthenticated';
 import LoadingPage from '@/app/loading';
 import Link from 'next/link';
 import { Toaster } from 'react-hot-toast';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import HomePosts from './HomePosts/HomePosts';
 import axios from 'axios';
 import ServerUrl from '@/Hooks/useServerUrl';
+import Head from 'next/head';
 
 const HomeLayout = ({children}) => {
-    
+    const router = useRouter()
+
     const searchParams = useSearchParams()
     const query_name = searchParams.get("category") || ""
     
@@ -39,9 +41,8 @@ const HomeLayout = ({children}) => {
 
 
     const [posts, setPosts] = useState([])
+    const [postPoading, setPostLoading] = useState(true)
     
-    
-
     async function handleSortDataByCategory(reqCategory) {
         setcategoryName(reqCategory)
         
@@ -51,18 +52,23 @@ const HomeLayout = ({children}) => {
             withCredentials: true,
         })
         .then(res => {
+            setPostLoading(false)
             setPosts(res.data.data.posts)
+            // window.location.reload()
+            router.refresh()
         })
-        console.log(reqCategory)
     }
 
     useEffect(() => {
-        handleSortDataByCategory("")
+        handleSortDataByCategory(categoryName)
     }, [])
     
 
     return (
         <div>
+            {/* <Head>
+                <title>SS</title>
+            </Head> */}
             <Toaster
                 position="top-center"
                 reverseOrder={false}
@@ -93,25 +99,25 @@ const HomeLayout = ({children}) => {
                                         </div>
                                     </div>
 
-                                    <div className='px-4'>
+                                    <div className='px-4 '>
                                         <div className='flex gap-1 flex-wrap border-[1px] border-[#ddd] p-1 rounded-md'>
                                             <Link href={'/'}>
                                                 <button onClick={() => handleSortDataByCategory("")} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === "" ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Default</button>
                                             </Link>
 
-                                            <Link href={'/?category=interesting'}>
+                                            <Link href={'?category=interesting'}>
                                                 <button onClick={() => handleSortDataByCategory('interesting')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'interesting' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Interesting</button>
                                             </Link>
 
-                                            <Link href={'/?category=todays'}>
+                                            <Link href={'?category=todays'}>
                                                 <button onClick={() => handleSortDataByCategory('todays')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'todays' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Todays</button>
                                             </Link>
 
-                                            <Link href={'/?category=week'}>
+                                            <Link href={'?category=week'}>
                                                 <button onClick={() => handleSortDataByCategory('week')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'week' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Week</button>
                                             </Link>
 
-                                            <Link href={'/?category=month'}>
+                                            <Link href={'?category=month'}>
                                                 <button onClick={() => handleSortDataByCategory('month')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'month' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Month</button>
                                             </Link>
                                             
@@ -120,7 +126,12 @@ const HomeLayout = ({children}) => {
                                 </section>
 
                                 {/* {children} */}
-                                <HomePosts posts={posts}></HomePosts>
+                                {
+                                    postPoading ?
+                                    <LoadingPage></LoadingPage>
+                                    :
+                                    <HomePosts posts={posts}></HomePosts>
+                                }
                             </div>
                             <div className="md:w-[15%] w-full">
 

@@ -207,7 +207,7 @@ const MakePost = () => {
             console.log(topics)
             
             tempImageFile.forEach((file) => {
-                formData.append("images", file); // 'images' should match the field name in multer setup
+                formData.append("images", file); 
             });
             
             // Append other data fields from `post_object`

@@ -40,7 +40,7 @@ const SingleCard = ({post}) => {
     const [seeMore, setSeeMore] = useState(false)
 
     return (
-        <div className='w-full  px-3 pt-3 pb-6 border-b-[1px] border-primary'>
+        <div className='w-full  px-3 pt-3 pb-6 border-t-[1px] border-primary'>
             {/* navigate details page  */}
             <div>
                 <Link href={`post/${title.split(/[\\/]+/).join(' ')}?id=${_id}`}>

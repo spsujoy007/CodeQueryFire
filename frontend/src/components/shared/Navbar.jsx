@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import useSiteName from '@/Hooks/useSiteName';
 import useAuthenticated from '@/Hooks/useAuthenticated';
 import Image from 'next/image';
+const null_avatar = '/images/null_avatar.jpeg'
 
 const Navbar = () => {
     const {isLoggedIn, user, loading} = useAuthenticated()
@@ -26,6 +27,7 @@ const Navbar = () => {
             url: '/signup',
         }
     ]
+
     const loggedInMenuItems = [
         {
             title: "Home",
@@ -88,7 +90,7 @@ const Navbar = () => {
                             isLoggedIn &&
                             <Link href={'/profile'} className='flex items-center gap-2'>
                                 <p>{user && user.first_name}</p>
-                                <Image className='rounded-full ring-[1px] ring-primary border-2 border-white' width={35} height={35} src={`https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg`} alt='profile_pic'></Image>
+                                <Image className='rounded-full ring-[1px] ring-primary border-2 border-white' width={35} height={35} src={user?.avatar ? user.avatar?.url : null_avatar} alt='profile_pic'></Image>
                             </Link>
                         }
                     </div>

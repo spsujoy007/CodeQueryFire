@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+const null_avatar = '/images/null_avatar.jpeg'
 
 const HomeProfile = () => {
     const pathname = usePathname();
@@ -15,6 +16,7 @@ const HomeProfile = () => {
     const {
         first_name,
         last_name,
+        full_name,
         email
     } = user
 
@@ -51,11 +53,11 @@ const HomeProfile = () => {
                             {/* profile info */}
                             <div>
                                 <div className='flex items-center gap-3'>
-                                    <Image alt='avatar' className='rounded-full ring-1 ring-primary' src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} width={45} height={45}></Image>
+                                    <Image alt='avatar' className='rounded-full ring-1 ring-primary' src={user?.avatar ? user.avatar?.url : null_avatar} width={45} height={45}></Image>
                                     <div>
                                         {/* user name ----------------------- */}
                                         <h5 className='text-sm font-bold'>
-                                            {first_name + " " + last_name}
+                                            {first_name}
                                         </h5>
 
                                         {/* user email ----------------------- */}
@@ -64,7 +66,7 @@ const HomeProfile = () => {
                                         </p>
                                     </div>
                                 </div>
-                                <p className='mt-5 text-xs'>Some ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, ullam!</p>
+                                <p className='mt-5 text-xs'>{user?.bio && user.bio}</p>
                             </div>
                             <div className='mt-5 flex flex-col gap-2'>
                                 <Link href={'/'} className=''>

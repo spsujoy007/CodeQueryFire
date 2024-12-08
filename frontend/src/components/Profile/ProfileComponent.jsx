@@ -69,7 +69,7 @@ const ProfileComponent = () => {
                             <Image onClick={handleAvatarModal} className="rounded-full cursor-pointer hover:brightness-90 duration-150 ring-2 ring-primary border-4 border-white" width={250} height={250} src={user?.avatar ? user.avatar?.url : null_avatar} alt={user?.full_name} priority layout="fit"></Image>
                             <div className="w-full">
                                 <h1 className="text-2xl font-bold text-primary">{user.full_name}</h1>
-                                <p className="text-sm mt-1 w-[70%] whitespace-pre-wrap">{user.bio && user.bio}</p>
+                                <p className="text-sm mt-1 w-[600px]  whitespace-pre-wrap">{user?.bio && user.bio}</p>
 
                                 {/* some followers pic  */}
                                 {/* <div className="mt-2 flex -space-x-3">

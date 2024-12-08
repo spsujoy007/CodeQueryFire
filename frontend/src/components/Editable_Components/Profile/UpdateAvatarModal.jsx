@@ -3,12 +3,14 @@ import ServerUrl from '@/Hooks/useServerUrl';
 import axios from 'axios';
 import Image from 'next/image';
 import React, { useState } from 'react';
-const null_avatar = '/images/null_avatar.jpg'
+const null_avatar = '/images/null_avatar.jpeg'
+
 const UpdateAvatarModal = () => {
     const {user, loading} = useAuthenticated()
 
     const [avatarBlob, setAvatarBlob] = useState(undefined);
     const [imageFile, setImageFile] = useState(null);
+    const [uploadLoading, setUploadLoading] = useState(false)
 
     const handleChange = (e) => {
         e.preventDefault()
@@ -20,20 +22,26 @@ const UpdateAvatarModal = () => {
     }
 
     const handleSaveAvatar = async () => {
+        setUploadLoading(true)
+
+        const formData = new FormData();
+        formData.append("avatar", imageFile)
+
         await axios({
             method: 'patch',
             url: `${ServerUrl()}/users/update_avatar`,
-            data: {
-                avatar: imageFile
-            },
+            data: formData,
             withCredentials: true
         })
         .then(data => {
             console.log(data)
-            // location.reload()
+            setUploadLoading(false)
+            location.reload()
         })
         .catch(e => {
             console.error(e)
+            setUploadLoading(false)
+            location.reload()
         })
     } 
 
@@ -43,12 +51,12 @@ const UpdateAvatarModal = () => {
             {
                 !loading &&
                 <div className='w-full'>
-                    <div className='w-[200px] h-[200px] rounded-full overflow-hidden mx-auto border-2 border-primary'>
+                    <div className='w-[300px] h-[300px] rounded-full overflow-hidden mx-auto border-2 border-primary'>
                         <Image
-                            className=''
+                            className='bg-white w-full h-full'
                             src={avatarBlob ? avatarBlob : `${user?.avatar?.url ? user?.avatar?.url : null_avatar}`}
-                            width={200}
-                            height={200}
+                            width={300}
+                            height={300}
                             priority
                         ></Image>
                     </div>
@@ -70,9 +78,18 @@ const UpdateAvatarModal = () => {
 
                         {
                             imageFile &&
-                            <button onClick={handleSaveAvatar} className='bg-primary text-white w-full py-2 rounded-md block text-center hover:opacity-90 mt-2'>
-                                Save
-                            </button>
+                            <>
+                                {
+                                    uploadLoading ?
+                                    <button className='bg-primary text-white w-full py-2 rounded-md block text-center hover:opacity-90 mt-2 animate-pulse duration-200'>
+                                        saving...
+                                    </button>
+                                    :
+                                    <button onClick={handleSaveAvatar} className='bg-primary text-white w-full py-2 rounded-md block text-center hover:opacity-90 mt-2'>
+                                        Save
+                                    </button>
+                                }
+                            </>
                         }
                     </div>
                 </div>

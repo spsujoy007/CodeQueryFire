@@ -1,15 +1,19 @@
 "use client"
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ContainMargin from './ContainMargin';
 import { usePathname } from 'next/navigation';
 import useSiteName from '@/Hooks/useSiteName';
 import useAuthenticated from '@/Hooks/useAuthenticated';
 import Image from 'next/image';
+import ServerUrl from '@/Hooks/useServerUrl';
+import axios from 'axios';
 const null_avatar = '/images/null_avatar.jpeg'
 
 const Navbar = () => {
     const {isLoggedIn, user, loading} = useAuthenticated()
+    const [drawer, setDrawer] = useState(false)
+
     // console.log("is logged in: ", isLoggedIn)
 
     const pathname = usePathname()
@@ -42,8 +46,24 @@ const Navbar = () => {
     const name = useSiteName()
     // const activeRoute = navmenu.includes(pathname)
 
+    const handleLogoutUser = async () => {
+        await axios({
+            method: 'GET',
+            url: `${ServerUrl()}/users/logout_user`,
+            withCredentials: true
+
+        })
+        .then(data => {
+            console.log(data)
+            location.reload()
+        })
+        .catch(e => {
+            location.reload()
+        })
+    }
+
     return (
-        <div className='bg-[#ffffffbf] backdrop-blur-md fixed top-0 w-full border-b-[1px] z-20 border-primary'>
+        <div onMouseLeave={() => setDrawer(false)} className='bg-[#ffffffbf] backdrop-blur-md fixed top-0 w-full border-b-[1px] z-20 border-primary'>
             <ContainMargin box_width={'md'}>
             <div className='flex gap-20 items-center py-4'>
                 <div>
@@ -88,10 +108,22 @@ const Navbar = () => {
 
                         {
                             isLoggedIn &&
-                            <Link href={'/profile'} className='flex items-center gap-2'>
-                                <p>{user && user.first_name}</p>
-                                <Image className='rounded-full ring-[1px] ring-primary border-2 border-white' width={35} height={35} src={user?.avatar ? user.avatar?.url : null_avatar} alt='profile_pic'></Image>
-                            </Link>
+                            <div onMouseOver={() => setDrawer(true)}  className='relative'>
+                                <div className='flex items-center gap-2 cursor-pointer'>
+                                    <p>{user && user.first_name}</p>
+                                    <Image className='rounded-full ring-[1px] ring-primary border-2 border-white' width={35} height={35} src={user?.avatar ? user.avatar?.url : null_avatar} alt='profile_pic'></Image>
+                                </div>
+
+                                {
+                                    drawer &&
+                                    <div className='absolute top-10 -right-4 w-[200px] rounded-md border-[1px] border-gray-300  bg-white backdrop-blur-md p-2'>
+                                        <Link href={'/profile'}>
+                                            <button href={'/profile'} className='mt-2 mb-1 w-full py-2 border-[1px] border-gray-300 hover:bg-gray-200 duration-300 rounded-md'>Profile</button>
+                                        </Link>
+                                        <button onClick={handleLogoutUser} className='w-full py-2 border-[1px] border-gray-300 hover:bg-gray-200 duration-300 rounded-md'>Logout</button>
+                                    </div>
+                                }
+                            </div>
                         }
                     </div>
 

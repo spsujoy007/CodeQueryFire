@@ -65,11 +65,11 @@ export default function EditProfile({modal}) {
       withCredentials: true
     })
     .then(data => {
-      modal(false)
       setErrorMsg(false)
       setSaveLoading(false)
       // router.refresh()
       location.reload()
+      modal(false)
     })
     .catch(e => {
       setSaveLoading(false)

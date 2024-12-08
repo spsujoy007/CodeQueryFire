@@ -248,5 +248,30 @@ const updateUserAvatar = asyncHandler ( async ( req, res ) => {
     ))
 })
 
+const logoutUserControl = asyncHandler ( async ( req, res ) => {
+    await User.findByIdAndUpdate(
+        req.user?._id,
+        {
+            $unset: {
+                refresh_token: 1
+            }
+        },
+        {
+            new: true
+        }
+    );
 
-export { registerUser, loginUser, changePassword, loggedInProfile, editUserProfile, updateUserAvatar }
+    res
+    .status(200)
+    .clearCookie('refresh_token', options)
+    .clearCookie('access_token', options)
+    .json(new ApiResponse(
+        200,
+        {},
+        "user successfully logged out"
+    ))
+
+})
+
+
+export { registerUser, loginUser, changePassword, loggedInProfile, editUserProfile, updateUserAvatar, logoutUserControl }

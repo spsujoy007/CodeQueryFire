@@ -232,10 +232,10 @@ const MakePost = () => {
                 setServerError(false)
                 setLoading(false)
                 toast.success(res.data?.data?.message || 'Post uploaded successfully')
-                return router.push("/")
+                router.push("/")
             })
             .catch(err => {
-                const errorMessage = err.response.data.message
+                const errorMessage = err?.response?.data?.message
                 setServerError(true)
                 setServerErrorMsg(errorMessage)
                 setLoading(false)

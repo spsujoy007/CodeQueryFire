@@ -1,7 +1,7 @@
 import ProfileComponent from "@/components/Profile/ProfileComponent";
 
 export async function generateMetadata() {
-  
+  const res = await fetch('')
   return {
     title: "Sujoy Paul",
     details: ""

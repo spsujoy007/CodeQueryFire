@@ -30,11 +30,12 @@ const ProfileComponent = () => {
     useEffect(() => {
         axios({
             method: 'GET',
-            url: `${ServerUrl()}/post/viewposts`,
+            url: `${ServerUrl()}/post/myposts`,
             withCredentials: true,
         })
         .then(res => {
-            setPosts(res.data.data.posts)
+            console.log(res)
+            setPosts(res?.data?.data?.posts)
         })
     }, [])
 
@@ -116,7 +117,7 @@ const ProfileComponent = () => {
                             <div className="w-[70%] bg-white min-h-[40%] rounded-b-xl overflow-hidden">
                                 <div className="w-full bg-black text-white font-bold py-1 pl-5 rounded-t-xl" ><p>Posts: </p></div>
                                 {
-                                    posts.map((post) => <SingleCard key={post._id} post={post}></SingleCard>)
+                                    posts?.map((post) => <SingleCard key={post._id} post={post}></SingleCard>)
                                 }
                             </div>
                             <div className="w-[30%] bg-white min-h-[40%] rounded-b-xl overflow-hidden">

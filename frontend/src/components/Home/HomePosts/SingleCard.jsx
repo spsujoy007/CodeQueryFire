@@ -8,18 +8,15 @@ import { MdBookmarkBorder } from "react-icons/md";
 import { FaCode } from "react-icons/fa6";
 import { useState } from "react";
 import moment from "moment";
+const null_avatar = '/images/null_avatar.jpeg'
 
 const SingleCard = ({post}) => {
     const{
         _id,
         title,
-        details,
-        code,
-        image,
         topics,
-        createdAt,
         updatedAt,
-        source,
+        author
     } = post
 
     const FormatedTime = moment(updatedAt).startOf('hour').fromNow(); // format the time for UX
@@ -79,9 +76,9 @@ const SingleCard = ({post}) => {
             </div> */}
 
             <div className="mt-5 flex items-center gap-2">
-                <Image alt="avatar" src={'https://res.cloudinary.com/cloudinarybysp/image/upload/v1726165245/personal/spsujoy.jpg'} width={35} height={35} className="rounded-full"></Image>
+                <Image alt="avatar" src={author?.avatar ?  author?.avatar?.url : null_avatar} width={35} height={35} className="rounded-full bg-gray-200"></Image>
                 <div>
-                    <h6 className="text-xs font-semibold">Sujoy</h6>
+                    <h6 className="text-xs font-semibold">{author?.full_name}</h6>
                     <p className="text-xs">{FormatedTime}</p>
                 </div>
             </div>

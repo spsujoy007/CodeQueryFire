@@ -8,10 +8,9 @@ export async function generateMetadata ({ params, searchParams }) {
 
     // const res = await fetch('https://mocki.io/v1/4f69807c-4aa7-426f-884d-d51554599b80');
 
-    const res = await fetch(`http://localhost:5000/api/v1/post/post_details?id=${getid}`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/post/post_details?id=${getid}`)
     const getdata = await res.json();
     const data = getdata.data.post
-    console.log("POST:------", data)
       
     // Use the JSON data
     return {

@@ -91,7 +91,6 @@ const ViewHomePosts = asyncHandler ( async (req, res) => {
     ]
 
     const query = categories.find(cat => cat.name === getCategory)
-    console.log(query)
     const matchCondition = query && getCategory !== undefined ? { createdAt: { $gte: new Date(new Date().setDate(new Date().getDate() - query.sort_date)) } }
     : {}; 
     

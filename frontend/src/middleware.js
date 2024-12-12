@@ -18,7 +18,7 @@ export async function middleware(request) {
   
   try {
     // Make fetch request with credentials
-    const res = await fetch(`http://localhost:5000/api/v1/users/loggedin-profile`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/users/loggedin-profile`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token?.value}`,

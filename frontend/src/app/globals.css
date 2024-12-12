@@ -11,6 +11,14 @@ body{
   font-family: "JetBrains Mono", system-ui;
 }
 
+button{
+  transition:  all 0.5s;
+}
+button:hover{
+  filter: brightness(85%);
+  transition:  all 0.2s;
+}
+
 /* // tip tap style default for tailwind  */
 
 .tiptap-style > h1{

@@ -25,19 +25,18 @@ const ProfileComponent = () => {
     const [posts, setPosts] = useState([])
 
     const {user, loading} = useAuthenticated()
-    // modal functionalities 
-    
+
+    const api = process.env.NEXT_PUBLIC_SERVER
     useEffect(() => {
         axios({
             method: 'GET',
-            url: `${ServerUrl()}/post/myposts`,
+            url: `${api}/post/myposts`,
             withCredentials: true,
         })
         .then(res => {
-            console.log(res)
             setPosts(res?.data?.data?.posts)
         })
-    }, [])
+    }, [api])
 
     // const {modal, showModal, closeModal} = useModal()
     const [editProfileModal, setEditProfile] = useState(false)
@@ -72,15 +71,19 @@ const ProfileComponent = () => {
                                 <h1 className="text-2xl font-bold text-primary">{user.full_name}</h1>
                                 <p className="text-sm mt-1 w-[600px]  whitespace-pre-wrap">{user?.bio && user.bio}</p>
 
+
                                 {/* some followers pic  */}
-                                {/* <div className="mt-2 flex -space-x-3">
-                                    <Image className="rounded-full border-2 border-white" width={35} height={35} src={null_avatar} alt=""></Image>
-                                    <Image className="rounded-full border-2 border-white" width={35} height={35} src={null_avatar} alt=""></Image>
-                                    <Image className="rounded-full border-2 border-white" width={35} height={35} src={null_avatar} alt=""></Image>
-                                    <div className="bg-gray-200 w-[35px] h-[35px] border-2 border-gray-400 rounded-full flex justify-center items-center text-gray-400">
-                                        <HiOutlineDotsHorizontal />
+                                {
+                                    user.followers &&
+                                    <div className="mt-2 flex -space-x-3">
+                                        <Image className="rounded-full border-2 border-white" width={35} height={35} src={null_avatar} alt=""></Image>
+                                        <Image className="rounded-full border-2 border-white" width={35} height={35} src={null_avatar} alt=""></Image>
+                                        <Image className="rounded-full border-2 border-white" width={35} height={35} src={null_avatar} alt=""></Image>
+                                        <div className="bg-gray-200 w-[35px] h-[35px] border-2 border-gray-400 rounded-full flex justify-center items-center text-gray-400">
+                                            <HiOutlineDotsHorizontal />
+                                        </div>
                                     </div>
-                                </div> */}
+                                }
 
                                 <div className="mt-2">
                                     <p className="font-semibold text-sm"> <Link className="hover:underline" href={''}>Followers: <span className="text-primary">{user?.followers ? user?.followers : 0}</span></Link>   |  <Link className="hover:underline" href={''}>Following: <span className="text-primary">{user?.following ? user?.following : 0}</span></Link> </p>

@@ -32,7 +32,7 @@ const SignupPageComponent = () => {
 
         axios({
             method: 'POST',
-            url: 'http://localhost:5000/api/v1/users/register',
+            url: `${process.env.NEXT_PUBLIC_SERVER}/users/register`,
             data: {
                 first_name: firstname, 
                 last_name: lastname,

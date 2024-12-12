@@ -31,7 +31,7 @@ const LoginPageComponent = () => {
         console.log(email, password)
         axios({
             method: 'POST',
-            url: `${ServerUrl()}/users/login`,
+            url: `${process.env.NEXT_PUBLIC_SERVER}/users/login`,
             data: {
                 email, password
             },

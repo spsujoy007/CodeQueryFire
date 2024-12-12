@@ -60,6 +60,7 @@ const UpdateAvatarModal = () => {
                             width={300}
                             height={300}
                             priority={true}
+                            alt='avatar'
                         ></Image>
                     </div>
 

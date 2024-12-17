@@ -1,5 +1,11 @@
 import React from 'react';
 
+export function generateMetadata () {
+    return {
+        title: 'Saved'
+    }
+}
+
 const page = () => {
     return (
         <div className='text-center mt-10'>

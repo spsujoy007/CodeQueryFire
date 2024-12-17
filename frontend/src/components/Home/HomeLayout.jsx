@@ -69,9 +69,6 @@ const HomeLayout = ({children}) => {
 
     return (
         <div>
-            {/* <Head>
-                <title>SS</title>
-            </Head> */}
             <Toaster
                 position="top-center"
                 reverseOrder={false}
@@ -82,7 +79,7 @@ const HomeLayout = ({children}) => {
                 {/* <button className='' onClick={() => setOpenMenu(!openMenu)}>menu</button> */}
                     <ContainMargin box_width={'md'}>
                         <div className="md:flex md:flex-row flex-col">
-                            <div className={`md:w-[15%]  w-full p-1 min-h-[90vh] overflow-hidden hid md:max-h-[90vh] scroll-pr-14 overflow-y-scroll top-20 duration-200 scrollbar-custom sticky md:ml-0 ${openMenu ? '-ml-0 bg-white ':'-ml-[500px]'}`}>
+                            <div className={`md:w-[15%] w-full p-1 min-h-[90vh] overflow-hidden hid md:max-h-[95vh] scroll-pr-14 overflow-y-scroll top-20 duration-200 scrollbar-custom sticky md:ml-0 ${openMenu ? '-ml-0 bg-white ':'-ml-[500px]'}`}>
                                 {
                                     loading ?
                                     <LoadingPage></LoadingPage>
@@ -90,7 +87,9 @@ const HomeLayout = ({children}) => {
                                     <HomeProfile></HomeProfile>
                                 }
                             </div>
-                            <div className="border-x-[1px] border-primary md:w-[70%] min-h-screen w-full">
+                            {
+                                pathname === '/' ?
+                                <div className="border-x-[1px] border-primary md:w-[70%] min-h-screen w-full">
                                 {/* search and post section  */}
                                 <section className=''>
                                     <div className='p-4 bg-background m-3 rounded-md'>
@@ -143,16 +142,19 @@ const HomeLayout = ({children}) => {
                                     </>
                                 }
                             </div>
-                            <div className="md:w-[15%] w-full">
-
+                            :
+                            <div className='md:w-[70%] w-full min-h-[100vh]'>
+                                {children}
                             </div>
+                                
+                            }
                         </div>
                     </ContainMargin>
                 </>
                 :
                 <>
                     <div className='flex justify-center items-center h-screen'>
-                        {children}
+                    {children}
                     </div>
                 </>
             }

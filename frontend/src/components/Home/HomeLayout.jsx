@@ -45,7 +45,6 @@ const HomeLayout = ({children}) => {
     
     async function handleSortDataByCategory(reqCategory) {
         setcategoryName(reqCategory)
-        
         await axios({
             method: 'GET',
             url: `${ServerUrl()}/post/viewposts?category=${reqCategory}`,
@@ -66,6 +65,11 @@ const HomeLayout = ({children}) => {
         handleSortDataByCategory(categoryName)
     }, [])
     
+    
+    const handleCategoryRequestData = async (title) => {
+        await handleSortDataByCategory(title)
+        window.location.reload()
+    }
 
     return (
         <div>
@@ -104,23 +108,23 @@ const HomeLayout = ({children}) => {
                                     <div className='px-4 '>
                                         <div className='flex gap-1 flex-wrap border-[1px] border-[#ddd] p-1 rounded-md'>
                                             <Link href={'/'}>
-                                                <button onClick={() => handleSortDataByCategory("")} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === "" ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Default</button>
+                                                <button onClick={() => handleCategoryRequestData("")} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === "" ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Default</button>
                                             </Link>
 
                                             <Link href={'?category=interesting'}>
-                                                <button onClick={() => handleSortDataByCategory('interesting')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'interesting' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Interesting</button>
+                                                <button onClick={() => handleCategoryRequestData('interesting')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'interesting' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Interesting</button>
                                             </Link>
 
                                             <Link href={'?category=todays'}>
-                                                <button onClick={() => handleSortDataByCategory('todays')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'todays' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Todays</button>
+                                                <button onClick={() => handleCategoryRequestData('todays')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'todays' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Todays</button>
                                             </Link>
 
                                             <Link href={'?category=week'}>
-                                                <button onClick={() => handleSortDataByCategory('week')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'week' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Week</button>
+                                                <button onClick={() => handleCategoryRequestData('week')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'week' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Week</button>
                                             </Link>
 
                                             <Link href={'?category=month'}>
-                                                <button onClick={() => handleSortDataByCategory('month')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'month' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Month</button>
+                                                <button onClick={() => handleCategoryRequestData('month')} className={`border-[1px] border-[#ddd] rounded-md py-1 px-3  ${categoryName === 'month' ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>Month</button>
                                             </Link>
                                             
                                         </div>

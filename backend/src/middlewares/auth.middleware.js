@@ -11,30 +11,34 @@ export const verifyJWT = asyncHandler ( async ( req, res, next ) => {
         if ( !token ) {
             //when access_token expired then request through the refresh token.
             const refresh_token = req.cookies?.refresh_token || (req.headers['authorization'] ? req.headers['authorization'].replace('Bearer ', '') : '')
-
+            
             if(!refresh_token){
                 res.status(401).json("unauthorized request or token was expired")
                 throw new ApiError(401, "unauthorized request or token was expired")
             }
-
-            const decodedInfo = jwt.verify(refresh_token, process.env.REFRESH_TOKEN_SECRET)
-            console.log(decodedInfo._id)
-            if(!user) return res.status(401).json("unauthorized request or token was expired") 
-                
-                const new_access_token = await user.generateAccessToken()
-                
-                const options = {
-                    httpOnly: true,
-                    secure: true,
-                    sameSite: 'None',
-                    maxAge: 24 * 60 * 60 * 1000 // for 1 day browser accept
-                    // maxAge: 2 * 60 * 1000 // for 2 minute browser accept
-                }
-                
-                res
-                .status(201)
-                .cookie('access_token', new_access_token, options)
-                return next()
+            
+            console.log('first')
+            const decodedInfo = jwt.verify(refresh_token, process.env.REFRESH_TOKEN_SECRET);
+            
+            if(!decodedInfo) {
+                console.log(decodedInfo, "Hited")
+                return res.status(401).json("unauthorized request or token was expired") 
+            }
+            
+            const new_access_token = await user.generateAccessToken()
+            
+            const options = {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'None',
+                maxAge: 24 * 60 * 60 * 1000 // for 1 day browser accept
+                // maxAge: 2 * 60 * 1000 // for 2 minute browser accept
+            }
+            
+            res
+            .status(201)
+            .cookie('access_token', new_access_token, options)
+            return next()
         }
         if(!token) {
             res.status(401).json("unauthorized request or token was expired")

@@ -17,6 +17,7 @@ import useModal from "../shared/Modal/useModal";
 import EditProfile from "../Editable_Components/Profile/EditProfile";
 import useAuthenticated from "@/Hooks/useAuthenticated";
 import UpdateAvatarModal from "../Editable_Components/Profile/UpdateAvatarModal";
+import { TiHome } from "react-icons/ti";
 const null_avatar = '/images/null_avatar.jpeg'
 
 const ProfileComponent = () => {
@@ -97,21 +98,21 @@ const ProfileComponent = () => {
                             </div>
                         </section>
 
-                        <section className="mt-10 bg-white rounded-xl p-3">
-                            <div className="w-full bg-white text-black font-bold  rounded-t-xl" ><p>Social links: </p></div>
-                            <div className="mt-2 flex items-center flex-wrap gap-1">
+                        <section className="mt-10 bg-white rounded-xl p-3 space-y-2">
+                            <div className="w-full flex gap-2">
+                                <span className="flex items-center gap-2"> <TiHome className="text-xl text-gray-800" /> Lives in:</span><button className="hover:underline text-black font-bold">Dhaka city</button>
+                            </div>
+                            <div className="mt-1 gap-1 space-y-2">
                                 {/* maping social links ================ */}
-                                <div className="flex items-center gap-2 text-[#1877F2] hover:bg-[#1877F2] hover:text-white max-w-[140px] rounded-full px-2 py-1 cursor-pointer duration-100">
-                                    <FaFacebook className="text-xl" /> <span>Facebook</span>
-                                </div>
-                                    |
-                                <div className="flex items-center gap-2 text-black max-w-[140px] rounded-full px-2 py-1 hover:bg-black hover:text-white cursor-pointer duration-100">
-                                    <FaGithub className="text-xl" /> <span>Github</span>
-                                </div>
-                                    |
-                                <div className="flex items-center gap-2 text-[#0077B5] max-w-[140px] rounded-full px-2 py-1 hover:bg-[#0077B5] hover:text-white cursor-pointer duration-100">
-                                    <FaLinkedinIn className="text-xl" /> <span>LinkedIn</span>
-                                </div>
+                                <button className="flex items-center gap-2 hover:underline cursor-pointer">
+                                    <FaFacebook className="text-xl text-gray-800" /> <span className="text-black font-semibold">Facebook</span>
+                                </button>
+                                <button className="flex items-center gap-2 hover:underline cursor-pointer">
+                                    <FaGithub className="text-xl text-gray-800" /> <span className="text-black font-semibold">Github</span>
+                                </button>
+                                <button className="flex items-center gap-2 hover:underline cursor-pointer">
+                                    <FaLinkedinIn className="text-xl text-gray-800" /> <span className="text-black font-semibold">LinkedIn</span>
+                                </button>
                             </div>
                         </section>
 
@@ -139,12 +140,14 @@ const ProfileComponent = () => {
             {/* Editable modals //////////////////////////////////////////////// */}
 
             {/* edit profile details  */}
+            <section>
             {
                 editProfileModal &&
                 <Modal handleCloseModal={setEditProfile}>
                     <EditProfile modal={setEditProfile}></EditProfile>
                 </Modal>
             }
+            </section>
 
             {/* update avatar  */}
             {

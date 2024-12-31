@@ -1,6 +1,6 @@
 
 export const metadata = {
-  title: `Home - CodeQueryFire`,
+  title: `CodeQueryFire`,
   description: `Answer and post your problem's with CodeQueryFire`,
 }
 const Home = () => {

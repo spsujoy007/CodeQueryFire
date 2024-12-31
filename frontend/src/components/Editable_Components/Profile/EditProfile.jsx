@@ -78,7 +78,7 @@ export default function EditProfile({modal}) {
   }
 
   return (
-    <div>
+    <div className='h-[60vh] pr-10 overflow-y-scroll'>
       {
         !loading &&
         <form id='editprofileform'>

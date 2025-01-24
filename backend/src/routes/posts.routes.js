@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { 
+    EditPostController,
     MyPostsController,
     post_Question, 
     SinglePostDetails, 
@@ -15,5 +16,6 @@ router.route("/makepost").post(upload.array('images', 3), verifyJWT, post_Questi
 router.route("/viewposts").get(ViewHomePosts)
 router.route("/myposts").get(verifyJWT, MyPostsController)
 router.route("/post_details").get( SinglePostDetails)
+router.route("/editpost").get( EditPostController)
 
 export default router

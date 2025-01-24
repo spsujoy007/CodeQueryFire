@@ -8,8 +8,8 @@ export default function useAuthenticated (req) {
     const [error, setError] = useState(false)
     const [user, setUserData] = useState({}) 
 
-    const cookies = req.cookies;
-    console.log(cookies, "COOKIES")
+    // const cookies = req.cookies;
+    // console.log(cookies, "COOKIES")
 
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     try{

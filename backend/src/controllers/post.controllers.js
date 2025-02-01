@@ -278,7 +278,8 @@ const MyPostsController = asyncHandler ( async (req, res) => {
 
 const EditPostController = asyncHandler ( async ( req, res ) => {
   // get the edited data
-  const editedData = req.body; 
+  let editedData = req.body; 
+  console.log(editedData)
   
   // check if the user is the author of the post
   if(req.user?._id !== await Post.findById({_id: new mongoose.Types.ObjectId(editedData._id)}).select('author_id').author_id){
@@ -302,10 +303,12 @@ const EditPostController = asyncHandler ( async ( req, res ) => {
       .status(404)
       .json(new ApiResponse(404, {},"No post founded"))
     } // check if the post is founded
-  
+    
     return res
     .status(200)
-    .json(new ApiResponse(200, {post: updatedPost}, 'Post upated successfully'))
+    .json(new ApiResponse(200, {
+      post: updatedPost
+    }, 'Post upated successfully'))
   }
   catch(err){
     return res

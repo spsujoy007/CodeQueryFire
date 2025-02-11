@@ -3,6 +3,7 @@ import ServerUrl from '@/Hooks/useServerUrl';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
+import { FaCheck, FaPlus } from 'react-icons/fa6';
 
 export default function EditProfile({modal}) {
   const router = useRouter()
@@ -77,44 +78,109 @@ export default function EditProfile({modal}) {
     })
   }
 
+  const [isActiveSocial, setIsActiveSocial] = useState(false)
+  const [selectLink, setSelectLink] = useState(false)
+  const [tempUsername, setTempUsername] = useState("")
+  const [storeSocialLinks, setStoreSocialLinks] = useState([]);
+
+  const handleTryToaddSocialLink = () => {
+    setIsActiveSocial(true)
+  }
+
+  const handleAddSocialLink = () => {
+    const getSocialPlatform = document.getElementById("social_links").value;
+    const link_object = {platform: getSocialPlatform, username: tempUsername}
+    setStoreSocialLinks([...storeSocialLinks, link_object ])
+  }
+  console.log(storeSocialLinks)
+
+  // designs 
+  const label_design = `text-sm ml-2 mt-4 text-primary`
   return (
-    <div className='h-[60vh] pr-10 overflow-y-scroll'>
+    <div className='max-h-[60vh] pr-2 overflow-y-auto
+  [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100
+  [&::-webkit-scrollbar-thumb]:bg-gray-300
+  dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500'>
       {
         !loading &&
-        <form id='editprofileform'>
+        <form id='editprofileform' className='w-full'>
           {/* user name inputs  */}
-          <div className='flex gap-2'>
-              <div>
-                  <label htmlFor="first_name" className='text-sm ml-2 text-primary'>First name</label>
+          <div className='flex gap-2 w-full'>
+              <div className='md:w-[50%]'>
+                  <label htmlFor="first_name" className={label_design}>First name</label>
                   <input 
                     onChange={handleOnChange}
                     id='first_name' 
                     name='first_name'
                     defaultValue={user?.first_name}
-                    className='border-[1px] border-gray-200 rounded-md w-full py-2 px-3 outline-none placeholder:text-sm' placeholder='type your first name...' 
+                    className='border-[1px] border-gray-200 focus:border-primary rounded-md w-full py-2 px-3 outline-none placeholder:text-sm' placeholder='type your first name...' 
                     type="text" />
               </div>
-              <div>
-                  <label htmlFor="last_name" className='text-sm ml-2 text-primary'>Last name</label>
+              <div className='md:w-[50%]'>
+                  <label htmlFor="last_name" className={label_design}>Last name</label>
                   <input 
                     onChange={handleOnChange}
                     id='last_name' 
                     name='last_name' 
                     defaultValue={user?.last_name} 
-                    className='border-[1px] border-gray-200 rounded-md w-full py-2 px-3 outline-none placeholder:text-sm' placeholder='type your last name...' 
+                    className='border-[1px] border-gray-200 rounded-md w-full py-2 px-3 outline-none placeholder:text-sm focus:border-primary' placeholder='type your last name...' 
                     type="text" />
               </div>
           </div>
 
-          <label htmlFor="bio" className='text-sm ml-2 mt-4 text-primary'>Bio</label>
-          <textarea 
-            onChange={handleOnChange}
-            id="bio"
-            name="bio" 
-            defaultValue={user?.bio && user.bio} 
-            className=' border-[1px] border-gray-200 rounded-md w-full max-h-[100px] min-h-[100px] p-2 outline-none placeholder:text-sm' 
-            placeholder='something about your self...' 
-          ></textarea>
+          <div className='my-1'>
+            <p htmlFor="social" className={label_design}>Social accounts</p>
+            {
+              !isActiveSocial ?
+              <button onClick={handleTryToaddSocialLink} type='button' className='px-5 py-2 border-[1px]  border-gray-200 hover:border-primary rounded-lg capitalize flex items-center gap-2'><FaPlus className='text-primary' /> add social links</button>
+              :
+              <div className='flex items-center gap-1 mx-2'>
+                  <select name="social_links" id="social_links" className='border-none outline-none bg-gray-200 px-5 py-3 rounded-md'>
+                    <option value="" selected disabled>Select Platform</option>
+                    <option value="facebook">Facebook</option>
+                    <option value="whatsapp">WhatsApp</option>
+                    <option value="twitter">Twitter (X)</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="linkedin">LinkedIn</option>
+                    <option value="snapchat">Snapchat</option>
+                    <option value="tiktok">TikTok</option>
+                    <option value="youtube">YouTube</option>
+                    <option value="telegram">Telegram</option>
+                    <option value="reddit">Reddit</option>
+                    <option value="hackerrank">HackerRank</option>
+                    <option value="leetcode">LeetCode</option>
+                    <option value="codeforces">Codeforces</option>
+                    <option value="codechef">CodeChef</option>
+                    <option value="github">GitHub</option>
+                  </select>
+
+                  <input 
+                    onChange={(e) => {
+                      e.target.value.length > 0 ? setSelectLink(true) : setSelectLink(false)
+                      setTempUsername(e.target.value)
+                    }}
+                    className='border-[1px] border-gray-200 rounded-md w-full py-2 px-3 outline-none placeholder:text-sm focus:border-primary' placeholder='username' 
+                    type="text" />
+
+                  {
+                    selectLink && <button onClick={handleAddSocialLink} type='button' className={`px-4 text-white bg-primary py-[13px] rounded-md`}><FaCheck /></button>
+                  }
+              </div>
+            }
+          </div>
+
+          <div className='mt-2'>
+            <label htmlFor="bio" className={label_design}>Bio</label>
+            <textarea 
+              onChange={handleOnChange}
+              id="bio"
+              name="bio" 
+              defaultValue={user?.bio && user.bio} 
+              className=' border-[1px] border-gray-200 rounded-md w-full max-h-[100px] min-h-[100px] p-2 outline-none placeholder:text-sm focus:border-primary' 
+              placeholder='something about your self...' 
+            ></textarea>
+          </div>
 
           {
             errorMsg && <p className='text-sm text-red-500 ml-2'>{errorMsg}</p>

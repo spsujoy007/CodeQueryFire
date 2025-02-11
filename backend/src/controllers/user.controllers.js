@@ -183,20 +183,10 @@ const loggedInProfile = asyncHandler ( async (req, res) => {
 })
 
 const editUserProfile = asyncHandler ( async ( req, res ) => {
-    const {
-        first_name,
-        last_name,
-        bio
-    } = req.body;
+    const user_data = req.body;
 
-    const updateUserData = await User.findByIdAndUpdate(req.user?._id, {
-        $set: {
-            first_name,
-            last_name,
-            bio
-        }
-    })
-    updateUserData.save()
+    const updateUserData = await User.findByIdAndUpdate(req.user?._id, user_data, {new: true})
+    // updateUserData.save()
 
     const updatedData = await User.findById(req.user?._id)
 

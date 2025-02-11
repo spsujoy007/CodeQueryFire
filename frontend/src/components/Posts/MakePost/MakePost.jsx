@@ -275,7 +275,17 @@ const MakePost = () => {
                                 <label className='text-sm ml-1 text-primary' htmlFor="topics">Topics</label><br />
                                 <input 
                                 onKeyDown={handleSelectTopic}
-                                className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md border-[1px] border-gray-200' id='topics' name='topics' placeholder='type a topic and click enter' type="text" />
+                                className={`bg-gray-100 px-2  w-full mt-1 rounded-lg py-2 outline-none text-md border-[1px] border-gray-200`} id='topics' name='topics' placeholder='type a topic and click enter' type="text" />
+                                {/* {
+                                    topics.length < 5 ?
+                                    <input 
+                                    onKeyDown={handleSelectTopic}
+                                    className={`bg-gray-100 px-2  w-full mt-1 rounded-lg py-2 outline-none text-md border-[1px] border-gray-200`} id='topics' name='topics' placeholder='type a topic and click enter' type="text" />
+                                    :
+                                    <input 
+                                    disabled
+                                    className={`bg-gray-200 px-2  w-full mt-1 rounded-lg py-2 outline-none text-md border-[1px] border-gray-200`} placeholder='type a topic and click enter' />
+                                } */}
                         </div>
                         <div className='mt-1 flex flex-wrap gap-1 items-center'>
                             {

@@ -21,6 +21,18 @@ const refreshtokenOptions = {
     maxAge: 30 * 24 * 60 * 60 * 1000
 }
 
+const readableTimeMethod = (date) => {
+    const formattedDate = date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    });
+    return formattedDate
+}
+
 const generateAccessAndRefreshToken = async(userId) => {
     try {
         const user = await User.findById(userId)
@@ -238,9 +250,67 @@ const updateUserAvatar = asyncHandler ( async ( req, res ) => {
     ))
 })
 
+
+// 
 const handleAddSocialLinks = asyncHandler( async ( req, res) => {
+    //* get the object of social link
+    //* find the user
+    //* validation: check the platform of link already saved or not
+    //* store previous object in a variable
+    //* put the new object in this variable(array)
+    //* update the User with this new array
+    //* return
     const get_social_data = req.body;
-    console.log(get_social_data)
+
+    const {social_links} = await User.findById(req.user?._id);
+
+    // validation: platform already saved or not
+    const findPlatform = social_links.find(links => links.platform === get_social_data.platform);
+    if(findPlatform) {
+        return res
+        .status(400)
+        .json( new ApiResponse(
+            400, {success: false}, `Platform ${get_social_data.platform} is already linked to your profile.`
+        ))
+    }
+    
+    let temp_array_of_links = social_links;
+    
+    // put the new object
+    if(get_social_data.platform && get_social_data.username){
+        temp_array_of_links.push(get_social_data)
+    }
+    else{
+        return res
+        .status(404)
+        .json(new ApiResponse(
+            404, {success: false}, "Platform and username are required!"
+        ))
+    }
+
+    // update the user with new link
+    const updatedProfile = await User.findByIdAndUpdate(
+        req.user?._id,
+        {social_links: temp_array_of_links},
+        {new: true}
+    ).select("email username social_links updatedAt -_id");
+
+    if(!updatedProfile){
+        return res
+        .status(500)
+        .json( new ApiResponse(
+            500, {success: false}, "Failed to update social links. Please try again later"
+        ))
+    }
+    console.log(updatedProfile)
+
+    return res 
+    .status(200)
+    .json( new ApiResponse(
+        200,
+        {updatedProfile, updatedAt: `${readableTimeMethod(updatedProfile.updatedAt)}`},
+        "Social links updated successfully"
+    ))
 })
 
 const logoutUserControl = asyncHandler ( async ( req, res ) => {

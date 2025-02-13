@@ -14,6 +14,7 @@ router.route("/register").post(registerUser);
 // 🔐 User Login Route
 router.route("/login").post(loginUser);
 
+
 // ================================
 // 🔒 Protected Routes (Require Authentication)
 // ================================

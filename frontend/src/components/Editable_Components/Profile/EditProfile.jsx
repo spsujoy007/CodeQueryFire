@@ -68,14 +68,17 @@ export default function EditProfile({modal}) {
       else{
         await axios({
           method: "POST",
-          url: ``,
+          url: `${ServerUrl()}/users/add_social_link`,
           data: link_object,
           withCredentials: true
         })
+        .then(result => {
+          console.log(result)
+        })
+        .catch(e => {
+          console.error("Something went wrong: ", e)
+        })
       }
-
-      console.log(link_object)
-      return link_object
     }
     finally {
         setIsActiveSocial(false)

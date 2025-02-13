@@ -239,7 +239,8 @@ const updateUserAvatar = asyncHandler ( async ( req, res ) => {
 })
 
 const handleAddSocialLinks = asyncHandler( async ( req, res) => {
-    // const 
+    const get_social_data = req.body;
+    console.log(get_social_data)
 })
 
 const logoutUserControl = asyncHandler ( async ( req, res ) => {

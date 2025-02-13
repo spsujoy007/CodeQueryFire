@@ -56,11 +56,23 @@ export default function EditProfile({modal}) {
     setIsActiveSocial(true)
   }
 
-  const handleAddSocialLink = () => {
+  const handleAddSocialLink = async() => {
     try{
       const getSocialPlatform = document.getElementById("social_links").value;
       const link_object = {platform: getSocialPlatform, username: tempUsername}
       setStoredSocialLinks([...storedSocialLinks, link_object ])
+
+      if(!link_object){
+        return null
+      }
+      else{
+        await axios({
+          method: "POST",
+          url: ``,
+          data: link_object,
+          withCredentials: true
+        })
+      }
 
       console.log(link_object)
       return link_object

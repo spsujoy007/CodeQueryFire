@@ -23,7 +23,6 @@ export const verifyJWT = asyncHandler ( async ( req, res, next ) => {
                 return res.status(401).json("unauthorized request or token was expired") 
             }
             const user = await User.findById(decodedInfo._id)
-            console.log(user)
             const new_access_token = await user.generateAccessToken()
             
             const options = {

@@ -12,7 +12,7 @@ export default function EditProfile({modal}) {
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
-    bio: ""
+    bio: "",
   })
 
   const [dataBeforeSaved, setDataBeforeSaved] = useState(null);
@@ -45,11 +45,37 @@ export default function EditProfile({modal}) {
       [name]: value
     }))
   }
+
+
+  const [isActiveSocial, setIsActiveSocial] = useState(false)
+  const [selectLink, setSelectLink] = useState(false)
+  const [tempUsername, setTempUsername] = useState("")
+  const [storedSocialLinks, setStoredSocialLinks] = useState([]);
+
+  const handleTryToaddSocialLink = () => {
+    setIsActiveSocial(true)
+  }
+
+  const handleAddSocialLink = () => {
+    try{
+      const getSocialPlatform = document.getElementById("social_links").value;
+      const link_object = {platform: getSocialPlatform, username: tempUsername}
+      setStoredSocialLinks([...storedSocialLinks, link_object ])
+
+      console.log(link_object)
+      return link_object
+    }
+    finally {
+        setIsActiveSocial(false)
+        setSelectLink(false)
+    }
+  }
   
 
   const [saveLoading, setSaveLoading] = useState(false)
   const handleSaveProfile = async (e) => {
     e.preventDefault()
+    // setFormData( (data) => ({...data, social_accounts: storedSocialLinks}))
     setSaveLoading(true)
 
     // validation for no change data 
@@ -78,21 +104,6 @@ export default function EditProfile({modal}) {
     })
   }
 
-  const [isActiveSocial, setIsActiveSocial] = useState(false)
-  const [selectLink, setSelectLink] = useState(false)
-  const [tempUsername, setTempUsername] = useState("")
-  const [storeSocialLinks, setStoreSocialLinks] = useState([]);
-
-  const handleTryToaddSocialLink = () => {
-    setIsActiveSocial(true)
-  }
-
-  const handleAddSocialLink = () => {
-    const getSocialPlatform = document.getElementById("social_links").value;
-    const link_object = {platform: getSocialPlatform, username: tempUsername}
-    setStoreSocialLinks([...storeSocialLinks, link_object ])
-  }
-  console.log(storeSocialLinks)
 
   // designs 
   const label_design = `text-sm ml-2 mt-4 text-primary`
@@ -136,7 +147,7 @@ export default function EditProfile({modal}) {
               <button onClick={handleTryToaddSocialLink} type='button' className='px-5 py-2 border-[1px]  border-gray-200 hover:border-primary rounded-lg capitalize flex items-center gap-2'><FaPlus className='text-primary' /> add social links</button>
               :
               <div className='flex items-center gap-1 mx-2'>
-                  <select name="social_links" id="social_links" className='border-none outline-none bg-gray-200 px-5 py-3 rounded-md'>
+                  <select name="social_links" id="social_links" className='border-none outline-none bg-gray-200 px-5 py-[10px] rounded-md'>
                     <option value="" selected disabled>Select Platform</option>
                     <option value="facebook">Facebook</option>
                     <option value="whatsapp">WhatsApp</option>
@@ -156,6 +167,11 @@ export default function EditProfile({modal}) {
                   </select>
 
                   <input 
+                    id='social_username'
+                    name='social_username'
+                    onKeyDown={(e) => {
+                      if(e.key === "Enter" && e.target.value.length > 0) handleAddSocialLink()
+                    }}
                     onChange={(e) => {
                       e.target.value.length > 0 ? setSelectLink(true) : setSelectLink(false)
                       setTempUsername(e.target.value)

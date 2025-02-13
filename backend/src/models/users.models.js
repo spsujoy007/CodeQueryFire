@@ -2,6 +2,12 @@ import mongoose, { Schema } from "mongoose";
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
+const linkupSocialSchema = new Schema({
+    _id: false,
+    platform: String,
+    username: String
+})
+
 const userSchema = new Schema({
     username: {
         type: String,
@@ -57,6 +63,7 @@ const userSchema = new Schema({
             ref: "Blog"
         }
     ],
+    social_links: [linkupSocialSchema],
     refresh_token: {
         type: String
     }

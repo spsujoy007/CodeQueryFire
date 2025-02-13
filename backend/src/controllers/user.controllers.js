@@ -238,6 +238,10 @@ const updateUserAvatar = asyncHandler ( async ( req, res ) => {
     ))
 })
 
+const handleAddSocialLinks = asyncHandler( async ( req, res) => {
+    // const 
+})
+
 const logoutUserControl = asyncHandler ( async ( req, res ) => {
     await User.findByIdAndUpdate(
         req.user?._id,
@@ -264,4 +268,4 @@ const logoutUserControl = asyncHandler ( async ( req, res ) => {
 })
 
 
-export { registerUser, loginUser, changePassword, loggedInProfile, editUserProfile, updateUserAvatar, logoutUserControl }
+export { registerUser, loginUser, changePassword, loggedInProfile, editUserProfile, updateUserAvatar, logoutUserControl, handleAddSocialLinks }

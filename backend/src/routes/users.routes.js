@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { changePassword, editUserProfile, handleAddSocialLinks, loggedInProfile, loginUser, logoutUserControl, registerUser, updateUserAvatar } from "../controllers/user.controllers.js"
+import { changePassword, editUserProfile, handleAddSocialLinks, handleRemoveSocialLink, loggedInProfile, loginUser, logoutUserControl, registerUser, updateUserAvatar } from "../controllers/user.controllers.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js"
 import { upload } from "../middlewares/multer.middleware.js"
 
@@ -33,6 +33,8 @@ router.route("/logout_user").get(verifyJWT, logoutUserControl);
 
 // 🌐 Add Social Links to Profile
 router.route("/add_social_link").post(verifyJWT, handleAddSocialLinks);
+
+router.route("/remove_social_link").delete(verifyJWT, handleRemoveSocialLink)
 
 // 🖼️ Update User Avatar (Requires Authentication & File Upload)
 router.route("/update_avatar").patch(

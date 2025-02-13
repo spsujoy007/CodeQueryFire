@@ -12,27 +12,34 @@ export default function useAuthenticated (req) {
     // console.log(cookies, "COOKIES")
 
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-    try{
-        useEffect(() => {
-            axios({
-                method: 'get',
-                url: `${ServerUrl()}/users/loggedin-profile`,
-                withCredentials: true
-            })
-            .then(res => {
-                setIsLoggedIn(true)
-                setUserData(res.data.data)
-                setLoading(false)
-            })
-            .catch(err => {
-                // console.log(err)
-                setIsLoggedIn(false)
-                setError(err)
-                setLoading(false)
-            })
-        }, [])
+
+    const fetchUserData = () => {
+        axios({
+            method: 'get',
+            url: `${ServerUrl()}/users/loggedin-profile`,
+            withCredentials: true
+        })
+        .then(res => {
+            setIsLoggedIn(true)
+            setUserData(res.data.data)
+            setLoading(false)
+        })
+        .catch(err => {
+            // console.log(err)
+            setIsLoggedIn(false)
+            setError(err)
+            setLoading(false)
+        })
     }
-    finally {
-        return {loading, user, error, isLoggedIn}
+
+    useEffect(() => {
+        fetchUserData()
+    }, [])
+
+    const refetch = () => {
+        fetchUserData()
     }
+    
+    
+    return {loading, user, error, isLoggedIn, refetch}
 }

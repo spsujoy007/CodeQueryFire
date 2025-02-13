@@ -3,11 +3,13 @@ import ServerUrl from '@/Hooks/useServerUrl';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
-import { FaCheck, FaPlus } from 'react-icons/fa6';
+import { FaCheck, FaCross, FaPlus } from 'react-icons/fa6';
+import { AiOutlineCloseCircle } from "react-icons/ai";
 
 export default function EditProfile({modal}) {
   const router = useRouter()
-  const {user, loading} = useAuthenticated()
+  const {user, loading, refetch} = useAuthenticated()
+  console.log(user)
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -74,15 +76,40 @@ export default function EditProfile({modal}) {
         })
         .then(result => {
           console.log(result)
+          setErrorMsg("")
+          refetch()
         })
         .catch(e => {
-          console.error("Something went wrong: ", e)
+          console.error("Something went wrong: ", e?.response?.data?.message)
+          setErrorMsg(e?.response?.data?.message)
+          refetch()
         })
       }
     }
     finally {
         setIsActiveSocial(false)
         setSelectLink(false)
+    }
+  }
+
+  const handleRemoveSocialLink = async (platform) => {
+    console.log("Platform: ", platform)
+    if(platform){
+      await axios({
+        method: "DELETE",
+        url: `${ServerUrl()}/users/remove_social_link`,
+        data: {platform: platform},
+        withCredentials: true
+      })
+      .then(result => {
+        console.log(result)
+        setErrorMsg("")
+        refetch()
+      })
+      .catch(e => {
+        console.error("Error when removing", e)
+        refetch()
+      })
     }
   }
   
@@ -161,7 +188,7 @@ export default function EditProfile({modal}) {
               !isActiveSocial ?
               <button onClick={handleTryToaddSocialLink} type='button' className='px-5 py-2 border-[1px]  border-gray-200 hover:border-primary rounded-lg capitalize flex items-center gap-2'><FaPlus className='text-primary' /> add social links</button>
               :
-              <div className='flex items-center gap-1 mx-2'>
+              <div className='flex items-center gap-1 mx-0'>
                   <select name="social_links" id="social_links" className='border-none outline-none bg-gray-200 px-5 py-[10px] rounded-md'>
                     <option value="" selected disabled>Select Platform</option>
                     <option value="facebook">Facebook</option>
@@ -199,6 +226,18 @@ export default function EditProfile({modal}) {
                   }
               </div>
             }
+
+            {/* exist social medias  */}
+            <div className='grid grid-cols-4 gap-1 mt-1 '>
+              {
+                user?.social_links?.map(({platform, username}, i) => 
+                  <div key={i} className='bg-gray-100 px-2 py-2 rounded-lg border-[1px] border-gray-300 overflow-hidden group flex justify-center items-center duration-300'>
+                    <button onClick={()=> handleRemoveSocialLink(platform)} className='group-hover:block hidden group-hover:duration-300 text-black text-xl' type='button'> <AiOutlineCloseCircle /> </button>
+                    <p className='group-hover:hidden group-hover:duration-300 text-sm capitalize'>{platform}</p>
+                  </div>
+                )
+              }
+            </div>
           </div>
 
           <div className='mt-2'>

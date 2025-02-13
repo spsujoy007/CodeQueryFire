@@ -96,12 +96,12 @@ const registerUser = asyncHandler ( async (req, res) => {
 })
 
 const loginUser = asyncHandler ( async (req, res) => {
-    // 1. get email and password from body
-    // 2. validation: find user
-    // 3. validation: check password
-    // 4. set access and refresh token by cockies
-    // 5. remove password and refreshToken from response
-    // 6. response
+    //* 1. get email and password from body
+    //* 2. validation: find user
+    //* 3. validation: check password
+    //* 4. set access and refresh token by cockies
+    //* 5. remove password and refreshToken from response
+    //* 6. response
 
     // get user data
     const { email, password } = req.body;
@@ -251,7 +251,7 @@ const updateUserAvatar = asyncHandler ( async ( req, res ) => {
 })
 
 
-// 
+// add social media link
 const handleAddSocialLinks = asyncHandler( async ( req, res) => {
     //* get the object of social link
     //* find the user
@@ -313,6 +313,48 @@ const handleAddSocialLinks = asyncHandler( async ( req, res) => {
     ))
 })
 
+const handleRemoveSocialLink = asyncHandler ( async ( req, res ) => {
+    const getPlatform = req.body;
+    
+    if(!getPlatform.platform) {
+        return res
+        .status(404)
+        .json( new ApiResponse(
+            404,
+            {success: false},
+            "Platform name is required"
+        ))
+    }
+
+    const {social_links} = await User.findById(req.user?._id);
+
+    const filter_links = social_links.filter(link => link.platform !== getPlatform.platform )
+
+    const updatedProfile = await User.findByIdAndUpdate(
+        req.user?._id,
+        {social_links: filter_links},
+        {new: true}
+    ).select("email username social_links updatedAt -_id");
+
+    if(!updatedProfile){
+        return res
+        .status(500)
+        .json( new ApiResponse(
+            505,
+            {success: false},
+            "Something went wrong while deleting the profile"
+        ))
+    }
+
+    return res
+    .status(200)
+    .json( new ApiResponse(
+        200,
+        {updatedProfile, platform: getPlatform},
+        "Social link successfully deleted."
+    ))
+})
+
 const logoutUserControl = asyncHandler ( async ( req, res ) => {
     await User.findByIdAndUpdate(
         req.user?._id,
@@ -339,4 +381,4 @@ const logoutUserControl = asyncHandler ( async ( req, res ) => {
 })
 
 
-export { registerUser, loginUser, changePassword, loggedInProfile, editUserProfile, updateUserAvatar, logoutUserControl, handleAddSocialLinks }
+export { registerUser, loginUser, changePassword, loggedInProfile, editUserProfile, updateUserAvatar, logoutUserControl, handleAddSocialLinks, handleRemoveSocialLink }

@@ -211,6 +211,18 @@ export default function EditProfile({modal, refetch: FetchProfileData}) {
               </div>
           </div>
 
+          <div className='mt-2'>
+            <label htmlFor="bio" className={label_design}>Bio</label>
+            <textarea 
+              onChange={handleOnChange}
+              id="bio"
+              name="bio" 
+              defaultValue={user?.bio && user.bio} 
+              className=' border-[1px] border-gray-200 rounded-md w-full max-h-[100px] min-h-[100px] p-2 outline-none placeholder:text-sm focus:border-primary' 
+              placeholder='something about your self...' 
+            ></textarea>
+          </div>
+
           <div className='my-1'>
             <p htmlFor="social" className={label_design}>Social accounts</p>
             {
@@ -271,18 +283,6 @@ export default function EditProfile({modal, refetch: FetchProfileData}) {
                 )
               }
             </div>
-          </div>
-
-          <div className='mt-2'>
-            <label htmlFor="bio" className={label_design}>Bio</label>
-            <textarea 
-              onChange={handleOnChange}
-              id="bio"
-              name="bio" 
-              defaultValue={user?.bio && user.bio} 
-              className=' border-[1px] border-gray-200 rounded-md w-full max-h-[100px] min-h-[100px] p-2 outline-none placeholder:text-sm focus:border-primary' 
-              placeholder='something about your self...' 
-            ></textarea>
           </div>
 
           {

@@ -75,10 +75,10 @@ const PostDetails = ({searchParams}) => {
     const [viewImageUrl, setViewImageUrl] = useState("")
 
     return (
-        <div>
+        <>
             {
                 loading ?
-                <div className='min-h-screen'>
+                <div className='min-h-screen flex justify-center items-center'>
                     <LoadingPage></LoadingPage>
                 </div>
                 :
@@ -89,11 +89,11 @@ const PostDetails = ({searchParams}) => {
                             <ContainMargin box_width="sm">
                                 <div>
                                 
-                                <h1 className='text-3xl font-bold'>{title}</h1>
 
                                 {/* details images and source  */}
                                 <div className='bg-white border-[1px] border-gray-200 p-4 rounded-lg mt-2'>
-                                    <div className='tiptap-style-home' dangerouslySetInnerHTML={{__html: details}}></div>
+                                <h1 className='text-3xl font-bold border-b-[1px] border-black pb-2'>{title}</h1>
+                                    <div className='tiptap-style-home mt-2' dangerouslySetInnerHTML={{__html: details}}></div>
                                     {/* <p className='text-lg text-justify'><span className='text-primary font-bold'></span>{details}</p> */}
 
                                     {
@@ -242,7 +242,7 @@ const PostDetails = ({searchParams}) => {
                         }
                 </div>
             }
-        </div>
+        </>
     );
 };
 

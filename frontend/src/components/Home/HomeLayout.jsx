@@ -67,8 +67,8 @@ const HomeLayout = ({children}) => {
     
     
     const handleCategoryRequestData = async (title) => {
+        // window.location.reload()
         await handleSortDataByCategory(title)
-        window.location.reload()
     }
 
     return (
@@ -84,8 +84,12 @@ const HomeLayout = ({children}) => {
                     <ContainMargin box_width={'md'}>
                         <div className="md:flex md:flex-row flex-col">
                             <div className={`md:w-[15%] w-full p-1 min-h-[90vh] overflow-hidden md:max-h-[95vh] scroll-pr-14 overflow-y-scroll top-20 duration-200 scrollbar-custom sticky md:ml-0 ${openMenu ? '-ml-0 bg-white ':'-ml-[500px]'}`}>
-                                
-                                <HomeProfile></HomeProfile>
+                                {
+                                    loading ?
+                                    <LoadingPage></LoadingPage>
+                                    :
+                                    <HomeProfile></HomeProfile>
+                                }
                             </div>
                             {
                                 pathname === '/' ?

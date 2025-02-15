@@ -37,7 +37,7 @@ const SingleCard = ({post}) => {
     const [seeMore, setSeeMore] = useState(false)
 
     return (
-        <div className='w-full  px-3 pt-3 pb-6 border-t-[1px] border-primary'>
+        <div className='w-full  px-3 pt-3 pb-3 border-t-[1px] border-primary'>
             {/* navigate details page  */}
             <div>
                 <Link href={`post/${title.split(/[\\/]+/).join(' ')}?id=${_id}`}>
@@ -75,7 +75,7 @@ const SingleCard = ({post}) => {
                 </Link>
             </div> */}
 
-            <div className="pt-2 mt-3 flex items-center gap-2 relative group">
+            <div className="pt-2 mt-3 inline-flex items-center gap-2 relative group">
                 {/* <div className="w-[35px] h-[35px] rounded-full">
                     <Image alt="avatar" src={author?.avatar ?  author?.avatar?.url : null_avatar} width={35} height={35} className="rounded-full bg-gray-200 w-full h-full object-cover"></Image>
                 </div> */}
@@ -84,7 +84,8 @@ const SingleCard = ({post}) => {
                     <p className="text-xs">{FormatedTime}</p>
                 </div>
 
-                <div className=" absolute -top-[125px] drop-shadow-lg shadow-gray-400 hidden group-hover:block  bg-gray-100 border-[1px] border-gray-300 p-2 rounded-md">
+                {/* // hovered profile info */}
+                <div className="w-[400px] absolute -top-[125px] drop-shadow-lg shadow-gray-400 hidden group-hover:block  bg-gray-100 border-[1px] border-gray-300 p-2 rounded-md">
                     <section className="flex items-start gap-2">
                         <div className="w-[35px] h-[35px] rounded-full">
                             <Image alt="avatar" src={author?.avatar ?  author?.avatar?.url : null_avatar} width={35} height={35} className="rounded-full bg-gray-200 w-full h-full object-cover"></Image>
@@ -99,7 +100,7 @@ const SingleCard = ({post}) => {
                             </div>
                         </div>
                     </section>
-                    <button className="w-full mt-2 bg-primary text-white border-[1px] border-white rounded-md py-1">View Profile</button>
+                    <button className="w-full mt-2 bg-gray-300 text-black border-[1px] border-white rounded-md py-1">View Profile</button>
                 </div>
             </div>
         </div>

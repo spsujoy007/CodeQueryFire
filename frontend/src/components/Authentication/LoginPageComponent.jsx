@@ -5,10 +5,12 @@ import ServerUrl from "@/Hooks/useServerUrl";
 import useSiteName from "@/Hooks/useSiteName";
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 const LoginPageComponent = () => {
+    const getHistoryPath = useSearchParams()
+
     const router = useRouter()
     const name = useSiteName()
     
@@ -38,12 +40,18 @@ const LoginPageComponent = () => {
             withCredentials: true
         })
         .then(res => {
-            console.log(res)
             setRegisterd(true)
             setserverMsg(res.data.message)
             setError(false)
             setLoading(false)
-            router.push('/')
+
+            const HistoryPath = getHistoryPath.get("page")
+            if(HistoryPath) {
+                router.push(HistoryPath)
+            }
+            else{
+                router.push('/')
+            }
         })
         .catch(err => {
             console.error(err)

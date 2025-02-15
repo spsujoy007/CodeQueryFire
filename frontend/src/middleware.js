@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import ServerUrl from "./Hooks/useServerUrl";
 
 export async function middleware(request) {
-  const current_url = new URL(request.url);
+  const current_url = request.nextUrl.clone();
+  console.log("URL:: ", current_url)
   const response = NextResponse.next()
   response.cookies.set('history_url', current_url.pathname, {
     httpOnly: true, // Optional: to make it accessible via JavaScript on the client-side
@@ -13,7 +14,7 @@ export async function middleware(request) {
   
   const token = request.cookies.get('access_token');
   if (!token?.value) {
-    return NextResponse.redirect(new URL('/login', request.url));
+    return NextResponse.redirect(new URL(`/login?page=${current_url.pathname}${current_url?.search}`, request.url));
   }
   
   try {
@@ -26,7 +27,7 @@ export async function middleware(request) {
     });
     
     if (!res.ok) {
-      return NextResponse.redirect(new URL('/login', request.url));
+      return NextResponse.redirect(new URL(`/login?page=${current_url.pathname}${current_url?.search}`, request.url));
     }
     
     // Proceed if response is successful
@@ -36,7 +37,7 @@ export async function middleware(request) {
     return response;
   } catch (error) {
     console.error("Error fetching user data:", error);
-    return NextResponse.redirect(new URL('/login', request.url));
+    return NextResponse.redirect(new URL(`/login?page=${current_url.pathname}&id=${current_url?.search.split("?id=")[1]}`, request.url));
   }
 }
 

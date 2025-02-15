@@ -111,7 +111,9 @@ const Navbar = () => {
                             <div onMouseOver={() => setDrawer(true)}  className='relative'>
                                 <div className='flex items-center gap-2 cursor-pointer'>
                                     <p>{user && user.first_name}</p>
-                                    <Image className='rounded-full ring-[1px] ring-primary border-2 border-white' width={35} height={35} src={user?.avatar ? user.avatar?.url : null_avatar} alt='profile_pic'></Image>
+                                    <div className='w-[35px] h-[35px]'>
+                                        <Image className='w-full h-full object-cover rounded-full ring-[1px] ring-primary border-2 border-white' width={35} height={35} src={user?.avatar ? user.avatar?.url : null_avatar} alt='profile_pic'></Image>
+                                    </div>
                                 </div>
 
                                 {

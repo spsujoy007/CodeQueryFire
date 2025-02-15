@@ -53,7 +53,9 @@ const HomeProfile = () => {
                             {/* profile info */}
                             <div>
                                 <div className='flex items-center gap-3'>
-                                    <Image alt='avatar' className='rounded-full ring-1 ring-primary' src={user?.avatar ? user.avatar?.url : null_avatar} width={45} height={45}></Image>
+                                    <div className='w-[45px] h-[45px]'>
+                                    <Image alt='avatar' className=' w-full h-full object-cover rounded-full ring-1 ring-primary' src={user?.avatar ? user.avatar?.url : null_avatar} width={45} height={45}></Image>
+                                    </div>
                                     <div>
                                         {/* user name ----------------------- */}
                                         <h5 className='text-sm font-bold'>

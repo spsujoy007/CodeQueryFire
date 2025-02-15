@@ -87,8 +87,10 @@ const SingleCard = ({post}) => {
                 {/* // hovered profile info */}
                 <div className="w-[400px] absolute -top-[125px] drop-shadow-lg shadow-gray-400 hidden group-hover:block  bg-gray-100 border-[1px] border-gray-300 p-2 rounded-md">
                     <section className="flex items-start gap-2">
-                        <div className="w-[35px] h-[35px] rounded-full">
-                            <Image alt="avatar" src={author?.avatar ?  author?.avatar?.url : null_avatar} width={35} height={35} className="rounded-full bg-gray-200 w-full h-full object-cover"></Image>
+                        <div>
+                            <div className="w-[35px] h-[35px] rounded-full">
+                                <Image alt="avatar" src={author?.avatar ?  author?.avatar?.url : null_avatar} width={35} height={35} className="rounded-full bg-gray-200 w-full h-full object-cover"></Image>
+                            </div>
                         </div>
                         <div>
                             <h5 className="text-sm font-bold"> {author?.full_name}</h5>

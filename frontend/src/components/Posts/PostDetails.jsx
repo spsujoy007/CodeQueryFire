@@ -90,14 +90,6 @@ const PostDetails = ({searchParams}) => {
                                 <div>
                                 
                                 <h1 className='text-3xl font-bold'>{title}</h1>
-                                <div className="mt-2 bg-white border-[1px] border-gray-200 p-2 rounded-lg w-full flex items-center gap-3">
-                                    <Image priority  alt="avatar" src={author?.avatar ? author.avatar?.url : null_avatar} width={45} height={45} className="rounded-full"></Image>
-                                    <div>
-                                        <h6 className="text-sm font-semibold">Sujoy</h6>
-                                        <p className="text-sm">{FormatedTime}</p>
-                                    </div>
-                                </div>
-
 
                                 {/* details images and source  */}
                                 <div className='bg-white border-[1px] border-gray-200 p-4 rounded-lg mt-2'>
@@ -197,6 +189,37 @@ const PostDetails = ({searchParams}) => {
                                     </button>
                                 </div>
                                 </div>
+
+                                <div className="mt-2 relative group bg-white border-[1px] border-gray-200 p-2 rounded-lg w-full flex items-center gap-3 ">
+                                    <div className='w-[45px] h-[45px]'>
+                                        <Image priority  alt="avatar" src={author?.avatar ? author.avatar?.url : null_avatar} width={45} height={45} className="rounded-full w-full h-full object-cover"></Image>
+                                    </div>
+                                    <div>
+                                        <h6 className="text-sm font-semibold">Sujoy</h6>
+                                        <p className="text-sm">{FormatedTime}</p>
+                                    </div>
+
+                                    {/* // hovered profile info */}
+                                    <div className="w-[400px] absolute -top-[210%] drop-shadow-lg shadow-gray-400 hidden group-hover:block  bg-gray-100 border-[1px] border-gray-300 p-2 rounded-md">
+                                        <section className="flex items-start gap-2">
+                                            <div>
+                                                <div className="w-[35px] h-[35px] rounded-full">
+                                                    <Image alt="avatar" src={author?.avatar ?  author?.avatar?.url : null_avatar} width={35} height={35} className="rounded-full bg-gray-200 w-full h-full object-cover"></Image>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h5 className="text-sm font-bold"> {author?.full_name}</h5>
+                                                <p className="text-sm">{author?.bio}</p>
+                                                <div className="text-sm mt-2 flex gap-2">
+                                                    <p>Followers: <span className="font-bold text-primary">0</span></p>
+                                                    |
+                                                    <p>Following: <span className="font-bold text-primary">0</span></p>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <Link href="/" className="w-full mt-2 block text-center bg-gray-300 text-black border-[1px] border-white rounded-md py-1">View Profile</Link>
+                                    </div>
+                                </div>
                             </ContainMargin>
                         </>
                     }
@@ -211,8 +234,8 @@ const PostDetails = ({searchParams}) => {
                                         </div>
                                     </div>
 
-                                    <div style={{aspectRatio: 2/1, overflow: 'hidden'}}>
-                                        <Image  alt='post_image'   quality={100} className='rounded-b-xl  overflow-hidden' src={viewImageUrl ? viewImageUrl : imgPlaceholderView} height={500} width={1000} layout='responsive'></Image>
+                                    <div className='w-full h-full'>
+                                        <Image  alt='post_image' quality={100} className='rounded-b-xl w-full h-full object-cover' src={viewImageUrl ? viewImageUrl : imgPlaceholderView} height={1000} width={1000} ></Image>
                                     </div>
                                 </div>
                             </div>

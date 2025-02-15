@@ -106,7 +106,6 @@ const loginUser = asyncHandler ( async (req, res) => {
     // get user data
     const { email, password } = req.body;
     const existUser = await User.findOne({email})
-    console.log("EXISTED USER-------------------", existUser)
 
     // validation of existed user
     if(!existUser) throw new ApiError(404, "user with this email does not exist")
@@ -206,9 +205,8 @@ const editUserProfile = asyncHandler ( async ( req, res ) => {
 })
 
 const updateUserAvatar = asyncHandler ( async ( req, res ) => {
-    console.log('update avatar')
     const olddata = await User.findById(req.user?._id);
-
+    
     const avatarLocalPath = req.files?.avatar[0]?.path;
     if( !avatarLocalPath ) {
         return res
@@ -302,7 +300,6 @@ const handleAddSocialLinks = asyncHandler( async ( req, res) => {
             500, {success: false}, "Failed to update social links. Please try again later"
         ))
     }
-    console.log(updatedProfile)
 
     return res 
     .status(200)

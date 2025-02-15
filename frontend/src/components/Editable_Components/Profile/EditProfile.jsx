@@ -3,13 +3,13 @@ import ServerUrl from '@/Hooks/useServerUrl';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
-import { FaCheck, FaCross, FaPlus } from 'react-icons/fa6';
+import { FaCheck, FaCode, FaCross, FaFacebook, FaHackerrank, FaInstagram, FaLinkedinIn, FaPlus, FaReddit, FaSnapchat, FaTelegram, FaTwitter, FaWhatsapp, FaX, FaXTwitter, FaYoutube } from 'react-icons/fa6';
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import { FaGithub, FaInstagramSquare } from 'react-icons/fa';
 
 export default function EditProfile({modal}) {
   const router = useRouter()
   const {user, loading, refetch} = useAuthenticated()
-  console.log(user)
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -146,6 +146,34 @@ export default function EditProfile({modal}) {
     })
   }
 
+  const platform_lists = [
+    { platform: "facebook", label: "Facebook", icon: <FaFacebook/> },
+    { platform: "whatsapp", label: "WhatsApp", icon: <FaWhatsapp/> },
+    { platform: "twitter", label: "Twitter (X)", icon: <FaXTwitter/> },
+    { platform: "instagram", label: "Instagram", icon: <FaInstagram/> },
+    { platform: "linkedin", label: "LinkedIn", icon: <FaLinkedinIn/> },
+    { platform: "snapchat", label: "Snapchat", icon: <FaSnapchat/> },
+    { platform: "youtube", label: "YouTube", icon: <FaYoutube/> },
+    { platform: "telegram", label: "Telegram", icon: <FaTelegram/> },
+    { platform: "reddit", label: "Reddit", icon: <FaReddit/> },
+    { platform: "hackerrank", label: "HackerRank", icon: <FaHackerrank/> },
+    { platform: "leetcode", label: "LeetCode", icon: <FaCode/> },
+    { platform: "codeforces", label: "Codeforces", icon: <FaCode/> },
+    { platform: "codechef", label: "CodeChef", icon: <FaCode/> },
+    { platform: "github", label: "GitHub", icon: <FaGithub/> }
+  ];
+
+  // TODO: working in this line
+  let filteredPlatformListOptions = []
+  if(!loading){
+    filteredPlatformListOptions = platform_lists.filter((item) => !user?.social_links.some((p) => p.platform === item.platform))
+  }
+  
+  let filteredPlatformListAlreadyUsed = []
+  if(!loading){
+    filteredPlatformListAlreadyUsed = platform_lists.filter((item) => user?.social_links.some((p) => p.platform === item.platform))
+  }
+  
 
   // designs 
   const label_design = `text-sm ml-2 mt-4 text-primary`
@@ -191,7 +219,10 @@ export default function EditProfile({modal}) {
               <div className='flex items-center gap-1 mx-0'>
                   <select name="social_links" id="social_links" className='border-none outline-none bg-gray-200 px-5 py-[10px] rounded-md'>
                     <option value="" selected disabled>Select Platform</option>
-                    <option value="facebook">Facebook</option>
+                    {
+                      filteredPlatformListOptions.map(({platform, label}, i) => <option key={i} value={platform}>{label}</option>)
+                    }
+                    {/* <option value="facebook">Facebook</option>
                     <option value="whatsapp">WhatsApp</option>
                     <option value="twitter">Twitter (X)</option>
                     <option value="instagram">Instagram</option>
@@ -205,13 +236,14 @@ export default function EditProfile({modal}) {
                     <option value="leetcode">LeetCode</option>
                     <option value="codeforces">Codeforces</option>
                     <option value="codechef">CodeChef</option>
-                    <option value="github">GitHub</option>
+                    <option value="github">GitHub</option> */}
                   </select>
 
                   <input 
                     id='social_username'
                     name='social_username'
                     onKeyDown={(e) => {
+                      setErrorMsg("")
                       if(e.key === "Enter" && e.target.value.length > 0) handleAddSocialLink()
                     }}
                     onChange={(e) => {
@@ -230,10 +262,10 @@ export default function EditProfile({modal}) {
             {/* exist social medias  */}
             <div className='grid grid-cols-4 gap-1 mt-1 '>
               {
-                user?.social_links?.map(({platform, username}, i) => 
+                filteredPlatformListAlreadyUsed?.map(({platform, username, icon}, i) => 
                   <div key={i} className='bg-gray-100 px-2 py-2 rounded-lg border-[1px] border-gray-300 overflow-hidden group flex justify-center items-center duration-300'>
                     <button onClick={()=> handleRemoveSocialLink(platform)} className='group-hover:block hidden group-hover:duration-300 text-black text-xl' type='button'> <AiOutlineCloseCircle /> </button>
-                    <p className='group-hover:hidden group-hover:duration-300 text-sm capitalize'>{platform}</p>
+                    <p className='group-hover:hidden group-hover:duration-300 text-sm capitalize flex gap-2 items-center' title={username}>{icon} {platform}</p>
                   </div>
                 )
               }

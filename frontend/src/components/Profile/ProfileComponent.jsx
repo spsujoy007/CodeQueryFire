@@ -128,21 +128,32 @@ const ProfileComponent = () => {
                             </div>
                         </section>
 
-                        <section className="mt-10 bg-white rounded-xl p-3 space-y-2">
+                        {/*
+                            ╔══════════════════════════════════════════════════════════════════════════╗
+                            ║ 🌐 SOCIAL LINKS SECTION - CONNECT WITH THE WORLD 🚀                     ║
+                            ╠══════════════════════════════════════════════════════════════════════════╣
+                        */}
+                        <section className="mt-10 bg-white rounded-xl p-3 space-y-2 ">
+                            <p className="text-primary font-semibold">Social links</p>
                             {/* <div className="w-full flex gap-2">
                                 <span className="flex items-center gap-2"> <TiHome className="text-xl text-gray-800" /> Lives in:</span><button className="hover:underline text-black font-bold">Dhaka city</button>
                             </div> */}
-                            <div className="mt-1 gap-1 space-y-2">
+                            <div className="mt-1 gap-1 space-y-2 ml-2">
                                 {/* maping social links ================ */}
                                 {
                                     user?.social_links?.map(({platform, username}, i) => 
                                         <a href={`${match_link_by_platform(platform).url}${username}`} target="_blank" key={i} className="flex items-center gap-2 hover:underline cursor-pointer">
-                                            {match_link_by_platform(platform).icon} <span className="text-black font-semibold"> {platform} </span>
+                                            {match_link_by_platform(platform).icon} <span className="text-black font-semibold"> {username} </span>
                                         </a>
                                     )
                                 }
                             </div>
                         </section>
+                        {/* 
+                            ╔══════════════════════════════════════════════════════════════════════════╗
+                            ║ 🎯 CODE END                                                              ║
+                            ╠══════════════════════════════════════════════════════════════════════════╣
+                        */}
 
                         {/* post and blogs section  */}
                         <section className="mt-10 flex gap-1">

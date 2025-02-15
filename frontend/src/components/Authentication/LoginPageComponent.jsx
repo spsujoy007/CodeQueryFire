@@ -47,8 +47,11 @@ const LoginPageComponent = () => {
 
             const HistoryPath = getHistoryPath.get("page")
             const PostID = getHistoryPath.get("id")
-            console.log(encodeURI(HistoryPath)+ "?id="+ PostID)
-            if(HistoryPath) {
+            // console.log(encodeURI(HistoryPath)+ "?id="+ PostID)
+            if(HistoryPath && PostID === "undefined") {
+                router.push(encodeURI(HistoryPath))
+            }
+            else if(PostID) {
                 router.push(encodeURI(HistoryPath) + "?id=" + PostID)
             }
             else{

@@ -213,9 +213,9 @@ const updateUserAvatar = asyncHandler ( async ( req, res ) => {
         .status(404)
         .json(new ApiResponse(404, {}, "Avatar file is requireed!"))
     }
-
+    
     const uploadImage = await uploadOnCloudinary(avatarLocalPath);
-    console.log(uploadImage)
+    console.log("Image url: ", uploadImage)
     
     const updateAvatar = await User.findByIdAndUpdate(req.user?._id, {
         $set: {

@@ -1,12 +1,7 @@
 import {v2 as cloudinary} from 'cloudinary'
 import fs from 'fs'
-import dotenv from 'dotenv'
-
-dotenv.config({
-    path: '../.env'
-})
-
-
+import dotenv from 'dotenv';
+dotenv.config();
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
@@ -15,16 +10,14 @@ cloudinary.config({
 
 // upload photo method 
 const uploadOnCloudinary = async (localFilePath) => {
-    console.log(localFilePath)
     try {
         if (!localFilePath) return null;
-
         // upload photo 
         const response = await cloudinary.uploader.upload(localFilePath, {
             folder: 'CodeQueryFire',
             resource_type: "auto"
         })
-
+        
         console.log(`Image uploaded, Data: ${response}`);
         fs.unlinkSync(localFilePath)
 

@@ -53,9 +53,9 @@ const UpdateAvatarModal = () => {
             {
                 !loading &&
                 <div className='w-full'>
-                    <div className='w-[300px] h-[300px] rounded-full overflow-hidden mx-auto border-2 border-black'>
+                    <div className='w-[300px] h-[300px] rounded-full overflow-hidden mx-auto border-2 border-black flex justify-center items-center'>
                         <Image
-                            className='bg-white w-full h-full'
+                            className='bg-white w-full h-full object-cover'
                             src={avatarBlob ? avatarBlob : `${user?.avatar?.url ? user?.avatar?.url : null_avatar}`}
                             width={300}
                             height={300}

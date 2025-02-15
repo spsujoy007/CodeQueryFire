@@ -14,6 +14,7 @@ cloudinary.config({
 })
 
 const removeImageById = async ( public_id ) => {
+    console.log(public_id)
     if ( !public_id ) return;
 
     cloudinary.uploader.destroy(public_id, ( error, result ) => {

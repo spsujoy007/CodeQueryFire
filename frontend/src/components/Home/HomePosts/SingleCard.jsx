@@ -75,11 +75,31 @@ const SingleCard = ({post}) => {
                 </Link>
             </div> */}
 
-            <div className="mt-5 flex items-center gap-2">
-                <Image alt="avatar" src={author?.avatar ?  author?.avatar?.url : null_avatar} width={35} height={35} className="rounded-full bg-gray-200"></Image>
+            <div className="pt-2 mt-3 flex items-center gap-2 relative group">
+                {/* <div className="w-[35px] h-[35px] rounded-full">
+                    <Image alt="avatar" src={author?.avatar ?  author?.avatar?.url : null_avatar} width={35} height={35} className="rounded-full bg-gray-200 w-full h-full object-cover"></Image>
+                </div> */}
                 <div>
                     <h6 className="text-xs font-semibold">{author?.full_name}</h6>
                     <p className="text-xs">{FormatedTime}</p>
+                </div>
+
+                <div className=" absolute -top-[125px] drop-shadow-lg shadow-gray-400 hidden group-hover:block  bg-gray-100 border-[1px] border-gray-300 p-2 rounded-md">
+                    <section className="flex items-start gap-2">
+                        <div className="w-[35px] h-[35px] rounded-full">
+                            <Image alt="avatar" src={author?.avatar ?  author?.avatar?.url : null_avatar} width={35} height={35} className="rounded-full bg-gray-200 w-full h-full object-cover"></Image>
+                        </div>
+                        <div>
+                            <h5 className="text-sm font-bold"> {author?.full_name}</h5>
+                            <p className="text-sm">{author?.bio}</p>
+                            <div className="text-sm mt-2 flex gap-2">
+                                <p>Followers: <span className="font-bold text-primary">0</span></p>
+                                |
+                                <p>Following: <span className="font-bold text-primary">0</span></p>
+                            </div>
+                        </div>
+                    </section>
+                    <button className="w-full mt-2 bg-primary text-white border-[1px] border-white rounded-md py-1">View Profile</button>
                 </div>
             </div>
         </div>

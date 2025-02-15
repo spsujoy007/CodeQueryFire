@@ -56,7 +56,7 @@ const ProfileComponent = () => {
 
 
     // linked social media formula ***************
-    const styleForIcon = "text-lg text-gray-800"
+    const styleForIcon = "text-lg"
     const platform_lists = [
         { platform: "facebook", label: "Facebook", icon: <FaFacebook className={styleForIcon}/>, url: "https://www.facebook.com/" },
         { platform: "whatsapp", label: "WhatsApp", icon: <FaWhatsapp className={styleForIcon}/>, url: "https://wa.me/" },
@@ -97,7 +97,11 @@ const ProfileComponent = () => {
                     <section>
                     <ContainMargin box_width={'md'}>
                         <section className="flex gap-10 items-center">
-                            <Image onClick={handleAvatarModal} className="rounded-full cursor-pointer hover:brightness-90 duration-150 ring-2 ring-primary border-4 border-white" width={250} height={250} src={user?.avatar ? user.avatar?.url : null_avatar} alt={user?.full_name} priority layout="fit"></Image>
+                            <section>
+                            <div className="h-[250px] w-[250px] rounded-full bg-gray-300">
+                                <Image onClick={handleAvatarModal} className="  rounded-full object-cover h-full w-full cursor-pointer hover:brightness-90 duration-150 ring-2 ring-primary border-4 border-white" width={250} height={250}  src={user?.avatar ? user.avatar?.url : null_avatar} alt={user?.full_name}></Image>
+                            </div>
+                            </section>
                             <div className="w-full">
                                 <h1 className="text-2xl font-bold text-primary">{user.full_name}</h1>
                                 <p className="text-sm mt-1 w-[600px]  whitespace-pre-wrap">{user?.bio && user.bio}</p>
@@ -134,19 +138,21 @@ const ProfileComponent = () => {
                             ╠══════════════════════════════════════════════════════════════════════════╣
                         */}
                         <section className="mt-10 bg-white rounded-xl p-3 space-y-2 ">
-                            <p className="text-primary font-semibold">Social links</p>
+                            <p className="text-primary text-sm ml-2 rounded-full border-[1px] border-primary inline-block px-2">Social links</p>
                             {/* <div className="w-full flex gap-2">
                                 <span className="flex items-center gap-2"> <TiHome className="text-xl text-gray-800" /> Lives in:</span><button className="hover:underline text-black font-bold">Dhaka city</button>
                             </div> */}
-                            <div className="mt-1 gap-1 space-y-2 ml-2">
-                                {/* maping social links ================ */}
-                                {
-                                    user?.social_links?.map(({platform, username}, i) => 
-                                        <Link href={`${match_link_by_platform(platform).url}${username}`} target="_blank" key={i} className="flex items-center gap-2 hover:underline cursor-pointer">
-                                            {match_link_by_platform(platform).icon} <span className="text-black "> {username} </span>
-                                        </Link>
-                                    )
-                                }
+                            <div> {/* for separate the div */}
+                                <div className="mt-1 gap-1 space-y-2 ml-2 flex-col inline-flex">
+                                    {/* maping social links ================ */}
+                                    {
+                                        user?.social_links?.map(({platform, username}, i) => 
+                                            <Link href={`${match_link_by_platform(platform).url}${username}`} target="_blank" key={i} className="flex items-center gap-2 hover:underline cursor-pointer hover:text-primary">
+                                                {match_link_by_platform(platform).icon} <span className=" "> {username} </span>
+                                            </Link>
+                                        )
+                                    }
+                                </div>
                             </div>
                         </section>
                         {/* 
@@ -157,7 +163,7 @@ const ProfileComponent = () => {
 
                         {/* post and blogs section  */}
                         <section className="mt-10 flex gap-1">
-                            <div className="w-[70%] bg-white min-h-[40%] rounded-b-xl overflow-hidden">
+                            <div className="w-[70%] bg-white min-h-[40%] rounded-b-xl ">
                                 <div className="w-full bg-black text-white font-bold py-1 pl-5 rounded-t-xl" ><p>Posts: </p></div>
                                 {
                                     posts?.map((post) => <SingleCard key={post._id} post={post}></SingleCard>)

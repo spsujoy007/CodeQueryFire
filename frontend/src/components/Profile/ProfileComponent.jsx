@@ -7,7 +7,7 @@ import LoadingPage from "@/app/loading";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import Link from "next/link";
 import SingleCard from "../Home/HomePosts/SingleCard";
-import { FaFacebook, FaGithub, FaLinkedinIn } from "react-icons/fa6";
+import { FaCode, FaFacebook, FaGithub, FaHackerrank, FaInstagram, FaLinkedinIn, FaReddit, FaSnapchat, FaTelegram, FaWhatsapp, FaXTwitter, FaYoutube } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ServerUrl from "@/Hooks/useServerUrl";
@@ -54,6 +54,36 @@ const ProfileComponent = () => {
         setAvatarModel(true)
     }
 
+
+    // linked social media formula ***************
+    const styleForIcon = "text-lg text-gray-800"
+    const platform_lists = [
+        { platform: "facebook", label: "Facebook", icon: <FaFacebook className={styleForIcon}/>, url: "https://www.facebook.com/" },
+        { platform: "whatsapp", label: "WhatsApp", icon: <FaWhatsapp className={styleForIcon}/>, url: "https://wa.me/" },
+        { platform: "twitter", label: "Twitter (X)", icon: <FaXTwitter className={styleForIcon}/>, url: "https://twitter.com/" },
+        { platform: "instagram", label: "Instagram", icon: <FaInstagram className={styleForIcon}/>, url: "https://www.instagram.com/" },
+        { platform: "linkedin", label: "LinkedIn", icon: <FaLinkedinIn className={styleForIcon}/>, url: "https://www.linkedin.com/in/" },
+        { platform: "snapchat", label: "Snapchat", icon: <FaSnapchat className={styleForIcon}/>, url: "https://www.snapchat.com/add/" },
+        { platform: "youtube", label: "YouTube", icon: <FaYoutube className={styleForIcon}/>, url: "https://www.youtube.com/" },
+        { platform: "telegram", label: "Telegram", icon: <FaTelegram className={styleForIcon}/>, url: "https://t.me/" },
+        { platform: "reddit", label: "Reddit", icon: <FaReddit className={styleForIcon}/>, url: "https://www.reddit.com/user/" },
+        { platform: "hackerrank", label: "HackerRank", icon: <FaHackerrank className={styleForIcon}/>, url: "https://www.hackerrank.com/" },
+        { platform: "leetcode", label: "LeetCode", icon: <FaCode className={styleForIcon}/>, url: "https://leetcode.com/" },
+        { platform: "codeforces", label: "Codeforces", icon: <FaCode className={styleForIcon}/>, url: "https://codeforces.com/profile/" },
+        { platform: "codechef", label: "CodeChef", icon: <FaCode className={styleForIcon}/>, url: "https://www.codechef.com/users/" },
+        { platform: "github", label: "GitHub", icon: <FaGithub className={styleForIcon}/>, url: "https://github.com/" }
+    ];
+    
+    let filteredPlatformListAlreadyUsed = []
+    if(!loading){
+        filteredPlatformListAlreadyUsed = user?.social_links.filter((item) => platform_lists.some((p) => p.platform === item.platform))
+    }
+
+    const match_link_by_platform = (platform_name) =>{
+        return platform_lists.find((p) => p.platform === platform_name)
+    }
+    // linked social media formula ***************
+
     return (
         <div className="">
             {
@@ -99,20 +129,18 @@ const ProfileComponent = () => {
                         </section>
 
                         <section className="mt-10 bg-white rounded-xl p-3 space-y-2">
-                            <div className="w-full flex gap-2">
+                            {/* <div className="w-full flex gap-2">
                                 <span className="flex items-center gap-2"> <TiHome className="text-xl text-gray-800" /> Lives in:</span><button className="hover:underline text-black font-bold">Dhaka city</button>
-                            </div>
+                            </div> */}
                             <div className="mt-1 gap-1 space-y-2">
                                 {/* maping social links ================ */}
-                                <button className="flex items-center gap-2 hover:underline cursor-pointer">
-                                    <FaFacebook className="text-xl text-gray-800" /> <span className="text-black font-semibold">Facebook</span>
-                                </button>
-                                <button className="flex items-center gap-2 hover:underline cursor-pointer">
-                                    <FaGithub className="text-xl text-gray-800" /> <span className="text-black font-semibold">Github</span>
-                                </button>
-                                <button className="flex items-center gap-2 hover:underline cursor-pointer">
-                                    <FaLinkedinIn className="text-xl text-gray-800" /> <span className="text-black font-semibold">LinkedIn</span>
-                                </button>
+                                {
+                                    user?.social_links?.map(({platform, username}, i) => 
+                                        <a href={`${match_link_by_platform(platform).url}${username}`} target="_blank" key={i} className="flex items-center gap-2 hover:underline cursor-pointer">
+                                            {match_link_by_platform(platform).icon} <span className="text-black font-semibold"> {platform} </span>
+                                        </a>
+                                    )
+                                }
                             </div>
                         </section>
 

@@ -2,9 +2,17 @@ import express from "express";
 import cors from "cors"
 import cookieParser from "cookie-parser";
 const app = express()
-// || 'https://codequeryfire.vercel.app'
+const allowedOrigins = ["http://localhost:3000", "https://codequeryfire.vercel.app"]
 app.use(cors({
-    origin: 'http://localhost:3000',
+    // origin: 'http://localhost:3000',
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+    ,
     credentials: true,
     sameSite: false
 }))

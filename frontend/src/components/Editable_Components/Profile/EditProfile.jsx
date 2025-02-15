@@ -7,7 +7,7 @@ import { FaCheck, FaCode, FaCross, FaFacebook, FaHackerrank, FaInstagram, FaLink
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { FaGithub, FaInstagramSquare } from 'react-icons/fa';
 
-export default function EditProfile({modal}) {
+export default function EditProfile({modal, refetch: FetchProfileData}) {
   const router = useRouter()
   const {user, loading, refetch} = useAuthenticated()
 
@@ -77,6 +77,7 @@ export default function EditProfile({modal}) {
         .then(result => {
           console.log(result)
           setErrorMsg("")
+          FetchProfileData()
           refetch()
         })
         .catch(e => {

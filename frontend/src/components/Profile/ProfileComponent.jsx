@@ -25,7 +25,7 @@ const ProfileComponent = () => {
     
     const [posts, setPosts] = useState([])
 
-    const {user, loading} = useAuthenticated()
+    const {user, loading, refetch} = useAuthenticated()
 
     const api = process.env.NEXT_PUBLIC_SERVER
     useEffect(() => {
@@ -142,9 +142,9 @@ const ProfileComponent = () => {
                                 {/* maping social links ================ */}
                                 {
                                     user?.social_links?.map(({platform, username}, i) => 
-                                        <a href={`${match_link_by_platform(platform).url}${username}`} target="_blank" key={i} className="flex items-center gap-2 hover:underline cursor-pointer">
-                                            {match_link_by_platform(platform).icon} <span className="text-black font-semibold"> {username} </span>
-                                        </a>
+                                        <Link href={`${match_link_by_platform(platform).url}${username}`} target="_blank" key={i} className="flex items-center gap-2 hover:underline cursor-pointer">
+                                            {match_link_by_platform(platform).icon} <span className="text-black "> {username} </span>
+                                        </Link>
                                     )
                                 }
                             </div>
@@ -183,7 +183,7 @@ const ProfileComponent = () => {
             {
                 editProfileModal &&
                 <Modal handleCloseModal={setEditProfile}>
-                    <EditProfile modal={setEditProfile}></EditProfile>
+                    <EditProfile modal={setEditProfile} refetch={refetch}></EditProfile>
                 </Modal>
             }
             </section>

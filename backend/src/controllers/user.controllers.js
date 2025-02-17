@@ -9,7 +9,7 @@ import removeImageById from "../utils/cloudinary.remove.js";
 const options = {
     httpOnly: true,
     secure: true,
-    sameSite: 'None',
+    sameSite: false,
     maxAge: 24 * 60 * 60 * 1000 // for 1 day browser accept
     // maxAge: 2 * 60 * 1000 // for 2 minute browser accept
 }
@@ -17,7 +17,7 @@ const options = {
 const refreshtokenOptions = {
     httpOnly: true,
     secure: true,
-    sameSite: 'None',
+    sameSite: false,
     maxAge: 30 * 24 * 60 * 60 * 1000
 }
 
@@ -353,6 +353,7 @@ const handleRemoveSocialLink = asyncHandler ( async ( req, res ) => {
 })
 
 const logoutUserControl = asyncHandler ( async ( req, res ) => {
+    console.log("HITED")
     await User.findByIdAndUpdate(
         req.user?._id,
         {

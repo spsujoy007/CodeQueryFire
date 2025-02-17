@@ -49,9 +49,8 @@ const Navbar = () => {
     const handleLogoutUser = async () => {
         await axios({
             method: 'GET',
-            url: `${ServerUrl()}/users/logout_user`,
+            url: `${process.env.NEXT_PUBLIC_SERVER}/users/logout_user`,
             withCredentials: true
-
         })
         .then(data => {
             console.log(data)

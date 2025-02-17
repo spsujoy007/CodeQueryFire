@@ -2,24 +2,27 @@ import express from "express";
 import cors from "cors"
 import cookieParser from "cookie-parser";
 const app = express()
-const allowedOrigins = ["http://localhost:3000", "https://codequeryfire.vercel.app"]
-app.use(cors({
-    // origin: 'http://localhost:3000'
-    origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    }
-    ,
-    credentials: true,
-    sameSite: false
-}))
+const allowedOrigins = ["http://localhost:3000", "https://codequeryfire.vercel.app"];
 
+app.use(cors({
+    origin:allowedOrigins,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+
+}));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
+
+// app.options('*', cors()); 
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', req.headers.origin || "*");
+//     res.header('Access-Control-Allow-Credentials', 'true');
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//     next();
+// });
 
 
 // for production big level

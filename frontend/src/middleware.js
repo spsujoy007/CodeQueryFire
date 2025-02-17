@@ -1,43 +1,44 @@
 import { NextResponse } from "next/server";
-import ServerUrl from "./Hooks/useServerUrl";
 
 export async function middleware(request) {
   const current_url = request.nextUrl.clone();
-  console.log(current_url)
-  const response = NextResponse.next()
-  response.cookies.set('history_url', current_url.pathname, {
-    httpOnly: true, // Optional: to make it accessible via JavaScript on the client-side
-    secure: false, // Only set secure cookies in production
-    maxAge: 60 * 60 * 24 * 7, // Set cookie expiration (1 week here)
-    path: '/', // Path where the cookie will be available
-  });
-  
+  console.log("Current URL:", current_url);
+
   const token = request.cookies.get('access_token');
+  console.log("ACCESS TOKEN:", token?.value);
+
   if (!token?.value) {
-    return NextResponse.redirect(new URL(`/login?page=${encodeURIComponent(current_url.pathname)}&id=${current_url?.search.split("?id=")[1]}`, request.url));
+    const searchParams = new URLSearchParams(current_url.search);
+    const id = searchParams.get("id") || "";
+    // return NextResponse.redirect(new URL(`/login?page=${current_url.pathname}&id=${id}`, request.url));
   }
-  
+
   try {
     // Make fetch request with credentials
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/users/loggedin-profile`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token?.value}`,
-      }
+      },
+      credentials: "include"
+    }).catch(error => {
+      console.error("Fetch error:", error);
+      return null;
     });
-    
-    if (!res.ok) {
-      return NextResponse.redirect(new URL(`/login?page=${encodeURIComponent(current_url.pathname)}&id=${current_url?.search.split("?id=")[1]}`, request.url));
+
+    if (!res || !res.ok) {
+      const searchParams = new URLSearchParams(current_url.search);
+      const id = searchParams.get("id") || "";
+      // return NextResponse.redirect(new URL(`/login?page=${current_url.pathname}&id=${id}`, request.url));
     }
-    
+
     // Proceed if response is successful
-    const userData = await res.json();
-    
-    // Optionally, you can pass data to the response if needed
-    return response;
+    return NextResponse.next();
   } catch (error) {
     console.error("Error fetching user data:", error);
-    return NextResponse.redirect(new URL(`/login?page=${encodeURIComponent(current_url.pathname)}&id=${current_url?.search.split("?id=")[1]}`, request.url));
+    const searchParams = new URLSearchParams(current_url.search);
+    const id = searchParams.get("id") || "";
+    // return NextResponse.redirect(new URL(`/login?page=${current_url.pathname}&id=${id}`, request.url));
   }
 }
 

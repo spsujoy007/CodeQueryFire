@@ -16,7 +16,7 @@ export default function useAuthenticated (req) {
     const fetchUserData = () => {
         axios({
             method: 'get',
-            url: `${ServerUrl()}/users/loggedin-profile`,
+            url: `${process.env.NEXT_PUBLIC_SERVER}/users/loggedin-profile`,
             withCredentials: true
         })
         .then(res => {

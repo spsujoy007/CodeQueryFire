@@ -23,6 +23,7 @@ const LoginPageComponent = () => {
     
     const inputstyle = `border-b-[1px] outline-none border-b-primary placeholder:text-gray-400 placeholder:text-sm w-full px-2 py-[6px] text-md rounded-t-md`
     
+    console.log("BY ENV: ", process.env.NEXT_PUBLIC_SERVER)
     const handleLogin = (event) => {
         event.preventDefault()
         setLoading(true)

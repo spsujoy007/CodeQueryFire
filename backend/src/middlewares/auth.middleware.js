@@ -12,7 +12,7 @@ export const verifyJWT = asyncHandler ( async ( req, res, next ) => {
             //when access_token expired then request through the refresh token.
             const refresh_token = req.cookies?.refresh_token || (req.headers['authorization'] ? req.headers['authorization'].replace('Bearer ', '') : '')
             if(!refresh_token){
-                res.status(401).json("unauthorized request or token was expired")
+                res.status(401).json(new ApiResponse(401, {}, "unauthorized request or token was expired"))
                 throw new ApiError(401, "unauthorized request or token was expired")
             }
             
@@ -20,7 +20,7 @@ export const verifyJWT = asyncHandler ( async ( req, res, next ) => {
             
             if(!decodedInfo) {
                 console.log(decodedInfo, "Hited")
-                return res.status(401).json("unauthorized request or token was expired") 
+                return res.status(401).json(new ApiResponse(401, {}, "unauthorized request or token was expired")) 
             }
             const user = await User.findById(decodedInfo._id)
             const new_access_token = await user.generateAccessToken()

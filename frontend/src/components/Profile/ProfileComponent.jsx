@@ -37,7 +37,7 @@ const ProfileComponent = () => {
         .then(res => {
             setPosts(res?.data?.data?.posts)
         })
-    })
+    }, [api])
 
     // const {modal, showModal, closeModal} = useModal()
     const [editProfileModal, setEditProfile] = useState(false)

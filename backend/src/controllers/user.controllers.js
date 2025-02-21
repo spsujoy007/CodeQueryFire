@@ -8,16 +8,15 @@ import removeImageById from "../utils/cloudinary.remove.js";
 
 const options = {
     httpOnly: true,
-    secure: true,
-    sameSite: false,
-    maxAge: 24 * 60 * 60 * 1000 // for 1 day browser accept
-    // maxAge: 2 * 60 * 1000 // for 2 minute browser accept
-}
+    secure: true, // Ensure HTTPS is used in production
+    sameSite: "none", // If cross-site cookies are needed, otherwise use "lax"
+    maxAge: 24 * 60 * 60 * 1000 // 1 day
+};
 
 const refreshtokenOptions = {
     httpOnly: true,
     secure: true,
-    sameSite: false,
+    sameSite: "none",
     maxAge: 30 * 24 * 60 * 60 * 1000
 }
 
@@ -215,7 +214,6 @@ const updateUserAvatar = asyncHandler ( async ( req, res ) => {
     }
     
     const uploadImage = await uploadOnCloudinary(avatarLocalPath);
-    console.log("Image url: ", uploadImage)
     
     const updateAvatar = await User.findByIdAndUpdate(req.user?._id, {
         $set: {

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 const null_avatar = '/images/null_avatar.jpeg'
 
-const UpdateAvatarModal = () => {
+const UpdateAvatarModal = ({refetch, setAvatarModel}) => {
     const {user, loading} = useAuthenticated()
 
     const [avatarBlob, setAvatarBlob] = useState(undefined);
@@ -24,26 +24,27 @@ const UpdateAvatarModal = () => {
     }
 
     const handleSaveAvatar = async () => {
-        
         const formData = new FormData();
         formData.append("avatar", imageFile)
         
         setUploadLoading(true)
         await axios({
-            method: 'patch',
+            method: 'PATCH',
             url: `${ServerUrl()}/users/update_avatar`,
             data: formData,
-            withCredentials: true
+            withCredentials: true,
         })
         .then(data => {
-            console.log(data)
-            setUploadLoading(false)
-            location.reload()
+            console.log(data.status)
+            if(data.status === 200){
+                refetch()
+                setAvatarModel(false)
+            }
         })
         .catch(e => {
             console.error(e)
             setUploadLoading(false)
-            location.reload()
+            // location.reload()
         })
     } 
 

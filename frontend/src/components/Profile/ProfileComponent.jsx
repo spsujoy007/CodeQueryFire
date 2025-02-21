@@ -37,7 +37,7 @@ const ProfileComponent = () => {
         .then(res => {
             setPosts(res?.data?.data?.posts)
         })
-    }, [api])
+    })
 
     // const {modal, showModal, closeModal} = useModal()
     const [editProfileModal, setEditProfile] = useState(false)
@@ -99,7 +99,7 @@ const ProfileComponent = () => {
                         <section className="flex gap-10 items-center">
                             <section>
                             <div className="h-[250px] w-[250px] rounded-full bg-gray-300">
-                                <Image onClick={handleAvatarModal} className="  rounded-full object-cover h-full w-full cursor-pointer hover:brightness-90 duration-150 ring-2 ring-primary border-4 border-white" width={250} height={250}  src={user?.avatar ? user.avatar?.url : null_avatar} alt={user?.full_name}></Image>
+                                <Image priority onClick={handleAvatarModal} className="  rounded-full object-cover h-full w-full cursor-pointer hover:brightness-90 duration-150 ring-2 ring-primary border-4 border-white" width={250} height={250}  src={user?.avatar ? user.avatar?.url : null_avatar} alt={user?.full_name}></Image>
                             </div>
                             </section>
                             <div className="w-full">
@@ -198,7 +198,7 @@ const ProfileComponent = () => {
             {
                 avatarModal &&
                 <Modal size="25" handleCloseModal={setAvatarModel}>
-                    <UpdateAvatarModal></UpdateAvatarModal>
+                    <UpdateAvatarModal refetch={refetch} setAvatarModel={setAvatarModel}></UpdateAvatarModal>
                 </Modal> 
             }
         </div>

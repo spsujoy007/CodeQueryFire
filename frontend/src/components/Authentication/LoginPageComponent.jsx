@@ -23,7 +23,6 @@ const LoginPageComponent = () => {
     
     const inputstyle = `border-b-[1px] outline-none border-b-primary placeholder:text-gray-400 placeholder:text-sm w-full px-2 py-[6px] text-md rounded-t-md`
     
-    console.log("BY ENV: ", process.env.NEXT_PUBLIC_SERVER)
     const handleLogin = (event) => {
         event.preventDefault()
         setLoading(true)
@@ -41,14 +40,14 @@ const LoginPageComponent = () => {
             withCredentials: true
         })
         .then(res => {
+            let HistoryPath = getHistoryPath.get("page")
+            let PostID = getHistoryPath.get("id")
             setRegisterd(true)
             setserverMsg(res.data.message)
             setError(false)
             setLoading(false)
 
-            const HistoryPath = getHistoryPath.get("page")
-            const PostID = getHistoryPath.get("id")
-            // console.log(encodeURI(HistoryPath)+ "?id="+ PostID)
+            console.log(encodeURI(HistoryPath)+ "?id="+ PostID)
             if(HistoryPath && PostID === "undefined") {
                 router.push(encodeURI(HistoryPath))
             }

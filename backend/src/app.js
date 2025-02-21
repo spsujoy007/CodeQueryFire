@@ -5,9 +5,9 @@ const app = express()
 const allowedOrigins = ["http://localhost:3000", "https://codequeryfire.vercel.app"];
 
 app.use(cors({
-    origin:allowedOrigins,
+    origin: allowedOrigins,
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', "PATCH"],
     allowedHeaders: ['Content-Type', 'Authorization']
 
 }));
@@ -15,7 +15,7 @@ app.use(cors({
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
 
-// app.options('*', cors()); 
+app.options('*', cors()); 
 // app.use((req, res, next) => {
 //     res.header('Access-Control-Allow-Origin', req.headers.origin || "*");
 //     res.header('Access-Control-Allow-Credentials', 'true');

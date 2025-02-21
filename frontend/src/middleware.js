@@ -4,7 +4,7 @@ export async function middleware(request) {
   const current_url = request.nextUrl.clone();
 
     try{
-      const res = await fetch(`http://localhost:5000/api/v1/users/loggedin-profile`, {
+      const res = await fetch(`https://cqfbeserver.vercel.app/api/v1/users/loggedin-profile`, {
         method: 'GET',
         headers: {
           Cookie: request.headers.get("cookie") || "",  // ✅ Manually pass cookies

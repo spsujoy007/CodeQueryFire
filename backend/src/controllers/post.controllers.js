@@ -200,6 +200,7 @@ const SinglePostDetails = asyncHandler ( async (req, res) => {
             }
     ])
 
+
     if(!post){
         return res 
         .status(500)

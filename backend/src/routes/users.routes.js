@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { changePassword, editUserProfile, handleAddSocialLinks, handleRemoveSocialLink, loggedInProfile, loginUser, logoutUserControl, registerUser, updateUserAvatar } from "../controllers/user.controllers.js"
+import { changePassword, editUserProfile, handleAddSocialLinks, handleRemoveSocialLink, loggedInProfile, loginUser, logoutUserControl, registerUser, updateUserAvatar, userPublicProfile } from "../controllers/user.controllers.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js"
 import { upload } from "../middlewares/multer.middleware.js"
 
@@ -25,6 +25,7 @@ router.route("/change-password").post(verifyJWT, changePassword);
 
 // 🏠 Get Logged-in User Profile
 router.route("/loggedin-profile").get(verifyJWT, loggedInProfile);
+router.route("/user_profile").get(userPublicProfile)
 
 // 🛠️ Edit User Profile
 router.route("/edit_profile").post(verifyJWT, editUserProfile);

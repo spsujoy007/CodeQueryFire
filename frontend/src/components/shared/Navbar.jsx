@@ -39,7 +39,7 @@ const Navbar = () => {
         },
         {
             title: "Profile",
-            url: '/profile',
+            url: `/profile/${user?.username}`,
         }
     ]
 
@@ -118,8 +118,8 @@ const Navbar = () => {
                                 {
                                     drawer &&
                                     <div className='absolute top-10 -right-4 w-[200px] rounded-md border-[1px] border-gray-300  bg-white backdrop-blur-md p-2'>
-                                        <Link href={'/profile'}>
-                                            <button href={'/profile'} className='mt-2 mb-1 w-full py-2 border-[1px] border-gray-300 hover:bg-gray-200 duration-300 rounded-md'>Profile</button>
+                                        <Link href={`/profile/${user?.username}`}>
+                                            <button className='mt-2 mb-1 w-full py-2 border-[1px] border-gray-300 hover:bg-gray-200 duration-300 rounded-md'>Profile</button>
                                         </Link>
                                         <button onClick={handleLogoutUser} className='w-full py-2 border-[1px] border-gray-300 hover:bg-gray-200 duration-300 rounded-md'>Logout</button>
                                     </div>

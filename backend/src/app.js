@@ -15,16 +15,6 @@ app.use(cors({
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
 
-// app.options('*', cors()); 
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', req.headers.origin || "*");
-//     res.header('Access-Control-Allow-Credentials', 'true');
-//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-//     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//     next();
-// });
-
-
 // for production big level
 app.use(express.json({limit: '16kb'}))
 app.use(express.urlencoded({extended: true, limit: "16kb"}))

@@ -192,6 +192,58 @@ const loggedInProfile = asyncHandler ( async (req, res) => {
     .json( new ApiResponse(200, user[0], "user profile successfully fetched") )
 })
 
+const userPublicProfile = asyncHandler ( async ( req, res ) => {
+    const username = req.query?.username;
+    if( !username ) {
+        return res 
+        .status(404)
+        .json( new ApiResponse(
+            404,
+            {},
+            "Username is required but was not provided."
+        ))
+    }
+
+    const userProfile = await User.aggregate([
+        {
+            $match: {
+                username: username.toLowerCase()
+            }
+        },
+        {
+            $addFields: {
+                full_name: null
+            }
+        },
+        {
+            $set: {
+                "full_name": {
+                    $concat: ["$first_name", " ", "$last_name"]
+                }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                password: 0,
+                refresh_token: 0
+            }
+        }
+    ])
+
+    if (!userProfile || userProfile.length === 0) {
+        return res.status(404).json(new ApiResponse(
+            404,
+            {},
+            "User not found. Please check the provided user ID."
+        ));
+    }
+
+    return res 
+    .status(200)
+    .json( new ApiResponse(200, userProfile[0], "user profile successfully fetched") )
+})
+
 const editUserProfile = asyncHandler ( async ( req, res ) => {
     const user_data = req.body;
 
@@ -382,5 +434,5 @@ export {
     changePassword, loggedInProfile, 
     editUserProfile, updateUserAvatar, 
     logoutUserControl, handleAddSocialLinks, 
-    handleRemoveSocialLink 
+    handleRemoveSocialLink, userPublicProfile 
 }

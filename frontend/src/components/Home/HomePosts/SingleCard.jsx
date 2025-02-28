@@ -102,7 +102,9 @@ const SingleCard = ({post}) => {
                             </div>
                         </div>
                     </section>
-                    <button className="w-full mt-2 bg-gray-300 text-black border-[1px] border-white rounded-md py-1">View Profile</button>
+                    <Link href={`/profile/${author?.username}`}>
+                        <button className="w-full mt-2 bg-gray-300 text-black border-[1px] border-white rounded-md py-1">View Profile</button>
+                    </Link>
                 </div>
             </div>
         </div>

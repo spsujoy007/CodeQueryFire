@@ -18,9 +18,12 @@ import EditProfile from "../Editable_Components/Profile/EditProfile";
 import useAuthenticated from "@/Hooks/useAuthenticated";
 import UpdateAvatarModal from "../Editable_Components/Profile/UpdateAvatarModal";
 import { TiHome } from "react-icons/ti";
+import { usePathname } from "next/navigation";
 const null_avatar = '/images/null_avatar.jpeg'
 
 const ProfileComponent = () => {
+    const path = usePathname()
+
     useEffect(() => window.scrollTo(0, 0),[])
     
     const [posts, setPosts] = useState([])
@@ -55,6 +58,28 @@ const ProfileComponent = () => {
     }
 
 
+    const [profile, setProfile] = useState([])
+    const [pageLoading, setPageLoading] = useState(true)
+    const pathname = path.split("profile/")[1]
+
+    
+    const fetchUserProfile = async () => {
+        // setPageLoading(true)
+        axios({
+            method: "GET",
+            url: `${api}/users/user_profile?username=${pathname}`
+        })
+        .then(res => {
+            if(res.data.data) {
+                setProfile(res.data.data)
+                setPageLoading(false)
+            }
+        })
+    }
+    useEffect(() => {
+        fetchUserProfile()
+    }, [path, pathname])
+    
     // linked social media formula ***************
     const styleForIcon = "text-lg"
     const platform_lists = [
@@ -87,7 +112,7 @@ const ProfileComponent = () => {
     return (
         <div className="">
             {
-                loading ?
+                pageLoading ?
                 <section className="h-[80vh] m-auto">
                     <LoadingPage></LoadingPage>
                 </section>
@@ -99,17 +124,17 @@ const ProfileComponent = () => {
                         <section className="flex gap-10 items-center">
                             <section>
                             <div className="h-[250px] w-[250px] rounded-full bg-gray-300">
-                                <Image priority onClick={handleAvatarModal} className="  rounded-full object-cover h-full w-full cursor-pointer hover:brightness-90 duration-150 ring-2 ring-primary border-4 border-white" width={250} height={250}  src={user?.avatar ? user.avatar?.url : null_avatar} alt={user?.full_name}></Image>
+                                <Image priority onClick={handleAvatarModal} className="  rounded-full object-cover h-full w-full cursor-pointer hover:brightness-90 duration-150 ring-2 ring-primary border-4 border-white" width={250} height={250}  src={profile?.avatar ? profile.avatar?.url : null_avatar} alt={profile?.full_name}></Image>
                             </div>
                             </section>
                             <div className="w-full">
-                                <h1 className="text-2xl font-bold text-primary">{user.full_name}</h1>
-                                <p className="text-sm mt-1 w-[600px]  whitespace-pre-wrap">{user?.bio && user.bio}</p>
+                                <h1 className="text-2xl font-bold text-primary">{profile.full_name}</h1>
+                                <p className="text-sm mt-1 w-[600px]  whitespace-pre-wrap">{profile?.bio && profile.bio}</p>
 
 
                                 {/* some followers pic  */}
                                 {
-                                    user.followers &&
+                                    profile.followers &&
                                     <div className="mt-2 flex -space-x-3">
                                         <Image className="rounded-full border-2 border-white" width={35} height={35} src={null_avatar} alt=""></Image>
                                         <Image className="rounded-full border-2 border-white" width={35} height={35} src={null_avatar} alt=""></Image>
@@ -121,7 +146,7 @@ const ProfileComponent = () => {
                                 }
 
                                 <div className="mt-2">
-                                    <p className="font-semibold text-sm"> <Link className="hover:underline" href={''}>Followers: <span className="text-primary">{user?.followers ? user?.followers : 0}</span></Link>   |  <Link className="hover:underline" href={''}>Following: <span className="text-primary">{user?.following ? user?.following : 0}</span></Link> </p>
+                                    <p className="font-semibold text-sm"> <Link className="hover:underline" href={''}>Followers: <span className="text-primary">{profile?.followers ? profile?.followers : 0}</span></Link>   |  <Link className="hover:underline" href={''}>Following: <span className="text-primary">{profile?.following ? profile?.following : 0}</span></Link> </p>
                                 </div>
 
                                 <div className="mt-4 space-x-2">
@@ -137,24 +162,27 @@ const ProfileComponent = () => {
                             ║ 🌐 SOCIAL LINKS SECTION - CONNECT WITH THE WORLD 🚀                     ║
                             ╠══════════════════════════════════════════════════════════════════════════╣
                         */}
-                        <section className="mt-10 bg-white rounded-xl p-3 space-y-2 ">
-                            <p className="text-primary text-sm ml-2 rounded-full border-[1px] border-primary inline-block px-2">Social links</p>
-                            {/* <div className="w-full flex gap-2">
-                                <span className="flex items-center gap-2"> <TiHome className="text-xl text-gray-800" /> Lives in:</span><button className="hover:underline text-black font-bold">Dhaka city</button>
-                            </div> */}
-                            <div> {/* for separate the div */}
-                                <div className="mt-1 gap-1 space-y-2 ml-2 flex-col inline-flex">
-                                    {/* maping social links ================ */}
-                                    {
-                                        user?.social_links?.map(({platform, username}, i) => 
-                                            <Link href={`${match_link_by_platform(platform).url}${username}`} target="_blank" key={i} className="flex items-center gap-2 hover:underline cursor-pointer hover:text-primary">
-                                                {match_link_by_platform(platform).icon} <span className=" "> {username} </span>
-                                            </Link>
-                                        )
-                                    }
+                        {
+                            profile?.social_links?.length > 0 && 
+                            <section className="mt-10 bg-white rounded-xl p-3 space-y-2 ">
+                                <p className="text-primary text-sm ml-2 rounded-full border-[1px] border-primary inline-block px-2">Social links</p>
+                                {/* <div className="w-full flex gap-2">
+                                    <span className="flex items-center gap-2"> <TiHome className="text-xl text-gray-800" /> Lives in:</span><button className="hover:underline text-black font-bold">Dhaka city</button>
+                                </div> */}
+                                <div> {/* for separate the div */}
+                                    <div className="mt-1 gap-1 space-y-2 ml-2 flex-col inline-flex">
+                                        {/* maping social links ================ */}
+                                        {
+                                            profile?.social_links?.map(({platform, username}, i) => 
+                                                <Link href={`${match_link_by_platform(platform).url}${username}`} target="_blank" key={i} className="flex items-center gap-2 hover:underline cursor-pointer hover:text-primary">
+                                                    {match_link_by_platform(platform).icon} <span className=" "> {username} </span>
+                                                </Link>
+                                            )
+                                        }
+                                    </div>
                                 </div>
-                            </div>
-                        </section>
+                            </section>
+                        }
                         {/* 
                             ╔══════════════════════════════════════════════════════════════════════════╗
                             ║ 🎯 CODE END                                                              ║

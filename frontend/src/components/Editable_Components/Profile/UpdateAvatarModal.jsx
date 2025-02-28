@@ -52,7 +52,13 @@ const UpdateAvatarModal = ({refetch, setAvatarModel}) => {
     return (
         <div className='w-full'>
             {
-                !loading &&
+                loading ?
+                <div className="flex flex-col items-center space-y-4">
+                  <div className="w-[300px] h-[300px] bg-gray-300 rounded-full animate-pulse duration-75"></div>
+                  <div className="w-full h-[40px] bg-gray-500 text-white text-center rounded-lg flex items-center justify-center animate-pulse duration-100">
+                  </div>
+                </div>
+                :
                 <div className='w-full'>
                     <div className='w-[300px] h-[300px] rounded-full overflow-hidden mx-auto border-2 border-black flex justify-center items-center'>
                         <Image

@@ -185,7 +185,18 @@ export default function EditProfile({modal, refetch: FetchProfileData}) {
   dark:[&::-webkit-scrollbar-track]:bg-neutral-700
   dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500'>
       {
-        !loading &&
+        loading ?
+        <div className="pt-5 rounded-xl w-full space-y-4">
+          <div className="flex gap-4">
+            <div className="w-1/2 h-10 bg-gray-300 rounded animate-pulse duration-[100ms]"></div>
+            <div className="w-1/2 h-10 bg-gray-300 rounded animate-pulse duration-[120ms]"></div>
+          </div>
+          <div className="h-24 bg-gray-300 rounded animate-pulse duration-[140ms]"></div>
+          <div className="text-right">
+            <div className="inline-block w-16 h-6 bg-gray-400 rounded animate-pulse duration-[150ms]"></div>
+          </div>
+        </div>
+        :
         <form id='editprofileform' className='w-full'>
           {/* user name inputs  */}
           <div className='flex gap-2 w-full'>

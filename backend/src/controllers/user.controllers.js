@@ -9,14 +9,14 @@ import removeImageById from "../utils/cloudinary.remove.js";
 const options = {
     httpOnly: true,
     secure: true, // Ensure HTTPS is used in production
-    sameSite: "none", // If cross-site cookies are needed, otherwise use "lax"
+    sameSite: "None", // If cross-site cookies are needed, otherwise use "lax"
     maxAge: 24 * 60 * 60 * 1000 // 1 day
 };
 
 const refreshtokenOptions = {
     httpOnly: true,
     secure: true,
-    sameSite: "none",
+    sameSite: "None",
     maxAge: 30 * 24 * 60 * 60 * 1000
 }
 
@@ -377,4 +377,10 @@ const logoutUserControl = asyncHandler ( async ( req, res ) => {
 })
 
 
-export { registerUser, loginUser, changePassword, loggedInProfile, editUserProfile, updateUserAvatar, logoutUserControl, handleAddSocialLinks, handleRemoveSocialLink }
+export { 
+    registerUser, loginUser, 
+    changePassword, loggedInProfile, 
+    editUserProfile, updateUserAvatar, 
+    logoutUserControl, handleAddSocialLinks, 
+    handleRemoveSocialLink 
+}

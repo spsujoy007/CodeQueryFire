@@ -24,7 +24,7 @@ const Modal = ({children, handleCloseModal, size}) => {
     }
   `;
     return (
-            <>
+            <section className='overflow-hidden'>
             <style>{dynamicStyle}</style>
                 <div className='w-full h-screen flex justify-center items-center z-100 fixed top-0 overflow-y-scroll bg-[#ebebebbe] backdrop-blur-md'>
                 <div  
@@ -36,7 +36,7 @@ const Modal = ({children, handleCloseModal, size}) => {
                     {children}
                 </div>
             </div>
-            </>
+            </section>
     );
 };
 

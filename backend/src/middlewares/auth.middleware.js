@@ -5,6 +5,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from 'jsonwebtoken'
 
 export const verifyJWT = asyncHandler ( async ( req, res, next ) => {
+    console.log("token: ", req.cookies.access_token)
     try {
         const token = req.cookies?.access_token || (req.headers['authorization'] ? req.headers['authorization'].replace('Bearer ', '') : '');
         // refresh token
@@ -27,7 +28,7 @@ export const verifyJWT = asyncHandler ( async ( req, res, next ) => {
             const options = {
                 httpOnly: true,
                 secure: true,
-                sameSite: 'None',
+                sameSite: 'none',
                 maxAge: 24 * 60 * 60 * 1000 // for 1 day browser accept
                 // maxAge: 2 * 60 * 1000 // for 2 minute browser accept
             }

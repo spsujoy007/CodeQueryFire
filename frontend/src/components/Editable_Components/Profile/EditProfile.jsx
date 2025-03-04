@@ -70,7 +70,7 @@ export default function EditProfile({modal, refetch: FetchProfileData}) {
       else{
         await axios({
           method: "POST",
-          url: `${ServerUrl()}/users/add_social_link`,
+          url: `${process.env.NEXT_PUBLIC_SERVER}/users/add_social_link`,
           data: link_object,
           withCredentials: true
         })
@@ -98,7 +98,7 @@ export default function EditProfile({modal, refetch: FetchProfileData}) {
     if(platform){
       await axios({
         method: "DELETE",
-        url: `${ServerUrl()}/users/remove_social_link`,
+        url: `${process.env.NEXT_PUBLIC_SERVER}/users/remove_social_link`,
         data: {platform: platform},
         withCredentials: true
       })
@@ -130,15 +130,14 @@ export default function EditProfile({modal, refetch: FetchProfileData}) {
     
     await axios({
       method: "POST",
-      url: `${ServerUrl()}/users/edit_profile`,
+      url: `${process.env.NEXT_PUBLIC_SERVER}/users/edit_profile`,
       data: formData,
       withCredentials: true
     })
     .then(data => {
       setErrorMsg(false)
       setSaveLoading(false)
-      // router.refresh()
-      location.reload()
+      FetchProfileData()
       modal(false)
     })
     .catch(e => {

@@ -221,7 +221,7 @@ const MakePost = () => {
             });
 
             // Send the FormData with axios
-            axios.post(`${ServerUrl()}/post/makepost`, formData, {
+            axios.post(`${process.env.NEXT_PUBLIC_SERVER}/post/makepost`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data", // Ensure axios uses the correct encoding
                 },

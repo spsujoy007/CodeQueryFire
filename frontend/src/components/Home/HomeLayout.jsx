@@ -47,7 +47,7 @@ const HomeLayout = ({children}) => {
         setcategoryName(reqCategory)
         await axios({
             method: 'GET',
-            url: `${ServerUrl()}/post/viewposts?category=${reqCategory}`,
+            url: `${process.env.NEXT_PUBLIC_SERVER}/post/viewposts?category=${reqCategory}`,
             withCredentials: true,
         })
         .then(res => {

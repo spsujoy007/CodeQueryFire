@@ -31,7 +31,7 @@ const PostDetails = ({searchParams}) => {
     const [loading, setLoading] = useState(false)
     useEffect(() => {
         setLoading(true)
-        axios.get(`${ServerUrl()}/post/post_details?id=${id}`)
+        axios.get(`${process.env.NEXT_PUBLIC_SERVER}/post/post_details?id=${id}`)
             .then(res => {
                 setPost(res?.data?.data?.post);
                 setLoading(false)

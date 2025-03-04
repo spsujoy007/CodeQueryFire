@@ -12,7 +12,12 @@ const HomeProfile = () => {
     const router = useRouter
     
     
-    const {user, loading, isLoggedIn} = useAuthenticated()
+    const {user, loading, isLoggedIn, refetch} = useAuthenticated()
+
+    useEffect(() => {
+        refetch()
+    })
+    
     const {
         first_name,
         last_name,

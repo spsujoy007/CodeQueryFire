@@ -6,11 +6,12 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import removeImageById from "../utils/cloudinary.remove.js";
 
+const environment = process.env.NODE_ENV;
 const options = {
     httpOnly: true,
     secure: true, // Ensure HTTPS is used in production
-    sameSite: "None", // If cross-site cookies are needed, otherwise use "lax"
-    maxAge: 24 * 60 * 60 * 1000 // 1 day
+    sameSite: 'none', // If cross-site cookies are needed, otherwise use "lax"
+    maxAge: 24 * 60 * 60 * 1000, // 1 day
 };
 
 const refreshtokenOptions = {

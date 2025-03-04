@@ -23,24 +23,23 @@ const null_avatar = '/images/null_avatar.jpeg'
 
 const ProfileComponent = () => {
     const path = usePathname()
+    const {user, loading, refetch} = useAuthenticated()
 
     useEffect(() => window.scrollTo(0, 0),[])
     
-    const [posts, setPosts] = useState([])
-
-    const {user, loading, refetch} = useAuthenticated()
-
     const api = process.env.NEXT_PUBLIC_SERVER
-    useEffect(() => {
-        axios({
-            method: 'GET',
-            url: `${api}/post/myposts`,
-            withCredentials: true,
-        })
-        .then(res => {
-            setPosts(res?.data?.data?.posts)
-        })
-    }, [api])
+    // const [posts, setPosts] = useState([])
+
+    // useEffect(() => {
+    //     axios({
+    //         method: 'GET',
+    //         url: `${api}/post/myposts`,
+    //         withCredentials: true,
+    //     })
+    //     .then(res => {
+    //         setPosts(res?.data?.data?.posts)
+    //     })
+    // }, [api])
 
     // const {modal, showModal, closeModal} = useModal()
     const [editProfileModal, setEditProfile] = useState(false)
@@ -78,7 +77,7 @@ const ProfileComponent = () => {
     }
     useEffect(() => {
         fetchUserProfile()
-    }, [path, pathname])
+    })
     
     // linked social media formula ***************
     const styleForIcon = "text-lg"
@@ -194,7 +193,7 @@ const ProfileComponent = () => {
                             <div className="w-[70%] bg-white min-h-[40%] rounded-b-xl ">
                                 <div className="w-full bg-black text-white font-bold py-1 pl-5 rounded-t-xl" ><p>Posts: </p></div>
                                 {
-                                    posts?.map((post) => <SingleCard key={post._id} post={post}></SingleCard>)
+                                    profile.posts?.map((post) => <SingleCard key={post._id} post={post}></SingleCard>)
                                 }
                             </div>
                             <div className="w-[30%] bg-white min-h-[40%] rounded-b-xl overflow-hidden">
@@ -217,7 +216,7 @@ const ProfileComponent = () => {
             {
                 editProfileModal &&
                 <Modal handleCloseModal={setEditProfile}>
-                    <EditProfile modal={setEditProfile} refetch={refetch}></EditProfile>
+                    <EditProfile modal={setEditProfile} refetch={fetchUserProfile}></EditProfile>
                 </Modal>
             }
             </section>

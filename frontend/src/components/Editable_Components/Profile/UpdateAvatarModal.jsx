@@ -30,7 +30,7 @@ const UpdateAvatarModal = ({refetch, setAvatarModel}) => {
         setUploadLoading(true)
         await axios({
             method: 'PATCH',
-            url: `${ServerUrl()}/users/update_avatar`,
+            url: `${process.env.NEXT_PUBLIC_SERVER}/users/update_avatar`,
             data: formData,
             withCredentials: true,
         })

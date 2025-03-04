@@ -54,16 +54,25 @@ const post_Question = asyncHandler ( async (req, res) => {
             author_id: req.user?._id,
             title,
             details,
-            code: code,
+            code: code || "",
             topics: newTopics,
             programming_language: programming_language,
-            source: source,
+            source: source || "",
             images: imageLinksByCloudinary
         })
         
         if(!newPost) {
             return res.send("ERRR")
         }
+
+        const user = await User.findByIdAndUpdate(
+            req.user?._id,
+            {
+              $push: {
+                posts: newPost?._id
+              }
+            }
+        )
     
         return res
         .status(201)
@@ -261,6 +270,7 @@ const MyPostsController = asyncHandler ( async (req, res) => {
               }
           }
   ])
+  // console.log(posts)
 
   if(posts.length == 0){
     console.log('no posts')
@@ -275,6 +285,68 @@ const MyPostsController = asyncHandler ( async (req, res) => {
       new ApiResponse(200, {posts: posts}, "All posts fetched successfully")
   )
 })
+
+// const ProfilePosts = asyncHandler ( async (req, res) => {
+//     // console.log(req.user?._id)
+//   const posts = await Post.aggregate(
+//       [
+//           {
+//             $match: {
+//               author_id: new mongoose.Types.ObjectId(req.user?._id)
+//             }
+//           },
+//           {
+//             $lookup: {
+//               from: 'users',
+//               localField: 'author_id',
+//               foreignField: '_id',
+//               as: 'author'
+//             }
+//           },
+//           {
+//             $addFields: {
+//               author: {$first: "$author"}
+//             }
+//           },
+//           {
+//             $set: {
+//               "author.full_name": {
+//                 $concat: ["$author.first_name", " ",  "$author.last_name"]
+//               }
+//             }
+//           },
+//           {
+//             $project: {
+//               author_id: 0,
+//               author: {
+//                 password: 0,
+//                 refresh_token: 0,
+//                 __v: 0,
+//                 posts: 0,
+//                 blogs: 0
+//               }
+//             }
+//           },
+//           {
+//               $sort: {
+//                 createdAt: -1
+//               }
+//           }
+//   ])
+
+//   if(posts.length == 0){
+//     console.log('no posts')
+//       return res 
+//       .status(200)
+//       .json(new ApiResponse(200, {}, "No data founded"))
+//   }
+
+//   res
+//   .status(200)
+//   .json(
+//       new ApiResponse(200, {posts: posts}, "All posts fetched successfully")
+//   )
+// })
 
 
 const EditPostController = asyncHandler ( async ( req, res ) => {

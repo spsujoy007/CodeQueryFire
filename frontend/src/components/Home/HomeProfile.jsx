@@ -8,15 +8,12 @@ import { useEffect } from 'react';
 const null_avatar = '/images/null_avatar.jpeg'
 
 const HomeProfile = () => {
+    const {user, loading, isLoggedIn} = useAuthenticated()
     const pathname = usePathname();
     const router = useRouter
     
     
-    const {user, loading, isLoggedIn, refetch} = useAuthenticated()
 
-    useEffect(() => {
-        refetch()
-    })
     
     const {
         first_name,

@@ -59,13 +59,13 @@ const post_Question = asyncHandler ( async (req, res) => {
             programming_language: programming_language,
             source: source || "",
             images: imageLinksByCloudinary
-        })
+        }, {new: true, timestamps: true})
         
         if(!newPost) {
             return res.send("ERRR")
         }
 
-        const user = await User.findByIdAndUpdate(
+        await User.findByIdAndUpdate(
             req.user?._id,
             {
               $push: {

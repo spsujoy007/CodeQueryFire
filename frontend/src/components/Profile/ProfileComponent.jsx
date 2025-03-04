@@ -46,11 +46,6 @@ const ProfileComponent = () => {
     const [avatarModal, setAvatarModel] = useState(false)
 
 
-    const handleEditProfileModal = () => {
-        if( avatarModal ) setAvatarModel(false);
-        setEditProfile(true)
-    }
-
     const handleAvatarModal = () => {
         if( editProfileModal ) setAvatarModel(false);
         setAvatarModel(true)
@@ -69,6 +64,7 @@ const ProfileComponent = () => {
             url: `${api}/users/user_profile?username=${pathname}`
         })
         .then(res => {
+            console.log(res.data.data)
             if(res.data.data) {
                 setProfile(res.data.data)
                 setPageLoading(false)
@@ -77,7 +73,15 @@ const ProfileComponent = () => {
     }
     useEffect(() => {
         fetchUserProfile()
-    })
+    }, [pathname])
+
+    const handleEditProfileModal = () => {
+        if(user?.username !== profile?.username){
+            location.reload()
+        }
+        if( avatarModal ) setAvatarModel(false);
+        setEditProfile(true)
+    }
     
     // linked social media formula ***************
     const styleForIcon = "text-lg"
@@ -109,9 +113,9 @@ const ProfileComponent = () => {
     // linked social media formula ***************
 
     return (
-        <div className="">
+        <div className={`${editProfileModal || avatarModal && "h-[80vh] overflow-hidden"}`}>
             {
-                pageLoading ?
+                pageLoading && loading ?
                 <section className="h-[80vh] m-auto">
                     <LoadingPage></LoadingPage>
                 </section>
@@ -123,7 +127,12 @@ const ProfileComponent = () => {
                         <section className="flex gap-10 items-center">
                             <section>
                             <div className="h-[250px] w-[250px] rounded-full bg-gray-300">
-                                <Image priority onClick={handleAvatarModal} className="  rounded-full object-cover h-full w-full cursor-pointer hover:brightness-90 duration-150 ring-2 ring-primary border-4 border-white" width={250} height={250}  src={profile?.avatar ? profile.avatar?.url : null_avatar} alt={profile?.full_name}></Image>
+                                {
+                                    profile?.username === user?.username ?
+                                    <Image priority onClick={handleAvatarModal} className="  rounded-full object-cover h-full w-full cursor-pointer hover:brightness-90 duration-150 ring-2 ring-primary border-4 border-white" width={250} height={250}  src={profile?.avatar ? profile.avatar?.url : null_avatar} alt={profile?.full_name}></Image>
+                                    :
+                                    <Image priority className="rounded-full object-cover h-full w-full ring-2 ring-primary border-4 border-white" width={250} height={250}  src={profile?.avatar ? profile.avatar?.url : null_avatar} alt={profile?.full_name}></Image>
+                                }
                             </div>
                             </section>
                             <div className="w-full">
@@ -148,10 +157,13 @@ const ProfileComponent = () => {
                                     <p className="font-semibold text-sm"> <Link className="hover:underline" href={''}>Followers: <span className="text-primary">{profile?.followers ? profile?.followers : 0}</span></Link>   |  <Link className="hover:underline" href={''}>Following: <span className="text-primary">{profile?.following ? profile?.following : 0}</span></Link> </p>
                                 </div>
 
-                                <div className="mt-4 space-x-2">
-                                    {/* <button className="border-[1px] border-black w-[150px] rounded-md py-[3px]">Follow</button> */}
-                                    <button onClick={handleEditProfileModal} className="border-[1px] border-primary bg-primary text-white w-[155px] rounded-md py-[3px]">Edit Profile</button>
-                                </div>
+                                {
+                                    profile?.username === user?.username &&
+                                    <div className="mt-4 space-x-2">
+                                        {/* <button className="border-[1px] border-black w-[150px] rounded-md py-[3px]">Follow</button> */}
+                                        <button onClick={handleEditProfileModal} className="border-[1px] border-primary bg-primary text-white w-[155px] rounded-md py-[3px]">Edit Profile</button>
+                                    </div>
+                                }
 
                             </div>
                         </section>
@@ -191,10 +203,19 @@ const ProfileComponent = () => {
                         {/* post and blogs section  */}
                         <section className="mt-10 flex gap-1">
                             <div className="w-[70%] bg-white min-h-[40%] rounded-b-xl ">
-                                <div className="w-full bg-black text-white font-bold py-1 pl-5 rounded-t-xl" ><p>Posts: </p></div>
-                                {
-                                    profile.posts?.map((post) => <SingleCard key={post._id} post={post}></SingleCard>)
-                                }
+                            <div className="w-full bg-black text-white font-bold py-1 pl-5 rounded-t-xl" ><p>Posts: </p></div>
+                               {
+                                profile.posts.length > 0 ?
+                                <>
+                                    {
+                                        profile.posts?.map((post) => <SingleCard key={post._id} post={post}></SingleCard>)
+                                    }
+                                </>
+                                :
+                                <div>
+                                    <p className="text-center py-5">No posts yet...</p>
+                                </div>
+                               }
                             </div>
                             <div className="w-[30%] bg-white min-h-[40%] rounded-b-xl overflow-hidden">
                                 <div className="w-full bg-black text-white font-bold py-1 pl-5 rounded-t-xl "><p>Blogs: </p></div>
@@ -213,21 +234,21 @@ const ProfileComponent = () => {
 
             {/* edit profile details  */}
             <section>
-            {
-                editProfileModal &&
-                <Modal handleCloseModal={setEditProfile}>
-                    <EditProfile modal={setEditProfile} refetch={fetchUserProfile}></EditProfile>
-                </Modal>
-            }
-            </section>
+                {
+                    editProfileModal &&
+                    <Modal handleCloseModal={setEditProfile}>
+                        <EditProfile modal={setEditProfile} refetch={fetchUserProfile}></EditProfile>
+                    </Modal>
+                }
 
-            {/* update avatar  */}
-            {
-                avatarModal &&
-                <Modal size="25" handleCloseModal={setAvatarModel}>
-                    <UpdateAvatarModal refetch={refetch} setAvatarModel={setAvatarModel}></UpdateAvatarModal>
-                </Modal> 
-            }
+                {/* update avatar  */}
+                {
+                    avatarModal &&
+                    <Modal size="25" handleCloseModal={setAvatarModel}>
+                        <UpdateAvatarModal refetch={refetch} setAvatarModel={setAvatarModel}></UpdateAvatarModal>
+                    </Modal> 
+                }
+            </section>
         </div>
     );
 };

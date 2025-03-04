@@ -9,8 +9,10 @@ import Image from 'next/image';
 import axios from 'axios';
 import ServerUrl from '@/Hooks/useServerUrl';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const MakePost = () => {
+    const router = useRouter()
 
     // #### details of post #### //
     const [content, setContent] = useState("") // ** details ** //
@@ -179,6 +181,7 @@ const MakePost = () => {
     const [serverErrorMsg, setServerErrorMsg] = useState("")
     // the biggest one submit post  ////////////////////////////////////////////////////////////////
     const handleSubmitPost = (e) => {
+        
         e.preventDefault()
         if(topics.length < 1) {
             setTopicError(true)
@@ -254,7 +257,7 @@ const MakePost = () => {
     return (
         <section className='py-10 bg-background min-h-screen'>
             <ContainMargin box_width={''}>
-                <form onSubmit={handleSubmitPost} className='mb-10 bg-white p-2 rounded-lg'>
+                <form onSubmit={handleSubmitPost} onKeyDown={(e) => e.key === "Enter" && "return"} className='mb-10 bg-white p-2 rounded-lg'>
                     
                     <div className='p-2 border-[1px] border-gray-200 rounded-lg'>
                         <label className='text-sm ml-1 text-primary' htmlFor="title">Title</label><br />

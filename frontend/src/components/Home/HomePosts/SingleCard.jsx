@@ -15,11 +15,12 @@ const SingleCard = ({post}) => {
         _id,
         title,
         topics,
+        createdAt,
         updatedAt,
         author
     } = post
 
-    const FormatedTime = moment(updatedAt).startOf('hour').fromNow(); // format the time for UX
+    const FormatedTime = moment(createdAt).local().startOf('hour').fromNow(); // format the time for UX
 
     // const likeNumberChecker = (num)=>{
     //     if (num >= 1000000) {
@@ -40,7 +41,7 @@ const SingleCard = ({post}) => {
         <div className='w-full  px-3 pt-3 pb-3 border-t-[1px] border-primary'>
             {/* navigate details page  */}
             <div>
-                <Link href={`post/${title.split(/[\\/]+/).join(' ')}?id=${_id}`}>
+                <Link href={`/post/${title?.split(/[\\/]+/).join(' ')}?id=${_id}`}>
                     <h3 className='text-md text-black hover:text-primary duration-100 hover:underline'>{title}</h3>
                 </Link>
                 
@@ -48,7 +49,7 @@ const SingleCard = ({post}) => {
                     <span className="text-sm text-primary font-semibold">topics:</span>
                     <div className="flex flex-wrap gap-2 ">
                         {
-                            topics.map(topic => <button title={`topic: ${topic.name}`} key={topic.name} className="border-[1px] border-primary text-primary font-semibold px-2 rounded-md text-xs">{topic.name}</button>)
+                            topics?.map(topic => <button title={`topic: ${topic.name}`} key={topic.name} className="border-[1px] border-primary text-primary font-semibold px-2 rounded-md text-xs">{topic.name}</button>)
                         }
                     </div>
                 </div>

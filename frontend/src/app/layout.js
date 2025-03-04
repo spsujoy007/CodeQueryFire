@@ -35,6 +35,7 @@ export default function RootLayout({ children }) {
               <Navbar></Navbar>
             }
             <section className={`${!isShowNav && 'pt-[65px]'}`}>
+            {/* <section> */}
               <HomeLayout>
                 {children}
               </HomeLayout>

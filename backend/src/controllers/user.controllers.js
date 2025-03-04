@@ -212,6 +212,14 @@ const userPublicProfile = asyncHandler ( async ( req, res ) => {
             }
         },
         {
+            $lookup: {
+                from: "posts",
+                localField: "posts",
+                foreignField: "_id",
+                as: "posts"
+            }
+        },
+        {
             $addFields: {
                 full_name: null
             }

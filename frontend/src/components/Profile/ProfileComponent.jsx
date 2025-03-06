@@ -205,7 +205,7 @@ const ProfileComponent = () => {
                             <div className="w-[70%] bg-white min-h-[40%] rounded-b-xl ">
                             <div className="w-full bg-black text-white font-bold py-1 pl-5 rounded-t-xl" ><p>Posts: </p></div>
                                {
-                                profile.posts.length > 0 ?
+                                profile?.posts?.length > 0 ?
                                 <>
                                     {
                                         profile.posts?.map((post) => <SingleCard key={post._id} post={post}></SingleCard>)

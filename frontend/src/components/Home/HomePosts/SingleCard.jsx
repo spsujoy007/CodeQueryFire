@@ -45,13 +45,10 @@ const SingleCard = ({post}) => {
                     <h3 className='text-md text-black hover:text-primary duration-100 hover:underline'>{title}</h3>
                 </Link>
                 
-                <div className="flex items-center gap-1 mt-1">
-                    <span className="text-sm text-primary font-semibold">topics:</span>
-                    <div className="flex flex-wrap gap-2 ">
-                        {
-                            topics?.map(topic => <button title={`topic: ${topic.name}`} key={topic.name} className="border-[1px] border-primary text-primary font-semibold px-2 rounded-md text-xs">{topic.name}</button>)
-                        }
-                    </div>
+                <div className="flex flex-wrap gap-2 mt-2">
+                    {
+                        topics?.map(topic => <button title={`topic: ${topic.name}`} key={topic.name} className="border-[1px] border-primary text-primary font-semibold px-2 rounded-md text-xs">{topic.name}</button>)
+                    }
                 </div>
             </div>
 

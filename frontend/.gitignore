@@ -20,6 +20,8 @@
 .DS_Store
 *.pem
 
+autoStart.py
+
 # debug
 npm-debug.log*
 yarn-debug.log*

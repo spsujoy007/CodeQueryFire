@@ -7,6 +7,7 @@ import { Post } from "../models/post.models.js";
 
 
 const post_Question = asyncHandler ( async (req, res) => {
+  console.log("HITED---");
     // console.log(req.files)
     const {
         title,
@@ -16,6 +17,7 @@ const post_Question = asyncHandler ( async (req, res) => {
         programming_language,  
         source
     } = req.body
+
     
     const newTopics = []
     topics.map(t => newTopics.push({name: t}));
@@ -59,7 +61,7 @@ const post_Question = asyncHandler ( async (req, res) => {
             programming_language: programming_language,
             source: source || "",
             images: imageLinksByCloudinary
-        }, {new: true, timestamps: true})
+        })
         
         if(!newPost) {
             return res.send("ERRR")

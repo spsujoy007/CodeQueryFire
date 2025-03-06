@@ -25,7 +25,7 @@ const HomeLayout = ({children}) => {
 
     const [openMenu, setOpenMenu] = useState(false)
 
-    const { isLoggedIn, loading } = useAuthenticated()
+    const { user, isLoggedIn, loading } = useAuthenticated()
 
     const [categoryName, setcategoryName] = useState(query_name || "")
 
@@ -43,7 +43,10 @@ const HomeLayout = ({children}) => {
     const [posts, setPosts] = useState([])
     const [postLoading, setPostLoading] = useState(true)
     
+    const [dataFetched, setDataFetched] = useState(false)
     async function handleSortDataByCategory(reqCategory) {
+        if(dataFetched)return;
+
         setcategoryName(reqCategory)
         await axios({
             method: 'GET',
@@ -53,9 +56,11 @@ const HomeLayout = ({children}) => {
         .then(res => {
             setPostLoading(false)
             setPosts(res.data.data.posts)
+            setDataFetched(true)
             // window.location.reload()
         })
         .catch(e => {
+            setDataFetched(true)
             setPostLoading(false)
             router.refresh()
         })
@@ -63,7 +68,7 @@ const HomeLayout = ({children}) => {
 
     useEffect(() => {
         handleSortDataByCategory(categoryName)
-    }, [])
+    })
     
     
     const handleCategoryRequestData = async (title) => {

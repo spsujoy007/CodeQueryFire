@@ -181,8 +181,12 @@ const MakePost = () => {
     const [serverErrorMsg, setServerErrorMsg] = useState("")
     // the biggest one submit post  ////////////////////////////////////////////////////////////////
     const handleSubmitPost = (e) => {
-        
         e.preventDefault()
+
+        if([title, content].some((field) => field === "")){
+            return
+        }
+
         if(topics.length < 1) {
             setTopicError(true)
             setTopicErrorMsg("You need to choose at least one topic.")
@@ -193,21 +197,18 @@ const MakePost = () => {
             return alert('An error founded')
         }
         else{
-            setLoading(true)
             const {title, source, code, images} = e.target
             const formData = new FormData();
             
             const post_object = {
-                "title": title?.value || null,
+                "title": title?.value || "",
                 "details": content,
                 "images": tempImageFile,
-                "code": code?.value || null,
+                "code": code?.value || "",
                 "topic": topics,
                 "programming_language": coding_language,
-                "source": source?.value || null, 
+                "source": source?.value || "", 
             }
-            
-            console.log(topics)
             
             tempImageFile.forEach((file) => {
                 formData.append("images", file); 
@@ -226,7 +227,7 @@ const MakePost = () => {
             // Send the FormData with axios
             axios.post(`${process.env.NEXT_PUBLIC_SERVER}/post/makepost`, formData, {
                 headers: {
-                    "Content-Type": "multipart/form-data", // Ensure axios uses the correct encoding
+                    "Content-Type": "multipart/form-data",
                 },
                 withCredentials: true,
             })
@@ -248,16 +249,12 @@ const MakePost = () => {
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    const disableEnterKey = (event) => {
-        if (event.key === "Enter") {
-            event.preventDefault(); // Disable Enter key
-        }
-    };
+
       
     return (
         <section className='py-10 bg-background min-h-screen'>
             <ContainMargin box_width={''}>
-                <form onSubmit={handleSubmitPost} onKeyDown={(e) => e.key === "Enter" && "return"} className='mb-10 bg-white p-2 rounded-lg'>
+                <form onSubmit={handleSubmitPost} className='mb-10 bg-white p-2 rounded-lg'>
                     
                     <div className='p-2 border-[1px] border-gray-200 rounded-lg'>
                         <label className='text-sm ml-1 text-primary' htmlFor="title">Title</label><br />
@@ -268,7 +265,7 @@ const MakePost = () => {
                         name='title'
                         placeholder='create a title'
                         type="text"
-                        onKeyDown={disableEnterKey}
+                    
                         className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md border-[1px] border-gray-200'/>
                     </div>
 
@@ -338,7 +335,7 @@ const MakePost = () => {
                                             onChange={handleSelectImages} 
                                             id='images' 
                                             className='hidden none' 
-                                            onKeyDown={disableEnterKey}
+                                        
                                             name='images' type="file" accept='.jpg, .png' />
                                         </div>
                                     }
@@ -369,7 +366,7 @@ const MakePost = () => {
                             <div className='mt-2 p-2 border-[1px] border-gray-200 rounded-lg'>
                                 <label className='text-sm ml-1 text-primary' htmlFor="source">Source</label><br />
                                 <input 
-                                onKeyDown={disableEnterKey}
+                            
                                 className='bg-gray-100 px-2 w-full mt-1 rounded-lg py-2 outline-none text-md border-[1px] border-gray-200' 
                                 id='source' name='source' placeholder='type source link only' type="url" />
                             </div>
@@ -430,17 +427,17 @@ const MakePost = () => {
                     {serverError && <p className='text-red-500 text-sm mt-1 text-center'>{serverErrorMsg}</p>}
                     <div className='mt-3 flex justify-end'>
                         <div className='flex items-center gap-2'>
-                        {
+                        {/* {
                             loading ?
                             <button disabled className='bg-primary hover:bg-primary_hover w-[180px] py-1 rounded-md text-white flex items-center justify-center gap-2 cursor-default'>
                                <span>Posting</span> <div className='mini-loader'></div>
                             </button>
-                            :
-                            <button className='bg-primary hover:bg-primary_hover text-white w-[180px] py-1 rounded-md flex items-center justify-center gap-2'>
+                            : */}
+                            <button disabled={loading} className='bg-primary hover:bg-primary_hover text-white w-[180px] py-1 rounded-md flex items-center justify-center gap-2'>
                                 <LuSend />
-                                Post
+                                {loading ? "Posting" : "Post"}
                             </button>
-                        }
+                        {/* } */}
                         </div>
                     </div>
                 </form>

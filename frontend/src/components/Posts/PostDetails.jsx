@@ -10,14 +10,16 @@ import moment from 'moment';
 import { BiShare } from "react-icons/bi";
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/default-highlight';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoCopyOutline } from "react-icons/io5";
 import { BiCommentDetail } from "react-icons/bi";
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios, { all } from 'axios';
 import ServerUrl from '@/Hooks/useServerUrl';
 const imgPlaceholderView = "/images/placeholdeImageView.jpg"
 import './postdesign.css'
 import LoadingPage from '@/app/loading';
+import { IoIosArrowDown } from 'react-icons/io';
+import toast from 'react-hot-toast';
 const null_avatar = "/images/null_avatar.jpeg"
 
 const PostDetails = ({searchParams}) => {
@@ -74,6 +76,16 @@ const PostDetails = ({searchParams}) => {
     const [viewImage, setViewImage] = useState(false)
     const [viewImageUrl, setViewImageUrl] = useState("")
 
+    // 🎯👁️ CONTROL → Show Full Code Toggle
+    const [showFullcode, setShowFullcode] = useState(false)
+
+    const handleCopyCode = () => {
+        navigator.clipboard.writeText(code)
+        .then(() => {
+            toast.success("Copied")
+        })
+    }
+
     return (
         <>
             {
@@ -92,7 +104,43 @@ const PostDetails = ({searchParams}) => {
 
                                 {/* details images and source  */}
                                 <div className='bg-white border-[1px] border-gray-200 p-4 rounded-lg mt-2'>
-                                <h1 className='text-3xl font-bold border-b-[1px] border-black pb-2'>{title}</h1>
+                                <section className='border-b-[1px] border-black pb-2'>
+                                    {/* ─── 🏷️ POST TITLE ─────────────────── */}
+                                    <h1 className='text-3xl font-bold'>{title}</h1>
+
+                                    {/* ─── 🎭 PROFILE DETAILS SECTION ─────────────────────  */}
+                                    <span className="mt-4 relative group p-2 rounded-lg flex items-center gap-3 w-[300px]  ">
+                                        <div className='w-[45px] h-[45px] inline'>
+                                            <Image priority  alt="avatar" src={author?.avatar ? author.avatar?.url : null_avatar} width={45} height={45} className="rounded-full w-full h-full object-cover"></Image>
+                                        </div>
+                                        <div>
+                                            <h6 className="text-sm font-semibold">{author?.full_name}</h6>
+                                            <p className="text-sm">{FormatedTime}</p>
+                                        </div>
+
+                                        {/* ✨👤 HOVERED PROFILE INFO → Showing extra details! */}
+                                        <div className="w-[400px] absolute -bottom-[205%] drop-shadow-lg shadow-gray-400 hidden group-hover:block  bg-white border-[1px] border-gray-300 p-2 rounded-md transition-all duration-500">
+                                            <section className="flex items-start gap-2">
+                                                <div>
+                                                    <div className="w-[35px] h-[35px] rounded-full">
+                                                        <Image alt="avatar" src={author?.avatar ?  author?.avatar?.url : null_avatar} width={35} height={35} className="rounded-full bg-gray-200 w-full h-full object-cover"></Image>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h5 className="text-sm font-bold"> {author?.full_name}</h5>
+                                                    <p className="text-sm">{author?.bio.slice(0, 35)}...</p>
+                                                    <div className="text-sm mt-2 flex gap-2">
+                                                        <p>Followers: <span className="font-bold text-primary">0</span></p>
+                                                        |
+                                                        <p>Following: <span className="font-bold text-primary">0</span></p>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            <Link href={`/profile/${author?.username}`} className="w-full mt-2 block text-center bg-gray-300 text-black border-[1px] border-white rounded-md py-1">View Profile</Link>
+                                        </div>
+                                    </span>
+                                </section>
+                                
                                     <div className='tiptap-style-home mt-2' dangerouslySetInnerHTML={{__html: details}}></div>
                                     {/* <p className='text-lg text-justify'><span className='text-primary font-bold'></span>{details}</p> */}
 
@@ -131,23 +179,53 @@ const PostDetails = ({searchParams}) => {
                                 </div>
 
 
-                                {/* shared code start ========================================== */}
-                                {
-                                    code && 
-                                    <div 
-                                    className='rounded-lg overflow-hidden mt-2 border-[1px] border-gray-300 bg-white'>
-                                        <div 
-                                        className='px-5 py-1 text-primary border-b-[1px] border-primary'>
-                                            <p>Code:</p>
-                                        </div>
-                                        <SyntaxHighlighter wrapLines={true}  showLineNumbers language={programming_language} style={docco}>
-                                            {code}
-                                        </SyntaxHighlighter>
-                                        <p 
-                                        className='py-2 pl-4 w-full bg-gray-100 font-bold'>language: <span className='text-primary capitalize font-normal'>{programming_language}</span> </p>
-                                        </div>
-                                }
-                                {/* shared code end ========================================== */}
+                                {/* ==================================================
+                                    🔄 SHARED CODE START  
+                                    - Reusable code blocks for efficiency.
+                                    - Ensures maintainability & scalability.
+                                ================================================== */}
+                                <div className='relative'>
+                                    {
+                                        code && 
+                                       <>
+                                            <div 
+                                            className={`rounded-lg overflow-hidden mt-2 border-[1px] border-gray-300 bg-white ${showFullcode ? "max-h-[1500px]" : "max-h-[400px]"} transition-all duration-500`}>
+                                                <div 
+                                                className='px-5 py-1 text-primary border-b-[1px] border-primary flex justify-between'>
+                                                    <p>Code:</p>
+                                                    <button 
+                                                        onClick={handleCopyCode} 
+                                                        className='flex items-center gap-2 text-sm'>
+                                                        <IoCopyOutline /> <span>Copy</span>
+                                                    </button>
+                                                </div>
+                                                <SyntaxHighlighter wrapLines={true}  showLineNumbers language={programming_language} style={docco}>
+                                                    {code}
+                                                </SyntaxHighlighter>
+                                                <p 
+                                                className='py-2 pl-4 w-full bg-gray-100 font-bold'>language: <span className='text-primary capitalize font-normal'>{programming_language}</span> </p>
+
+                                            </div>
+                                            
+                                            {/* ============================================
+                                                📝 BUTTON TO TOGGLE FULL CODE VISIBILITY
+                                                - Appears when code is not fully shown.
+                                                - Allows user to expand and view the full code.
+                                                - Button is styled with a gradient background.
+                                            ============================================ */}
+                                            {
+                                                code.split("\n").length > 14 && !showFullcode && 
+                                                <div className='absolute bottom-0 py-20 bg-gradient-to-t w-full flex justify-center from-orange-50 to-transparent'>
+                                                    <button onClick={() => setShowFullcode(!showFullcode)} className='text-black flex flex-col items-center w-[150px] gap-y-2 transition-all duration-700'> 
+                                                        <IoIosArrowDown className='text-2xl' /> 
+                                                        <span className='text-xs  text-primary'>show full code</span>
+                                                    </button>
+                                                </div>
+                                            }
+                                       </>
+                                    }
+                                </div>
+                                {/* 🔚 Shared Code End */}
 
                                 <div className="mt-4 grid md:grid-cols-5 border-[1px] border-gray-200 lg:grid-cols-6 grid-cols-3 gap-2 bg-white p-2 rounded-md">
                                     <button 
@@ -189,37 +267,7 @@ const PostDetails = ({searchParams}) => {
                                     </button>
                                 </div>
                                 </div>
-
-                                <div className="mt-2 relative group bg-white border-[1px] border-gray-200 p-2 rounded-lg w-full flex items-center gap-3 ">
-                                    <div className='w-[45px] h-[45px]'>
-                                        <Image priority  alt="avatar" src={author?.avatar ? author.avatar?.url : null_avatar} width={45} height={45} className="rounded-full w-full h-full object-cover"></Image>
-                                    </div>
-                                    <div>
-                                        <h6 className="text-sm font-semibold">Sujoy</h6>
-                                        <p className="text-sm">{FormatedTime}</p>
-                                    </div>
-
-                                    {/* // hovered profile info */}
-                                    <div className="w-[400px] absolute -top-[210%] drop-shadow-lg shadow-gray-400 hidden group-hover:block  bg-gray-100 border-[1px] border-gray-300 p-2 rounded-md">
-                                        <section className="flex items-start gap-2">
-                                            <div>
-                                                <div className="w-[35px] h-[35px] rounded-full">
-                                                    <Image alt="avatar" src={author?.avatar ?  author?.avatar?.url : null_avatar} width={35} height={35} className="rounded-full bg-gray-200 w-full h-full object-cover"></Image>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <h5 className="text-sm font-bold"> {author?.full_name}</h5>
-                                                <p className="text-sm">{author?.bio}</p>
-                                                <div className="text-sm mt-2 flex gap-2">
-                                                    <p>Followers: <span className="font-bold text-primary">0</span></p>
-                                                    |
-                                                    <p>Following: <span className="font-bold text-primary">0</span></p>
-                                                </div>
-                                            </div>
-                                        </section>
-                                        <Link href="/" className="w-full mt-2 block text-center bg-gray-300 text-black border-[1px] border-white rounded-md py-1">View Profile</Link>
-                                    </div>
-                                </div>
+                                
                             </ContainMargin>
                         </>
                     }

@@ -92,7 +92,7 @@ const SingleCard = ({post}) => {
                         </div>
                         <div>
                             <h5 className="text-sm font-bold"> {author?.full_name}</h5>
-                            <p className="text-sm">{author?.bio}</p>
+                            <p className="text-sm">{author?.bio.slice(0, 35)}...</p>
                             <div className="text-sm mt-2 flex gap-2">
                                 <p>Followers: <span className="font-bold text-primary">0</span></p>
                                 |

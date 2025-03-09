@@ -45,9 +45,9 @@ const HomeLayout = ({children}) => {
     
     const [dataFetched, setDataFetched] = useState(false)
     async function handleSortDataByCategory(reqCategory) {
-        if(dataFetched)return;
-
+        
         setcategoryName(reqCategory)
+        if(dataFetched)return;
         await axios({
             method: 'GET',
             url: `${process.env.NEXT_PUBLIC_SERVER}/post/viewposts?category=${reqCategory}`,

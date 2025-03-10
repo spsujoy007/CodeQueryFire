@@ -8,9 +8,11 @@ import { MdBookmarkBorder } from "react-icons/md";
 import { FaCode } from "react-icons/fa6";
 import { useState } from "react";
 import moment from "moment";
+import { FaHamburger } from "react-icons/fa";
+import { HiDotsVertical } from "react-icons/hi";
 const null_avatar = '/images/null_avatar.jpeg'
 
-const SingleCard = ({post}) => {
+const SingleCard = ({post, profile, index}) => {
     const{
         _id,
         title,
@@ -18,7 +20,7 @@ const SingleCard = ({post}) => {
         createdAt,
         updatedAt,
         author
-    } = post
+    } = post;
 
     const FormatedTime = moment(createdAt).local().startOf('hour').fromNow(); // format the time for UX
 
@@ -34,22 +36,27 @@ const SingleCard = ({post}) => {
     //       }
     // }
 
-    const [viewCode, setViewCode] = useState(false)
-    const [seeMore, setSeeMore] = useState(false)
-
     return (
-        <div className='w-full  px-3 pt-3 pb-3 border-t-[1px] border-primary'>
+        <div className={`w-full px-3 pt-3 pb-3 relative ${index !== 0 && 'border-t-[1px] border-primary'}`}>
             {/* navigate details page  */}
             <div>
-                <Link href={`/post/${title?.split(/[\\/]+/).join(' ')}?id=${_id}`}>
-                    <h3 className='text-md text-black hover:text-primary duration-100 hover:underline'>{title}</h3>
-                </Link>
+                    <h3 className='text-md text-black hover:text-primary duration-100 hover:underline'> 
+                        <Link href={`/post/${title?.split(/[\\/]+/).join(' ')}?id=${_id}`}>
+                            {title}
+                        </Link>
+                    </h3>
                 
                 <div className="flex flex-wrap gap-2 mt-2">
                     {
-                        topics?.map(topic => <button title={`topic: ${topic.name}`} key={topic.name} className="border-[1px] border-primary text-primary font-semibold px-2 rounded-md text-xs">{topic.name}</button>)
+                        topics?.map(topic => <span title={`topic: ${topic.name}`} key={topic.name} className=" text-primary hover:underline cursor-pointer font-semibold mr-1 rounded-md text-xs">#{topic.name}</span>)
                     }
                 </div>
+            </div>
+            
+            <div className="absolute right-5 top-[44%]">
+                <button >
+                    <HiDotsVertical />
+                </button>
             </div>
 
 
@@ -78,7 +85,7 @@ const SingleCard = ({post}) => {
                     <Image alt="avatar" src={author?.avatar ?  author?.avatar?.url : null_avatar} width={35} height={35} className="rounded-full bg-gray-200 w-full h-full object-cover"></Image>
                 </div> */}
                 <div>
-                    <h6 className="text-xs font-semibold">{author?.full_name}</h6>
+                    <h6 className="text-xs font-semibold">{author? `${author?.full_name}` : `${profile?.full_name}`}</h6>
                     <p className="text-xs">{FormatedTime}</p>
                 </div>
 
@@ -87,12 +94,12 @@ const SingleCard = ({post}) => {
                     <section className="flex items-start gap-2">
                         <div>
                             <div className="w-[35px] h-[35px] rounded-full">
-                                <Image alt="avatar" src={author?.avatar ?  author?.avatar?.url : null_avatar} width={35} height={35} className="rounded-full bg-gray-200 w-full h-full object-cover"></Image>
+                                <Image alt="avatar" src={author?.avatar || profile?.avatar ?  `${author?.avatar ? `${author?.avatar?.url}` : `${profile?.avatar?.url}`}` : null_avatar} width={35} height={35} className="rounded-full bg-gray-200 w-full h-full object-cover"></Image>
                             </div>
                         </div>
                         <div>
-                            <h5 className="text-sm font-bold"> {author?.full_name}</h5>
-                            <p className="text-sm">{author?.bio.slice(0, 35)}...</p>
+                            <h5 className="text-sm font-bold"> {author? `${author?.full_name}` : `${profile?.full_name}`} </h5>
+                            <p className="text-sm">{author?.bio ? `${author?.bio.slice(0, 35)}` : `${profile?.bio.slice(0, 35)}`}...</p>
                             <div className="text-sm mt-2 flex gap-2">
                                 <p>Followers: <span className="font-bold text-primary">0</span></p>
                                 |
@@ -100,7 +107,7 @@ const SingleCard = ({post}) => {
                             </div>
                         </div>
                     </section>
-                    <Link href={`/profile/${author?.username}`}>
+                    <Link href={`/profile/${author? author?.username : profile?.username}`}>
                         <button className="w-full mt-2 bg-gray-300 text-black border-[1px] border-white rounded-md py-1">View Profile</button>
                     </Link>
                 </div>

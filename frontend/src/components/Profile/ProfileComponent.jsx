@@ -104,7 +104,7 @@ const ProfileComponent = () => {
     
     let filteredPlatformListAlreadyUsed = []
     if(!loading){
-        filteredPlatformListAlreadyUsed = user?.social_links.filter((item) => platform_lists.some((p) => p.platform === item.platform))
+        filteredPlatformListAlreadyUsed = profile?.social_links?.filter((item) => platform_lists.some((p) => p.platform === item.platform))
     }
 
     const match_link_by_platform = (platform_name) =>{
@@ -208,7 +208,7 @@ const ProfileComponent = () => {
                                 profile?.posts?.length > 0 ?
                                 <>
                                     {
-                                        profile.posts?.map((post) => <SingleCard key={post._id} post={post}></SingleCard>)
+                                        profile.posts?.map((post, idx) => <SingleCard key={post._id} post={post} profile={profile} index={idx}></SingleCard>)
                                     }
                                 </>
                                 :

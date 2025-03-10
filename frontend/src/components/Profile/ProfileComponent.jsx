@@ -245,7 +245,7 @@ const ProfileComponent = () => {
                 {
                     avatarModal &&
                     <Modal size="25" handleCloseModal={setAvatarModel}>
-                        <UpdateAvatarModal refetch={refetch} setAvatarModel={setAvatarModel}></UpdateAvatarModal>
+                        <UpdateAvatarModal refetch={fetchUserProfile} setAvatarModel={setAvatarModel}></UpdateAvatarModal>
                     </Modal> 
                 }
             </section>

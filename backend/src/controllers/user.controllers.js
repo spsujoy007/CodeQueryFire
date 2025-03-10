@@ -216,7 +216,7 @@ const userPublicProfile = asyncHandler ( async ( req, res ) => {
                 from: "posts",
                 localField: "posts",
                 foreignField: "_id",
-                as: "posts"
+                as: "posts",
             }
         },
         {
@@ -226,6 +226,7 @@ const userPublicProfile = asyncHandler ( async ( req, res ) => {
         },
         {
             $set: {
+                posts: { $sortArray: {input: "$posts", sortBy: {createdAt: -1} } },
                 "full_name": {
                     $concat: ["$first_name", " ", "$last_name"]
                 }

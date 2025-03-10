@@ -30,9 +30,9 @@ const PostDetails = ({searchParams}) => {
     const { id } = searchParams
     const [post, setPost] = useState({});
     
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     useEffect(() => {
-        setLoading(true)
+        // setLoading(true)
         axios.get(`${process.env.NEXT_PUBLIC_SERVER}/post/post_details?id=${id}`)
             .then(res => {
                 setPost(res?.data?.data?.post);
@@ -94,7 +94,7 @@ const PostDetails = ({searchParams}) => {
                     <LoadingPage></LoadingPage>
                 </div>
                 :
-                <div className='py-8 realative'>
+                <div className='pt-8 pb-32 realative'>
                     {
                         !viewImage &&
                         <>
@@ -104,12 +104,12 @@ const PostDetails = ({searchParams}) => {
 
                                 {/* details images and source  */}
                                 <div className='bg-white border-[1px] border-gray-200 p-4 rounded-lg mt-2'>
-                                <section className='border-b-[1px] border-black pb-2'>
+                                <section className='pb-2'>
                                     {/* ─── 🏷️ POST TITLE ─────────────────── */}
                                     <h1 className='text-3xl font-bold'>{title}</h1>
 
                                     {/* ─── 🎭 PROFILE DETAILS SECTION ─────────────────────  */}
-                                    <span className="mt-4 relative group p-2 rounded-lg flex items-center gap-3 w-[300px]  ">
+                                    <span className="mt-4 relative group pl-2 flex items-center gap-3 w-[300px] border-l-4 border-primary ">
                                         <div className='w-[45px] h-[45px] inline'>
                                             <Image priority  alt="avatar" src={author?.avatar ? author.avatar?.url : null_avatar} width={45} height={45} className="rounded-full w-full h-full object-cover"></Image>
                                         </div>
@@ -119,7 +119,7 @@ const PostDetails = ({searchParams}) => {
                                         </div>
 
                                         {/* ✨👤 HOVERED PROFILE INFO → Showing extra details! */}
-                                        <div className="w-[400px] absolute -bottom-[205%] drop-shadow-lg shadow-gray-400 hidden group-hover:block  bg-white border-[1px] border-gray-300 p-2 rounded-md transition-all duration-500">
+                                        <div className="w-[400px] absolute -bottom-[130px] drop-shadow-lg shadow-gray-400 hidden group-hover:block  bg-white border-[1px] border-gray-300 p-2 rounded-md transition-all duration-500">
                                             <section className="flex items-start gap-2">
                                                 <div>
                                                     <div className="w-[35px] h-[35px] rounded-full">

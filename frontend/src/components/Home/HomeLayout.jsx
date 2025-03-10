@@ -11,6 +11,7 @@ import HomePosts from './HomePosts/HomePosts';
 import axios from 'axios';
 import ServerUrl from '@/Hooks/useServerUrl';
 import Head from 'next/head';
+import PostPlaceholderLoading from './PostPlaceholderLoading';
 
 const HomeLayout = ({children}) => {
     const router = useRouter()
@@ -44,10 +45,11 @@ const HomeLayout = ({children}) => {
     const [postLoading, setPostLoading] = useState(true)
     
     const [dataFetched, setDataFetched] = useState(false)
-    async function handleSortDataByCategory(reqCategory) {
+    const handleSortDataByCategory = async(reqCategory) => {
         
         setcategoryName(reqCategory)
         if(dataFetched)return;
+        setPostLoading(true)
         await axios({
             method: 'GET',
             url: `${process.env.NEXT_PUBLIC_SERVER}/post/viewposts?category=${reqCategory}`,
@@ -72,8 +74,9 @@ const HomeLayout = ({children}) => {
     
     
     const handleCategoryRequestData = async (title) => {
-        // window.location.reload()
+        setDataFetched(false)
         await handleSortDataByCategory(title)
+        // await window.location.reload()
     }
 
     return (
@@ -134,7 +137,7 @@ const HomeLayout = ({children}) => {
                                 {/* {children} */}
                                 {
                                     postLoading ?
-                                    <LoadingPage></LoadingPage>
+                                    <PostPlaceholderLoading></PostPlaceholderLoading>
                                     :
                                     <>
                                         {

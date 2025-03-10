@@ -315,9 +315,7 @@ const MakePost = () => {
                     </div>
 
                     {/* optional details of post but important for SEO  */}
-                    {
-                       activeOptional &&
-                        <section>
+                    <section className={`${activeOptional ? "max-h-[1000px]" : "max-h-[0px] overflow-hidden"} transition-all duration-500`}>
                             <p className='mt-5 ml-2 font-bold mb-1'>Optionals</p>
 
                             {/* select image section  */}
@@ -412,7 +410,6 @@ const MakePost = () => {
                                 </div>
                             </div>
                         </section>
-                    }
 
                     <div className='mt-3'>
                         <div className='flex justify-center'>
@@ -427,17 +424,10 @@ const MakePost = () => {
                     {serverError && <p className='text-red-500 text-sm mt-1 text-center'>{serverErrorMsg}</p>}
                     <div className='mt-3 flex justify-end'>
                         <div className='flex items-center gap-2'>
-                        {/* {
-                            loading ?
-                            <button disabled className='bg-primary hover:bg-primary_hover w-[180px] py-1 rounded-md text-white flex items-center justify-center gap-2 cursor-default'>
-                               <span>Posting</span> <div className='mini-loader'></div>
-                            </button>
-                            : */}
                             <button disabled={loading} className='bg-primary hover:bg-primary_hover text-white w-[180px] py-1 rounded-md flex items-center justify-center gap-2'>
                                 <LuSend />
                                 {loading ? "Posting" : "Post"}
                             </button>
-                        {/* } */}
                         </div>
                     </div>
                 </form>

@@ -10,9 +10,11 @@ import { useState } from "react";
 import moment from "moment";
 import { HiDotsVertical } from "react-icons/hi";
 import { useHandleDeletePost } from "@/components/Posts/PostControllers/useHandleDeletePost";
+import useAuthenticated from "@/Hooks/useAuthenticated";
 const null_avatar = '/images/null_avatar.jpeg'
 
 const SingleCard = ({post, profile, index, refetch, setDataFetched}) => {
+    const {user} = useAuthenticated()
     const{
         _id,
         title,
@@ -41,11 +43,14 @@ const SingleCard = ({post, profile, index, refetch, setDataFetched}) => {
     const {deletePost} = useHandleDeletePost()
 
     const handleDeletePost = async() => {
-        setDataFetched(false)
-        await deletePost(_id)
-        refetch()
+        const res = await deletePost(_id)
+        if(res){
+            setDataFetched(false)
+            refetch()
+        }
     }
 
+    // console.log(author.email, profile, user.email);
     return (
         <div onMouseLeave={() => setMenuDrawer(false)} className={`w-full px-3 pt-3 pb-3 relative ${index !== 0 && 'border-t-[1px] border-primary'}`}>
             {/* navigate details page  */}
@@ -63,22 +68,31 @@ const SingleCard = ({post, profile, index, refetch, setDataFetched}) => {
                 </div>
             </div>
             
-            <div className="absolute right-5 top-[44%]">
-                <div className="relative">
-                    <button onClick={() =>{setMenuDrawer(false)
-                         setMenuDrawer(!menuDrawer)}}>
-                        <HiDotsVertical />
-                    </button>
 
-                    {
-                        menuDrawer &&
-                        <div className="w-[160px] flex flex-col bg-gray-100 p-2 z-[1000] absolute -left-[140px] rounded-lg space-y-1 border-[1px] border-gray-200">
-                            <button className="border-[1px] bg-white border-gray-400 rounded-md py-2 ">Save</button>
-                            <button onClick={handleDeletePost} className="border-[1px] bg-white border-gray-400 rounded-md py-2 ">Delete</button>
-                        </div>
-                    }
+            <>
+                <div className="absolute right-5 top-[44%]">
+                    <div className="relative">
+                        <button onClick={() =>{setMenuDrawer(false)
+                            setMenuDrawer(!menuDrawer)}}>
+                            <HiDotsVertical />
+                        </button>
+
+                        {
+                            menuDrawer &&
+                            <div className="w-[160px] flex flex-col bg-gray-100 p-2 z-[1000] absolute -left-[160px] -top-[50px] rounded-lg space-y-1 border-[1px] border-gray-200">
+                                <>
+                                {
+                                    (author?.email === user?.email || profile?.email === user?.email) &&
+                                    <button onClick={handleDeletePost} className="border-[1px] bg-white border-gray-400 rounded-md py-2 ">Delete</button>
+                                }
+                                <button className="border-[1px] bg-white border-gray-400 rounded-md py-2 ">Save</button>
+                                </>
+                            </div>
+                        }
+                    </div>
                 </div>
-            </div>
+            
+            </>
 
 
             {/* <div className="mt-4 flex items-center gap-2">

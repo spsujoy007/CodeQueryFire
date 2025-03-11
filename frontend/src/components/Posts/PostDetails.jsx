@@ -111,7 +111,7 @@ const PostDetails = ({searchParams}) => {
                                     {/* ─── 🎭 PROFILE DETAILS SECTION ─────────────────────  */}
                                     <span className="mt-4 relative group pl-2 flex items-center gap-3 w-[300px] border-l-4 border-primary ">
                                         <div className='w-[45px] h-[45px] inline'>
-                                            <Image priority  alt="avatar" src={author?.avatar ? author.avatar?.url : null_avatar} width={45} height={45} className="rounded-full w-full h-full object-cover"></Image>
+                                            <Image priority alt="avatar" src={author?.avatar ? author.avatar?.url : null_avatar} width={45} height={45} className="rounded-full w-full h-full object-cover"></Image>
                                         </div>
                                         <div>
                                             <h6 className="text-sm font-semibold">{author?.full_name}</h6>
@@ -164,9 +164,7 @@ const PostDetails = ({searchParams}) => {
                                                     <Image 
                                                         alt='post_image' 
                                                         quality={50}
-                                                        // loader={imgPlaceholder}
-                                                        // placeholder='blur'
-                                                        priority={true}
+                                                        priority
                                                         className='rounded-lg' 
                                                         src={img?.url} 
                                                         height={200} 

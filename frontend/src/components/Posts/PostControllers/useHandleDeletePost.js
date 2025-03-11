@@ -3,7 +3,6 @@ import toast from "react-hot-toast";
 
 export const useHandleDeletePost = () => {
 
-
     const deletePost = async (post_id) => {
         await axios({
             method: "DELETE",
@@ -21,9 +20,12 @@ export const useHandleDeletePost = () => {
             }
         })
         .catch((error) => {
-            return {
-                response: false,
-                message: e?.message || "Problem when deleting the post"
+            toast.error(error?.response?.data?.message)
+            if(error){
+                return {
+                    response: false,
+                    message: error?.response?.data?.message || "Problem when deleting the post"
+                }
             }
         })
     }

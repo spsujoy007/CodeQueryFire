@@ -398,13 +398,25 @@ const HandleDeletePost = asyncHandler ( async ( req, res ) => {
     const post_id = req.query.pid;
     
     const findPost = await Post.findById(post_id);
-
+    
     if(!findPost){
       return res 
       .status(404)
       .json(new ApiResponse(
         404, {}, "Post not found with the given ID"
       ))
+    }
+
+    const author_email = await User.findById(findPost?.author_id).select("email")
+    // console.log(author_email?.email, req.user.email);
+    if(author_email?.email !== req?.user?.email){
+      return res
+      .status(403) // 403 Forbidden (User is not allowed to perform this action)
+      .json(new ApiResponse(
+        403, 
+        {}, 
+        "You are not authorized to access this post"
+      ));
     }
 
     const data_deleted = await Post.findByIdAndDelete(post_id);

@@ -1,18 +1,18 @@
 "use client"
 import Image from "next/image";
 import Link from "next/link";
-import { AiOutlineEye } from "react-icons/ai";
-import { BiDislike, BiLike } from "react-icons/bi";
-import { LuExternalLink } from "react-icons/lu";
-import { MdBookmarkBorder } from "react-icons/md";
-import { FaCode } from "react-icons/fa6";
+// import { AiOutlineEye } from "react-icons/ai";
+// import { BiDislike, BiLike } from "react-icons/bi";
+// import { LuExternalLink } from "react-icons/lu";
+// import { MdBookmarkBorder } from "react-icons/md";
+// import { FaCode } from "react-icons/fa6";
 import { useState } from "react";
 import moment from "moment";
-import { FaHamburger } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
+import { useHandleDeletePost } from "@/components/Posts/PostControllers/useHandleDeletePost";
 const null_avatar = '/images/null_avatar.jpeg'
 
-const SingleCard = ({post, profile, index}) => {
+const SingleCard = ({post, profile, index, refetch, setDataFetched}) => {
     const{
         _id,
         title,
@@ -36,12 +36,22 @@ const SingleCard = ({post, profile, index}) => {
     //       }
     // }
 
+    const [menuDrawer, setMenuDrawer] = useState(false)
+
+    const {deletePost} = useHandleDeletePost()
+
+    const handleDeletePost = async() => {
+        setDataFetched(false)
+        await deletePost(_id)
+        refetch()
+    }
+
     return (
-        <div className={`w-full px-3 pt-3 pb-3 relative ${index !== 0 && 'border-t-[1px] border-primary'}`}>
+        <div onMouseLeave={() => setMenuDrawer(false)} className={`w-full px-3 pt-3 pb-3 relative ${index !== 0 && 'border-t-[1px] border-primary'}`}>
             {/* navigate details page  */}
             <div>
-                    <h3 className='text-md text-black hover:text-primary duration-100 hover:underline'> 
-                        <Link href={`/post/${title?.split(/[\\/]+/).join(' ')}?id=${_id}`}>
+                    <h3 className='text-md text-black '> 
+                        <Link className="hover:text-primary duration-100 hover:underline" href={`/post/${title?.split(/[\\/]+/).join(' ')}?id=${_id}`}>
                             {title}
                         </Link>
                     </h3>
@@ -54,9 +64,20 @@ const SingleCard = ({post, profile, index}) => {
             </div>
             
             <div className="absolute right-5 top-[44%]">
-                <button >
-                    <HiDotsVertical />
-                </button>
+                <div className="relative">
+                    <button onClick={() =>{setMenuDrawer(false)
+                         setMenuDrawer(!menuDrawer)}}>
+                        <HiDotsVertical />
+                    </button>
+
+                    {
+                        menuDrawer &&
+                        <div className="w-[160px] flex flex-col bg-gray-100 p-2 z-[1000] absolute -left-[140px] rounded-lg space-y-1 border-[1px] border-gray-200">
+                            <button className="border-[1px] bg-white border-gray-400 rounded-md py-2 ">Save</button>
+                            <button onClick={handleDeletePost} className="border-[1px] bg-white border-gray-400 rounded-md py-2 ">Delete</button>
+                        </div>
+                    }
+                </div>
             </div>
 
 

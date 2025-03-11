@@ -9,7 +9,6 @@ const null_avatar = '/images/null_avatar.jpeg'
 
 const HomeProfile = () => {
     const {user, loading, isLoggedIn} = useAuthenticated()
-    console.log("USER: ",user);
     const pathname = usePathname();
     const router = useRouter
     

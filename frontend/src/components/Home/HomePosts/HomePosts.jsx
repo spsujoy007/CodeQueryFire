@@ -1,13 +1,13 @@
 'use client'
 import SingleCard from './SingleCard';
-const HomePosts = ({posts}) => {
+const HomePosts = ({posts, refetch, setDataFetched}) => {
     
   
     return (
         <div className='space-y-2 mt-3'>
             {
                 posts.map((post, id) => 
-                  <SingleCard key={post._id} post={post} index={id}></SingleCard>
+                  <SingleCard refetch={refetch} key={post._id} setDataFetched={setDataFetched} post={post} index={id}></SingleCard>
               )
             }
         </div>

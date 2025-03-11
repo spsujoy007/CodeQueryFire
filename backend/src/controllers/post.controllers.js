@@ -4,6 +4,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { Post } from "../models/post.models.js";
+import removeImageById from "../utils/cloudinary.remove.js";
 
 
 const post_Question = asyncHandler ( async (req, res) => {
@@ -393,10 +394,38 @@ const EditPostController = asyncHandler ( async ( req, res ) => {
 })
 
 
+const HandleDeletePost = asyncHandler ( async ( req, res ) => {
+    const post_id = req.query.pid;
+    
+    const findPost = await Post.findById(post_id);
+
+    if(!findPost){
+      return res 
+      .status(404)
+      .json(new ApiResponse(
+        404, {}, "Post not found with the given ID"
+      ))
+    }
+
+    const data_deleted = await Post.findByIdAndDelete(post_id);
+    if(data_deleted){
+        data_deleted?.images?.map(({public_id}) => removeImageById(public_id))
+    }
+
+    return res
+    .status(200)
+    .json(new ApiResponse(
+      200,
+      {},
+      "Post deleted successfully"
+    ));
+})
+
 export {
     post_Question,
     ViewHomePosts,
     SinglePostDetails,
     MyPostsController,
-    EditPostController
+    EditPostController,
+    HandleDeletePost,
 }

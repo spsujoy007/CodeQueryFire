@@ -203,7 +203,7 @@ const PostDetails = ({searchParams}) => {
                                                     {code}
                                                 </SyntaxHighlighter>
                                                 <p 
-                                                className='py-2 pl-4 w-full bg-gray-100 font-bold'>language: <span className='text-primary capitalize font-normal'>{programming_language}</span> </p>
+                                                className='py-2 pl-4 w-full bg-gray-white font-bold'>language: <span className='text-primary capitalize font-normal'>{programming_language}</span> </p>
 
                                             </div>
                                             

@@ -13,33 +13,37 @@ export default function useAuthenticated (req) {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-    const fetchUserData = () => {
-        axios({
+    const [dataFetched, setDataFetched] = useState(false)
+    const fetchUserData = async() => {
+        if(dataFetched) return
+
+        // setDataFetched(true)
+        await axios({
             method: 'get',
             url: `${process.env.NEXT_PUBLIC_SERVER}/users/loggedin-profile`,
             withCredentials: true
         })
         .then(res => {
-            // if(res.data.data)
-            console.log("ID: ", res.data.data);
             setIsLoggedIn(true)
             setUserData(res.data.data)
             setLoading(false)
+            setDataFetched(true)
         })
         .catch(err => {
             // console.log(err)
             setIsLoggedIn(false)
             setError(err)
             setLoading(false)
+            setDataFetched(false)
         })
     }
 
     useEffect(() => {
         fetchUserData()
-    }, [])
+    })
 
-    const refetch = () => {
-        fetchUserData()
+    const refetch = async() => {
+       await fetchUserData()
     }
     
     

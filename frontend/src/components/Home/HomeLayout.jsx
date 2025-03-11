@@ -26,7 +26,7 @@ const HomeLayout = ({children}) => {
 
     const [openMenu, setOpenMenu] = useState(false)
 
-    const { user, isLoggedIn, loading } = useAuthenticated()
+    // const { user, isLoggedIn, loading } = useAuthenticated()
 
     const [categoryName, setcategoryName] = useState(query_name || "")
 
@@ -75,7 +75,7 @@ const HomeLayout = ({children}) => {
     
     const handleCategoryRequestData = async (title) => {
         setDataFetched(false)
-        await handleSortDataByCategory(title)
+        await handleSortDataByCategory(title|| "")
         // await window.location.reload()
     }
 
@@ -142,7 +142,7 @@ const HomeLayout = ({children}) => {
                                     <>
                                         {
                                             posts?.length > 0 ?
-                                            <HomePosts posts={posts}></HomePosts>
+                                            <HomePosts refetch={handleCategoryRequestData} setDataFetched={setDataFetched} posts={posts}></HomePosts>
                                             :
                                             <p className='text-center mt-5'>No posts founded</p>
                                         }

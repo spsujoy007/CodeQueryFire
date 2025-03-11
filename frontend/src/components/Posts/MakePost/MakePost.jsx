@@ -1,5 +1,5 @@
 'use client'
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Tiptap from './Tiptap';
 import ContainMargin from '@/components/shared/ContainMargin';
 import { IoClose, IoCloseCircle } from "react-icons/io5";
@@ -13,6 +13,10 @@ import { useRouter } from 'next/navigation';
 
 const MakePost = () => {
     const router = useRouter()
+    
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    })
 
     // #### details of post #### //
     const [content, setContent] = useState("") // ** details ** //
@@ -182,6 +186,7 @@ const MakePost = () => {
     // the biggest one submit post  ////////////////////////////////////////////////////////////////
     const handleSubmitPost = (e) => {
         e.preventDefault()
+        setLoading(true)
 
         if([title, content].some((field) => field === "")){
             return
@@ -424,10 +429,18 @@ const MakePost = () => {
                     {serverError && <p className='text-red-500 text-sm mt-1 text-center'>{serverErrorMsg}</p>}
                     <div className='mt-3 flex justify-end'>
                         <div className='flex items-center gap-2'>
-                            <button disabled={loading} className='bg-primary hover:bg-primary_hover text-white w-[180px] py-1 rounded-md flex items-center justify-center gap-2'>
-                                <LuSend />
-                                {loading ? "Posting" : "Post"}
-                            </button>
+                            {
+                                loading ?
+                                <button disabled className='bg-primary hover:bg-primary_hover text-white w-[180px] py-1 rounded-md flex items-center justify-center gap-2 animate-pulse duration-100'>
+                                    <LuSend />
+                                    Posting...
+                                </button>
+                                :
+                                <button className='bg-primary hover:bg-primary_hover text-white w-[180px] py-1 rounded-md flex items-center justify-center gap-2'>
+                                    <LuSend />
+                                    Post
+                                </button>
+                            }
                         </div>
                     </div>
                 </form>

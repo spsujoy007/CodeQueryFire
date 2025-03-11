@@ -64,7 +64,6 @@ const ProfileComponent = () => {
             url: `${api}/users/user_profile?username=${pathname}`
         })
         .then(res => {
-            console.log(res.data.data)
             if(res.data.data) {
                 setProfile(res.data.data)
                 setPageLoading(false)
@@ -208,7 +207,14 @@ const ProfileComponent = () => {
                                 profile?.posts?.length > 0 ?
                                 <>
                                     {
-                                        profile.posts?.map((post, idx) => <SingleCard key={post._id} post={post} profile={profile} index={idx}></SingleCard>)
+                                        profile.posts?.map((post, idx) => 
+                                        <SingleCard 
+                                            key={post._id} 
+                                            post={post} 
+                                            profile={profile} 
+                                            index={idx}
+                                            refetch={fetchUserProfile}>
+                                        </SingleCard>)
                                     }
                                 </>
                                 :

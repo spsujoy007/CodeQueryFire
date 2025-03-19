@@ -1,4 +1,4 @@
-import PostDetails from '@/components/Posts/PostDetails';
+import PostDetails from '@/components/Posts/Post details/PostDetails';
 import React from 'react';
  
 export async function generateMetadata ({ params, searchParams }) {

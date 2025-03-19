@@ -2,8 +2,7 @@
 import ContainMargin from '@/components/shared/ContainMargin';
 import Image from 'next/image';
 import Link from 'next/link';
-import { AiOutlineEye } from "react-icons/ai";
-import { BiDislike, BiLike } from "react-icons/bi";
+import { BiLike } from "react-icons/bi";
 import { MdBookmarkBorder } from "react-icons/md";
 import { FaCode } from "react-icons/fa6";
 import moment from 'moment';
@@ -11,15 +10,16 @@ import { BiShare } from "react-icons/bi";
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/default-highlight';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { IoClose, IoCopyOutline } from "react-icons/io5";
-import { BiCommentDetail } from "react-icons/bi";
 import { useEffect, useState } from 'react';
 import axios, { all } from 'axios';
-import ServerUrl from '@/Hooks/useServerUrl';
 const imgPlaceholderView = "/images/placeholdeImageView.jpg"
-import './postdesign.css'
 import LoadingPage from '@/app/loading';
 import { IoIosArrowDown } from 'react-icons/io';
 import toast from 'react-hot-toast';
+import '../postdesign.css'
+import ToolbarDetailsPage from './ToolbarDetailsPage';
+import TiptapDetailsPage from './TiptapDetailsPage';
+
 const null_avatar = "/images/null_avatar.jpeg"
 
 const PostDetails = ({searchParams}) => {
@@ -86,6 +86,8 @@ const PostDetails = ({searchParams}) => {
         })
     }
 
+
+    const [content, setContent] = useState("")
     return (
         <>
             {
@@ -225,31 +227,19 @@ const PostDetails = ({searchParams}) => {
                                 </div>
                                 {/* 🔚 Shared Code End */}
 
-                                <div className="mt-4 grid md:grid-cols-5 border-[1px] border-gray-200 lg:grid-cols-6 grid-cols-3 gap-2 bg-white p-2 rounded-md">
+                                <div className="mt-4 grid md:grid-cols-3 border-[1px] border-gray-200 lg:grid-cols-3 grid-cols-3 gap-2 bg-white p-2 rounded-md">
                                     <button 
                                     title="likes" 
                                     className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
                                         <BiLike /> <span className="text-sm font-semibold">0</span>
                                     </button>
-                                    
-                                    <button 
-                                    title="dislikes" 
-                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
-                                        <BiDislike /> <span className="text-sm">0</span>
-                                    </button>
 
-                                    <button 
+                                    {/* <button 
                                     title="views" 
                                     className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
                                         <BiCommentDetail 
                                         className='' /><span className="text-sm font-bold">0</span> <span className="text-sm">Comments</span>
-                                    </button>
-
-                                    <button 
-                                    title="views" 
-                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
-                                        <AiOutlineEye /> <span className="text-sm font-semibold">0</span>
-                                    </button>
+                                    </button> */}
 
                                     <button 
                                     title="views" 
@@ -261,10 +251,20 @@ const PostDetails = ({searchParams}) => {
                                     title="bookmark" 
                                     className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 rounded-md py-1 text-gray-500 gap-2">
                                         <MdBookmarkBorder /> 
-                                        <span className="text-sm">Bookmark</span>
+                                        <span className="text-sm">Save</span>
                                     </button>
                                 </div>
                                 </div>
+
+                                {/* comments section  */}
+                                <section className='mt-2 bg-white'>
+                                    {/* yello wes */}
+                                    <TiptapDetailsPage
+                                        id="detailss"
+                                        content={content}
+                                        onChange={(newContent) => setContent(newContent)}
+                                    ></TiptapDetailsPage>
+                                </section>
                                 
                             </ContainMargin>
                         </>

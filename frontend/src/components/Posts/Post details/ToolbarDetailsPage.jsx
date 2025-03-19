@@ -4,7 +4,7 @@ import { LuHeading1, LuHeading2 } from "react-icons/lu";
 import { FaCode } from "react-icons/fa6";
 import { FaQuoteLeft } from "react-icons/fa";
 
-const Toolbar = ({editor, content}) => {
+const ToolbarDetailsPage = ({editor, content}) => {
     if(!editor) {
         return null
     }
@@ -57,7 +57,7 @@ const Toolbar = ({editor, content}) => {
                 className={`${editor.isActive('heading', { level: 1 }) ? 'bg-black text-white' : 'bg-white text-black '} p-2 rounded-md select-none`}
                 > <LuHeading1/> 
             </button> */}
-
+{/* 
             <button 
                 onClick={(e) => {
                     e.preventDefault()
@@ -65,7 +65,7 @@ const Toolbar = ({editor, content}) => {
                 }}
                 className={`${editor.isActive('heading', { level: 3 }) ? 'bg-black text-white' : 'bg-white text-black '} p-2 rounded-md select-none`}
                 > <LuHeading2/> 
-            </button>
+            </button> */}
 
             <button 
                 onClick={(e) => {
@@ -88,15 +88,6 @@ const Toolbar = ({editor, content}) => {
             <button 
                 onClick={(e) => {
                     e.preventDefault()
-                    editor.chain().focus().toggleBlockquote().run()
-                }}
-                className={`${editor.isActive('blockquote') ? 'bg-black text-white' : 'bg-white text-black '} p-2 rounded-md select-none`}
-                > <FaQuoteLeft/> 
-            </button>
-
-            <button 
-                onClick={(e) => {
-                    e.preventDefault()
                     editor.chain().focus().toggleCodeBlock().run()
                 }}
                 className={`${editor.isActive('codeBlock') ? 'bg-black text-white' : 'bg-white text-black '} p-2 rounded-md select-none`}
@@ -106,4 +97,4 @@ const Toolbar = ({editor, content}) => {
     );
 };
 
-export default Toolbar;
+export default ToolbarDetailsPage;

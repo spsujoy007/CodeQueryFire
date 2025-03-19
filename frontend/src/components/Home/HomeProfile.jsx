@@ -11,21 +11,17 @@ const HomeProfile = () => {
     const {user, loading, isLoggedIn} = useAuthenticated()
     const pathname = usePathname();
     const router = useRouter
-    
-    
-
-    
-    const {
-        first_name,
-        last_name,
-        full_name,
-        email
-    } = user && user
-
 
     useEffect(() => {
         router.reload
     }, [loading, isLoggedIn, user, router])
+
+    const {
+        first_name,
+        email
+    } = user && user
+
+
     // const loading = false
     // const isLoggedIn = false
 
@@ -55,10 +51,12 @@ const HomeProfile = () => {
                             {/* profile info */}
                             <div>
                                 <div className='flex items-center gap-3'>
-                                    <div className='w-[45px] h-[45px]'>
-                                    <Image alt='avatar' className=' w-full h-full object-cover rounded-full ring-1 ring-primary' src={user?.avatar ? user.avatar?.url : null_avatar} width={45} height={45}></Image>
-                                    </div>
                                     <div>
+                                        <div className='w-[35px] h-[35px]'>
+                                            <Image alt='avatar' className='w-full h-full object-cover rounded-full ring-1 ring-primary' src={user?.avatar ? user.avatar?.url : null_avatar} width={35} height={35}></Image>
+                                        </div>
+                                    </div>
+                                    <div className=''>
                                         {/* user name ----------------------- */}
                                         <h5 className='text-sm font-bold'>
                                             {first_name}

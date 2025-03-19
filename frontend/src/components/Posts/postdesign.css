@@ -20,6 +20,16 @@
   .tiptap-style-home ol > li{
     display: list-item;
   }
+  .tiptap-style-home pre{
+    color: #ff8225;
+    background-color: #ffecdd;
+    padding: 10px 15px; /* Adjust padding as needed */
+    border-radius: 3px;
+    margin: 0px 5px;
+    /* border: 0.3px dashed; */
+    overflow-x: auto; /* Ensures horizontal scrolling for long code */
+    white-space: pre-wrap; /* Prevents overflow issues */
+  }
   .tiptap-style-home > blockquote {
       padding: 2px 8px;
       margin: 5px 0px;
@@ -30,5 +40,9 @@
       border-left: 4px solid #ff8225; /* Colored left border */
       border-radius: 4px; /* Optional: rounded corners */
   }
+  /* .tiptap-style > pre >  code{
+    background-color: rgb(215, 215, 215);
+    padding: 5px;
+  } */
   
   /* // tip tap style default for tailwind  */

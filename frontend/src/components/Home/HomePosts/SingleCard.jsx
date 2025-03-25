@@ -11,6 +11,7 @@ import moment from "moment";
 import { HiDotsVertical } from "react-icons/hi";
 import { useHandleDeletePost } from "@/components/Posts/PostControllers/useHandleDeletePost";
 import useAuthenticated from "@/Hooks/useAuthenticated";
+import useGlobalFetch from "@/Hooks/useGlobalPostFetch";
 const null_avatar = '/images/null_avatar.jpeg'
 
 const SingleCard = ({post, profile, index, refetch, setDataFetched}) => {
@@ -44,9 +45,10 @@ const SingleCard = ({post, profile, index, refetch, setDataFetched}) => {
 
     const handleDeletePost = async() => {
         const res = await deletePost(_id)
+        useGlobalFetch.getState().refetchDatas?.()
         if(res){
             setDataFetched(false)
-            refetch()
+            // refetch()
         }
     }
 
@@ -120,8 +122,8 @@ const SingleCard = ({post, profile, index, refetch, setDataFetched}) => {
                     <Image alt="avatar" src={author?.avatar ?  author?.avatar?.url : null_avatar} width={35} height={35} className="rounded-full bg-gray-200 w-full h-full object-cover"></Image>
                 </div> */}
                 <div>
-                    <h6 className="text-xs font-semibold">{author? `${author?.full_name}` : `${profile?.full_name}`}</h6>
-                    <p className="text-xs">{FormatedTime}</p>
+                    <h6 className="text-xs select-none font-semibold">{author? `${author?.full_name}` : `${profile?.full_name}`}</h6>
+                    <p className="text-xs select-none">{FormatedTime}</p>
                 </div>
 
                 {/* // hovered profile info */}

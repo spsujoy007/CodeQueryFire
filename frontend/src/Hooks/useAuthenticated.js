@@ -30,7 +30,6 @@ export default function useAuthenticated (req) {
             setDataFetched(true)
         })
         .catch(err => {
-            // console.log(err)
             setIsLoggedIn(false)
             setError(err)
             setLoading(false)

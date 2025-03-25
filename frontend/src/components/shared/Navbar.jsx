@@ -11,10 +11,11 @@ import axios from 'axios';
 const null_avatar = '/images/null_avatar.jpeg'
 
 const Navbar = () => {
-    const {isLoggedIn, user, loading} = useAuthenticated()
+    const {isLoggedIn, user, loading, refetch} = useAuthenticated()
     const [drawer, setDrawer] = useState(false)
 
     // console.log("is logged in: ", isLoggedIn)
+    
 
     const pathname = usePathname()
     const navmenu = [
@@ -62,7 +63,7 @@ const Navbar = () => {
     }
 
     return (
-        <div onMouseLeave={() => setDrawer(false)} className='bg-[#ffffffbf] backdrop-blur-md fixed top-0 w-full border-b-[1px] z-20 border-primary'>
+        <div onMouseLeave={() => setDrawer(false)} className='bg-[#ffffffbf] backdrop-blur-md fixed top-0 w-full border-b-[1px] z-20 border-gray-300'>
             <ContainMargin box_width={'md'}>
             <div className='flex gap-20 items-center py-4'>
                 <div>

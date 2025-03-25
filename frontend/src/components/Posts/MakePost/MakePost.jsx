@@ -10,6 +10,7 @@ import axios from 'axios';
 import ServerUrl from '@/Hooks/useServerUrl';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import useGlobalFetch from '@/Hooks/useGlobalPostFetch';
 
 const MakePost = () => {
     const router = useRouter()
@@ -183,6 +184,7 @@ const MakePost = () => {
 
     const [serverError, setServerError] = useState(false)
     const [serverErrorMsg, setServerErrorMsg] = useState("")
+
     // the biggest one submit post  ////////////////////////////////////////////////////////////////
     const handleSubmitPost = (e) => {
         e.preventDefault()
@@ -241,6 +243,9 @@ const MakePost = () => {
                 setServerError(false)
                 setLoading(false)
                 toast.success(res.data?.data?.message || 'Post uploaded successfully')
+
+                useGlobalFetch.getState().refetchDatas?.();
+
                 router.push("/")
             })
             .catch(err => {

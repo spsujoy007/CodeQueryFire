@@ -9,9 +9,8 @@ import { Toaster } from 'react-hot-toast';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import HomePosts from './HomePosts/HomePosts';
 import axios from 'axios';
-import ServerUrl from '@/Hooks/useServerUrl';
-import Head from 'next/head';
 import PostPlaceholderLoading from './PostPlaceholderLoading';
+import useGlobalFetch from '@/Hooks/useGlobalPostFetch';
 
 const HomeLayout = ({children}) => {
     const router = useRouter()
@@ -70,6 +69,7 @@ const HomeLayout = ({children}) => {
 
     useEffect(() => {
         handleSortDataByCategory(categoryName)
+        useGlobalFetch.getState().setRefetchDatas?.(handleCategoryRequestData)
     })
     
     

@@ -19,6 +19,7 @@ import useAuthenticated from "@/Hooks/useAuthenticated";
 import UpdateAvatarModal from "../Editable_Components/Profile/UpdateAvatarModal";
 import { TiHome } from "react-icons/ti";
 import { usePathname } from "next/navigation";
+import useGlobalFetch from "@/Hooks/useGlobalPostFetch";
 const null_avatar = '/images/null_avatar.jpeg'
 
 const ProfileComponent = () => {
@@ -72,6 +73,7 @@ const ProfileComponent = () => {
     }
     useEffect(() => {
         fetchUserProfile()
+        useGlobalFetch.getState().setRefetchDatas?.(fetchUserProfile)
     }, [pathname])
 
     const handleEditProfileModal = () => {

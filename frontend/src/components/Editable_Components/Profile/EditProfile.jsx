@@ -2,14 +2,15 @@ import useAuthenticated from '@/Hooks/useAuthenticated'
 import ServerUrl from '@/Hooks/useServerUrl';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { FaCheck, FaCode, FaCross, FaFacebook, FaHackerrank, FaInstagram, FaLinkedinIn, FaPlus, FaReddit, FaSnapchat, FaTelegram, FaTwitter, FaWhatsapp, FaX, FaXTwitter, FaYoutube } from 'react-icons/fa6';
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { FaGithub, FaInstagramSquare } from 'react-icons/fa';
 
 export default function EditProfile({modal, refetch: FetchProfileData}) {
   const router = useRouter()
-  const {user, loading, refetch} = useAuthenticated()
+  const {user, loading, setLoading, refetch} = useAuthenticated()
+
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -59,6 +60,7 @@ export default function EditProfile({modal, refetch: FetchProfileData}) {
   }
 
   const handleAddSocialLink = async() => {
+    setLoading(true)
     try{
       const getSocialPlatform = document.getElementById("social_links").value;
       const link_object = {platform: getSocialPlatform, username: tempUsername}
@@ -75,15 +77,17 @@ export default function EditProfile({modal, refetch: FetchProfileData}) {
           withCredentials: true
         })
         .then(result => {
+          refetch()
           console.log(result)
           setErrorMsg("")
           FetchProfileData()
-          refetch()
+          setLoading(false)
         })
         .catch(e => {
           console.error("Something went wrong: ", e?.response?.data?.message)
           setErrorMsg(e?.response?.data?.message)
           refetch()
+          setLoading(false)
         })
       }
     }
@@ -170,6 +174,7 @@ export default function EditProfile({modal, refetch: FetchProfileData}) {
   }
   
   let filteredPlatformListAlreadyUsed = []
+  
   if(!loading){
     filteredPlatformListAlreadyUsed = platform_lists.filter((item) => user?.social_links.some((p) => p.platform === item.platform))
   }
@@ -245,21 +250,6 @@ export default function EditProfile({modal, refetch: FetchProfileData}) {
                     {
                       filteredPlatformListOptions.map(({platform, label}, i) => <option key={i} value={platform}>{label}</option>)
                     }
-                    {/* <option value="facebook">Facebook</option>
-                    <option value="whatsapp">WhatsApp</option>
-                    <option value="twitter">Twitter (X)</option>
-                    <option value="instagram">Instagram</option>
-                    <option value="linkedin">LinkedIn</option>
-                    <option value="snapchat">Snapchat</option>
-                    <option value="tiktok">TikTok</option>
-                    <option value="youtube">YouTube</option>
-                    <option value="telegram">Telegram</option>
-                    <option value="reddit">Reddit</option>
-                    <option value="hackerrank">HackerRank</option>
-                    <option value="leetcode">LeetCode</option>
-                    <option value="codeforces">Codeforces</option>
-                    <option value="codechef">CodeChef</option>
-                    <option value="github">GitHub</option> */}
                   </select>
 
                   <input 

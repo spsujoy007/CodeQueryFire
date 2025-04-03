@@ -46,5 +46,5 @@ export default function useAuthenticated (req) {
     }
     
     
-    return {loading, user, error, isLoggedIn, refetch}
+    return {loading, setLoading, user, error, isLoggedIn, refetch}
 }

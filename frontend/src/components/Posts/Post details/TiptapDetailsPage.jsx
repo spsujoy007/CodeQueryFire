@@ -11,6 +11,7 @@ import ToolbarDetailsPage from './ToolbarDetailsPage'
 import { EditorContent, useEditor } from '@tiptap/react'
 import '../postdesign.css'
 import { useEffect } from 'react'
+import Placeholder from '@tiptap/extension-placeholder'
 
 const TiptapDetailsPage = ({content, onChange}) => {
 
@@ -22,11 +23,15 @@ const TiptapDetailsPage = ({content, onChange}) => {
       BulletList,
       OrderedList,
       Blockquote,
+      Placeholder,
       CodeBlock.configure({
         languageClassPrefix: 'language-javascript', // Required for Prism.js to detect the language
         HTMLAttributes: {
           class: 'language-javascript', // Default language
         }
+      }),
+      Placeholder.configure({
+        emptyEditorClass: 'is-editor-empty',
       })
     ],
     editorProps: {

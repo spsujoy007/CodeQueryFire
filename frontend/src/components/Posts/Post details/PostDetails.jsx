@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { BiLike } from "react-icons/bi";
 import { MdBookmarkBorder } from "react-icons/md";
-import { FaCode } from "react-icons/fa6";
+import { FaBold, FaCode, FaItalic, FaList, FaListOl, FaStrikethrough, FaUnderline } from "react-icons/fa6";
 import moment from 'moment';
 import { BiShare } from "react-icons/bi";
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/default-highlight';
@@ -19,6 +19,7 @@ import toast from 'react-hot-toast';
 import '../postdesign.css'
 import ToolbarDetailsPage from './ToolbarDetailsPage';
 import TiptapDetailsPage from './TiptapDetailsPage';
+import Modal from '@/components/shared/Modal/Modal';
 
 const null_avatar = "/images/null_avatar.jpeg"
 
@@ -88,6 +89,8 @@ const PostDetails = ({searchParams}) => {
 
 
     const [content, setContent] = useState("")
+
+    const [modal, setModal] = useState(false)
     return (
         <>
             {
@@ -227,29 +230,29 @@ const PostDetails = ({searchParams}) => {
                                 </div>
                                 {/* 🔚 Shared Code End */}
 
-                                <div className="mt-4 grid md:grid-cols-3 border-[1px] border-gray-200 lg:grid-cols-3 grid-cols-3 gap-2 bg-white p-2 rounded-md">
+                                <div className="mt-4 grid md:grid-cols-3 border-[1px] border-gray-200 lg:grid-cols-3 grid-cols-3 gap-2 bg-white p-2 rounded-3xl">
                                     <button 
                                     title="likes" 
-                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
+                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-3xl text-gray-500 gap-2">
                                         <BiLike /> <span className="text-sm font-semibold">0</span>
                                     </button>
 
                                     {/* <button 
                                     title="views" 
-                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
+                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-3xl text-gray-500 gap-2">
                                         <BiCommentDetail 
                                         className='' /><span className="text-sm font-bold">0</span> <span className="text-sm">Comments</span>
                                     </button> */}
 
                                     <button 
                                     title="views" 
-                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
+                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-3xl text-gray-500 gap-2">
                                         <BiShare /> <span className="text-sm font-semibold">0</span>
                                     </button>
 
                                     <button 
                                     title="bookmark" 
-                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 rounded-md py-1 text-gray-500 gap-2">
+                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 rounded-3xl py-1 text-gray-500 gap-2">
                                         <MdBookmarkBorder /> 
                                         <span className="text-sm">Save</span>
                                     </button>
@@ -257,13 +260,20 @@ const PostDetails = ({searchParams}) => {
                                 </div>
 
                                 {/* comments section  */}
-                                <section className='mt-2 bg-white'>
-                                    {/* yello wes */}
-                                    <TiptapDetailsPage
-                                        id="detailss"
-                                        content={content}
-                                        onChange={(newContent) => setContent(newContent)}
-                                    ></TiptapDetailsPage>
+                                <section className='mt-2 bg-white rounded-3xl overflow-hidden'>
+                                    <div onClick={() => setModal(true)}>
+                                        <textarea className='w-full pt-4 h-[80px] outline-none pl-8' type="text" placeholder='comment...' />
+                                        
+                                        <div className='px-8 py-5 flex gap-6'>
+                                            <button className='cursor-auto'><FaBold /></button>
+                                            <button className='cursor-auto'><FaItalic /></button>
+                                            <button className='cursor-auto'><FaUnderline /></button>
+                                            <button className='cursor-auto'><FaStrikethrough /></button>
+                                            <button className='cursor-auto'><FaList /></button>
+                                            <button className='cursor-auto'><FaListOl /></button>
+                                            <button className='cursor-auto'><FaCode /></button>
+                                        </div>
+                                    </div>
                                 </section>
                                 
                             </ContainMargin>
@@ -288,6 +298,16 @@ const PostDetails = ({searchParams}) => {
                         }
                 </div>
             }
+
+            <section className={`${modal ? "visible" : "hidden"}`}>
+                <Modal handleCloseModal={setModal} size={50}>
+                    <TiptapDetailsPage
+                        id="detailss"
+                        content={content}
+                        onChange={(newContent) => setContent(newContent)}
+                    ></TiptapDetailsPage>
+                </Modal>
+            </section>
         </>
     );
 };

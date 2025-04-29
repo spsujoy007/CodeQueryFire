@@ -62,8 +62,12 @@ const Navbar = () => {
         })
     }
 
+    if(loading){
+        return <></>
+    }
+
     return (
-        <div onMouseLeave={() => setDrawer(false)} className='bg-[#ffffffbf] backdrop-blur-md fixed top-0 w-full border-b-[1px] z-20 border-gray-300'>
+        <div  className='bg-[#ffffffbf] backdrop-blur-md fixed top-0 w-full border-b-[1px] z-30 border-gray-300'>
             <ContainMargin box_width={'md'}>
             <div className='flex gap-20 items-center py-4'>
                 <div>
@@ -71,12 +75,7 @@ const Navbar = () => {
                 </div>
                 <div className='flex gap-5 items-center w-full justify-between'>
                     <ul className='flex items-center justify-center gap-6'>
-                        {
-                            loading ?
-                            <></>
-                            :
-                            <>
-                                {
+                    {
                                     isLoggedIn ?
                                     <>
                                         {
@@ -99,8 +98,6 @@ const Navbar = () => {
                                     </>
                                     
                                 }
-                            </>
-                        }
                     </ul>
 
                     <div className='w-[40%] flex items-center gap-5'>
@@ -118,7 +115,7 @@ const Navbar = () => {
 
                                 {
                                     drawer &&
-                                    <div className='absolute top-10 -right-4 w-[200px] rounded-md border-[1px] border-gray-300  bg-white backdrop-blur-md p-2'>
+                                    <div onMouseLeave={() => setDrawer(false)} className='absolute top-10 -right-4 w-[200px] rounded-md border-[1px] border-gray-300  bg-white backdrop-blur-md p-2'>
                                         <Link href={`/profile/${user?.username}`}>
                                             <button className='mt-2 mb-1 w-full py-2 border-[1px] border-gray-300 hover:bg-gray-200 duration-300 rounded-md'>Profile</button>
                                         </Link>

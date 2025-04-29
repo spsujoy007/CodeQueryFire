@@ -26,7 +26,7 @@ const Modal = ({children, handleCloseModal, size}) => {
     return (
             <section className='overflow-hidden'>
             <style>{dynamicStyle}</style>
-                <div className='w-full h-screen flex justify-center items-center z-100 fixed top-0 overflow-y-scroll bg-[#ebebebbe] backdrop-blur-md'>
+                <div className='w-full h-screen flex justify-center items-center z-[100] fixed top-0 overflow-y-scroll bg-[#ebebebbe] backdrop-blur-md'>
                 <div  
                 
                 className=' bg-white border-[1px] border-gray-200 p-3 rounded-xl dynamicWidth'>

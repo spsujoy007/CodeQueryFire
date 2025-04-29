@@ -10,14 +10,11 @@ import SingleCard from "../Home/HomePosts/SingleCard";
 import { FaCode, FaFacebook, FaGithub, FaHackerrank, FaInstagram, FaLinkedinIn, FaReddit, FaSnapchat, FaTelegram, FaWhatsapp, FaXTwitter, FaYoutube } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import ServerUrl from "@/Hooks/useServerUrl";
-import ModalBody from "../shared/Modal/ModalBody";
 import Modal from "../shared/Modal/Modal";
 import useModal from "../shared/Modal/useModal";
 import EditProfile from "../Editable_Components/Profile/EditProfile";
 import useAuthenticated from "@/Hooks/useAuthenticated";
 import UpdateAvatarModal from "../Editable_Components/Profile/UpdateAvatarModal";
-import { TiHome } from "react-icons/ti";
 import { usePathname } from "next/navigation";
 import useGlobalFetch from "@/Hooks/useGlobalPostFetch";
 const null_avatar = '/images/null_avatar.jpeg'
@@ -113,60 +110,86 @@ const ProfileComponent = () => {
     }
     // linked social media formula ***************
 
-    return (
-        <div className={`${editProfileModal || avatarModal && "h-[80vh] overflow-hidden"}`}>
-            {
-                pageLoading && loading ?
-                <section className="h-[80vh] m-auto">
+
+    if(pageLoading || loading){
+        return  <section className="h-[80vh] m-auto">
                     <LoadingPage></LoadingPage>
                 </section>
-                :
-                <>
-                <main className="py-10 min-h-screen bg-background">
+    }
+
+    function ProfilePicture() {
+        return <section className="z-20">
+            <div className="h-[250px] w-[250px] rounded-full bg-gray-300">
+                {
+                    profile?.username === user?.username ?
+                    <Image priority onClick={handleAvatarModal} className="  rounded-full object-cover h-full w-full cursor-pointer hover:brightness-90 duration-150 ring-2 ring-black border-4 border-white" width={250} height={250}  src={profile?.avatar ? profile.avatar?.url : null_avatar} alt={profile?.full_name}></Image>
+                    :
+                    <Image priority className="rounded-full object-cover h-full w-full ring-2 ring-primary border-4 border-white" width={250} height={250}  src={profile?.avatar ? profile.avatar?.url : null_avatar} alt={profile?.full_name}></Image>
+                }
+            </div>
+        </section>
+    }
+
+    return (
+        <div className={`${editProfileModal || avatarModal && "h-[80vh] overflow-hidden"}`}>
+            <main className="pb-10 min-h-screen bg-background">
                     <section>
-                    <ContainMargin box_width={'md'}>
-                        <section className="flex gap-10 items-center">
-                            <section>
-                            <div className="h-[250px] w-[250px] rounded-full bg-gray-300">
-                                {
-                                    profile?.username === user?.username ?
-                                    <Image priority onClick={handleAvatarModal} className="  rounded-full object-cover h-full w-full cursor-pointer hover:brightness-90 duration-150 ring-2 ring-primary border-4 border-white" width={250} height={250}  src={profile?.avatar ? profile.avatar?.url : null_avatar} alt={profile?.full_name}></Image>
-                                    :
-                                    <Image priority className="rounded-full object-cover h-full w-full ring-2 ring-primary border-4 border-white" width={250} height={250}  src={profile?.avatar ? profile.avatar?.url : null_avatar} alt={profile?.full_name}></Image>
-                                }
-                            </div>
-                            </section>
-                            <div className="w-full">
-                                <h1 className="text-2xl font-bold text-primary">{profile.full_name}</h1>
-                                <p className="text-sm mt-1 w-[600px]  whitespace-pre-wrap">{profile?.bio && profile.bio}</p>
+                        <section className="relative py-10">
+                        <ContainMargin box_width={"md"}>
+                            <div className="flex gap-10 items-center ">
+                                <div
+                                    className="absolute inset-0 backdrop-blur-xl"
+                                    style={{
+                                        backgroundImage: `
+                                        linear-gradient(180deg, rgb(245, 245, 245, 0.55), rgb(245, 245, 245)),
+                                        url(${profile?.avatar ? profile.avatar?.url : null_avatar})
+                                      `,
+                                    backgroundSize: "cover",
+                                    backgroundPosition: "center",
+                                    backgroundRepeat: "no-repeat",
+                                    zIndex: 0,
+                                    }}
+                                />
+                                <div
+                                    className="absolute inset-0 bg-white/20 backdrop-blur-xl z-10"
+                                    style={{
+                                        backdropFilter: 'blur(30px)',
+                                    }}
+                                />
+                                <ProfilePicture></ProfilePicture>
+                                <div className="w-full z-20">
+                                    <h1 className="text-2xl font-bold text-black">{profile.full_name}</h1>
+                                    <p className="text-sm mt-1 w-[600px]  whitespace-pre-wrap">{profile?.bio && profile.bio}</p>
 
 
-                                {/* some followers pic  */}
-                                {
-                                    profile.followers &&
-                                    <div className="mt-2 flex -space-x-3">
-                                        <Image className="rounded-full border-2 border-white" width={35} height={35} src={null_avatar} alt=""></Image>
-                                        <Image className="rounded-full border-2 border-white" width={35} height={35} src={null_avatar} alt=""></Image>
-                                        <Image className="rounded-full border-2 border-white" width={35} height={35} src={null_avatar} alt=""></Image>
-                                        <div className="bg-gray-200 w-[35px] h-[35px] border-2 border-gray-400 rounded-full flex justify-center items-center text-gray-400">
-                                            <HiOutlineDotsHorizontal />
+                                    {/* some followers pic  */}
+                                    {
+                                        profile.followers &&
+                                        <div className="mt-2 flex -space-x-3">
+                                            <Image className="rounded-full border-2 border-white" width={35} height={35} src={null_avatar} alt=""></Image>
+                                            <Image className="rounded-full border-2 border-white" width={35} height={35} src={null_avatar} alt=""></Image>
+                                            <Image className="rounded-full border-2 border-white" width={35} height={35} src={null_avatar} alt=""></Image>
+                                            <div className="bg-gray-200 w-[35px] h-[35px] border-2 border-gray-400 rounded-full flex justify-center items-center text-gray-400">
+                                                <HiOutlineDotsHorizontal />
+                                            </div>
                                         </div>
-                                    </div>
-                                }
+                                    }
 
-                                <div className="mt-2">
-                                    <p className="font-semibold text-sm"> <Link className="hover:underline" href={''}>Followers: <span className="text-primary">{profile?.followers ? profile?.followers : 0}</span></Link>   |  <Link className="hover:underline" href={''}>Following: <span className="text-primary">{profile?.following ? profile?.following : 0}</span></Link> </p>
+                                    <div className="mt-2">
+                                        <p className="font-semibold text-sm"> <Link className="hover:underline" href={''}>Followers: <span className="text-primary">{profile?.followers ? profile?.followers : 0}</span></Link>   |  <Link className="hover:underline" href={''}>Following: <span className="text-primary">{profile?.following ? profile?.following : 0}</span></Link> </p>
+                                    </div>
+
+                                    {
+                                        profile?.username === user?.username &&
+                                        <div className="mt-4 space-x-2">
+                                            {/* <button className="border-[1px] border-black w-[150px] rounded-md py-[3px]">Follow</button> */}
+                                            <button onClick={handleEditProfileModal} className="border-[1px] border-black bg-black text-white w-[155px] rounded-md py-[3px]">Edit Profile</button>
+                                        </div>
+                                    }
+
                                 </div>
-
-                                {
-                                    profile?.username === user?.username &&
-                                    <div className="mt-4 space-x-2">
-                                        {/* <button className="border-[1px] border-black w-[150px] rounded-md py-[3px]">Follow</button> */}
-                                        <button onClick={handleEditProfileModal} className="border-[1px] border-primary bg-primary text-white w-[155px] rounded-md py-[3px]">Edit Profile</button>
-                                    </div>
-                                }
-
                             </div>
+                        </ContainMargin>
                         </section>
 
                         {/*
@@ -174,27 +197,29 @@ const ProfileComponent = () => {
                             ║ 🌐 SOCIAL LINKS SECTION - CONNECT WITH THE WORLD 🚀                     ║
                             ╠══════════════════════════════════════════════════════════════════════════╣
                         */}
-                        {
-                            profile?.social_links?.length > 0 && 
-                            <section className="mt-10 bg-white rounded-xl p-3 space-y-2 ">
-                                <p className="text-primary text-sm ml-2 rounded-full border-[1px] border-primary inline-block px-2">Social links</p>
-                                {/* <div className="w-full flex gap-2">
-                                    <span className="flex items-center gap-2"> <TiHome className="text-xl text-gray-800" /> Lives in:</span><button className="hover:underline text-black font-bold">Dhaka city</button>
-                                </div> */}
-                                <div> {/* for separate the div */}
-                                    <div className="mt-1 gap-1 space-y-2 ml-2 flex-col inline-flex">
-                                        {/* maping social links ================ */}
-                                        {
-                                            profile?.social_links?.map(({platform, username}, i) => 
-                                                <Link href={`${match_link_by_platform(platform).url}${username}`} target="_blank" key={i} className="flex items-center gap-2 hover:underline cursor-pointer hover:text-primary">
-                                                    {match_link_by_platform(platform).icon} <span className=" "> {username} </span>
-                                                </Link>
-                                            )
-                                        }
+                        <ContainMargin box_width={'md'}>
+                            {
+                                profile?.social_links?.length > 0 && 
+                                <section className=" bg-white rounded-xl p-3 space-y-2 ">
+                                    <p className="text-primary text-sm ml-2 rounded-full border-[1px] border-primary inline-block px-2">Social links</p>
+                                    {/* <div className="w-full flex gap-2">
+                                        <span className="flex items-center gap-2"> <TiHome className="text-xl text-gray-800" /> Lives in:</span><button className="hover:underline text-black font-bold">Dhaka city</button>
+                                    </div> */}
+                                    <div> {/* for separate the div */}
+                                        <div className="mt-1 gap-1 space-y-2 ml-2 flex-col inline-flex">
+                                            {/* maping social links ================ */}
+                                            {
+                                                profile?.social_links?.map(({platform, username}, i) => 
+                                                    <Link href={`${match_link_by_platform(platform).url}${username}`} target="_blank" key={i} className="flex items-center gap-2 hover:underline cursor-pointer hover:text-primary">
+                                                        {match_link_by_platform(platform).icon} <span className=" "> {username} </span>
+                                                    </Link>
+                                                )
+                                            }
+                                        </div>
                                     </div>
-                                </div>
-                            </section>
-                        }
+                                </section>
+                            }
+                        </ContainMargin>
                         {/* 
                             ╔══════════════════════════════════════════════════════════════════════════╗
                             ║ 🎯 CODE END                                                              ║
@@ -202,39 +227,39 @@ const ProfileComponent = () => {
                         */}
 
                         {/* post and blogs section  */}
-                        <section className="mt-10 flex gap-1">
-                            <div className="w-[70%] bg-white min-h-[40%] rounded-b-xl ">
-                            <div className="w-full bg-black text-white font-bold py-1 pl-5 rounded-t-xl" ><p>Posts: </p></div>
-                               {
-                                profile?.posts?.length > 0 ?
-                                <>
-                                    {
-                                        profile.posts?.map((post, idx) => 
-                                        <SingleCard 
-                                            key={post._id} 
-                                            post={post} 
-                                            profile={profile} 
-                                            index={idx}
-                                            refetch={fetchUserProfile}>
-                                        </SingleCard>)
-                                    }
-                                </>
-                                :
-                                <div>
-                                    <p className="text-center py-5">No posts yet...</p>
+                        <ContainMargin box_width={'md'}>
+                            <section className="mt-10 flex gap-1">
+                                <div className="w-[70%] bg-white min-h-[40%] rounded-b-xl ">
+                                <div className="w-full bg-black text-white font-bold py-1 pl-5 rounded-t-xl" ><p>Posts: </p></div>
+                                {
+                                    profile?.posts?.length > 0 ?
+                                    <>
+                                        {
+                                            profile.posts?.map((post, idx) => 
+                                            <SingleCard 
+                                                key={post._id} 
+                                                post={post} 
+                                                profile={profile} 
+                                                index={idx}
+                                                refetch={fetchUserProfile}>
+                                            </SingleCard>)
+                                        }
+                                    </>
+                                    :
+                                    <div>
+                                        <p className="text-center py-5">No posts yet...</p>
+                                    </div>
+                                }
                                 </div>
-                               }
-                            </div>
-                            <div className="w-[30%] bg-white min-h-[40%] rounded-b-xl overflow-hidden">
-                                <div className="w-full bg-black text-white font-bold py-1 pl-5 rounded-t-xl "><p>Blogs: </p></div>
-                                    <p className="p-2 mt-5 text-sm text-center">No blogs yet....</p>
-                            </div>
-                        </section>
-                    </ContainMargin>
+                                <div className="w-[30%] bg-white min-h-[40%] rounded-b-xl overflow-hidden">
+                                    <div className="w-full bg-black text-white font-bold py-1 pl-5 rounded-t-xl "><p>Blogs: </p></div>
+                                        <p className="p-2 mt-5 text-sm text-center">No blogs yet....</p>
+                                </div>
+                            </section>
+                        </ContainMargin>
+
                     </section>
-                </main>
-                </>
-            }
+            </main>
 
 
 

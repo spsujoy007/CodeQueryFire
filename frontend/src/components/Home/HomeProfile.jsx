@@ -16,10 +16,6 @@ const HomeProfile = () => {
         router.reload
     }, [loading, isLoggedIn, user, router])
 
-    const {
-        first_name,
-        email
-    } = user && user
 
 
     // const loading = false
@@ -59,12 +55,12 @@ const HomeProfile = () => {
                                     <div className=''>
                                         {/* user name ----------------------- */}
                                         <h5 className='text-sm font-bold'>
-                                            {first_name}
+                                            {user?.first_name}
                                         </h5>
 
                                         {/* user email ----------------------- */}
                                         <p className='text-xs'>
-                                            {email}
+                                            {user?.email}
                                         </p>
                                     </div>
                                 </div>

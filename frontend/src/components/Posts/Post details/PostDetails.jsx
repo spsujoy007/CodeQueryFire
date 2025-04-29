@@ -20,6 +20,7 @@ import '../postdesign.css'
 import ToolbarDetailsPage from './ToolbarDetailsPage';
 import TiptapDetailsPage from './TiptapDetailsPage';
 import Modal from '@/components/shared/Modal/Modal';
+import PostComment from '../Post Comment/PostComment';
 
 const null_avatar = "/images/null_avatar.jpeg"
 
@@ -89,8 +90,8 @@ const PostDetails = ({searchParams}) => {
 
 
     const [content, setContent] = useState("")
+    const [answerModal, setAnswerModal] = useState(false)
 
-    const [modal, setModal] = useState(false)
     return (
         <>
             {
@@ -230,29 +231,29 @@ const PostDetails = ({searchParams}) => {
                                 </div>
                                 {/* 🔚 Shared Code End */}
 
-                                <div className="mt-4 grid md:grid-cols-3 border-[1px] border-gray-200 lg:grid-cols-3 grid-cols-3 gap-2 bg-white p-2 rounded-3xl">
+                                <div className="mt-4 grid md:grid-cols-3 border-[1px] border-gray-200 lg:grid-cols-3 grid-cols-3 gap-2 bg-white p-2 rounded-md">
                                     <button 
                                     title="likes" 
-                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-3xl text-gray-500 gap-2">
+                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
                                         <BiLike /> <span className="text-sm font-semibold">0</span>
                                     </button>
 
                                     {/* <button 
                                     title="views" 
-                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-3xl text-gray-500 gap-2">
+                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
                                         <BiCommentDetail 
                                         className='' /><span className="text-sm font-bold">0</span> <span className="text-sm">Comments</span>
                                     </button> */}
 
                                     <button 
                                     title="views" 
-                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-3xl text-gray-500 gap-2">
+                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 py-1 rounded-md text-gray-500 gap-2">
                                         <BiShare /> <span className="text-sm font-semibold">0</span>
                                     </button>
 
                                     <button 
                                     title="bookmark" 
-                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 rounded-3xl py-1 text-gray-500 gap-2">
+                                    className="text-2xl flex justify-center items-center bg-gray-100 hover:bg-gray-200 duration-100 rounded-md py-1 text-gray-500 gap-2">
                                         <MdBookmarkBorder /> 
                                         <span className="text-sm">Save</span>
                                     </button>
@@ -260,11 +261,11 @@ const PostDetails = ({searchParams}) => {
                                 </div>
 
                                 {/* comments section  */}
-                                <section className='mt-2 bg-white rounded-3xl overflow-hidden'>
-                                    <div onClick={() => setModal(true)}>
-                                        <textarea className='w-full pt-4 h-[80px] outline-none pl-8' type="text" placeholder='comment...' />
+                                <section className='mt-2 bg-white rounded-md overflow-hidden'>
+                                    <div onClick={() => setAnswerModal(true)}>
+                                        <textarea className='w-full pt-4 h-[80px] max-h-[80px] overscroll-auto outline-none pl-8' type="text" placeholder='answer...' />
                                         
-                                        <div className='px-8 py-5 flex gap-6'>
+                                        <div className='px-8 pb-5 flex gap-6 items-center'>
                                             <button className='cursor-auto'><FaBold /></button>
                                             <button className='cursor-auto'><FaItalic /></button>
                                             <button className='cursor-auto'><FaUnderline /></button>
@@ -279,6 +280,12 @@ const PostDetails = ({searchParams}) => {
                             </ContainMargin>
                         </>
                     }
+
+
+                    {/* show comments section //////////////////////////// */}
+                    <PostComment></PostComment>
+                    {/* show comments section //////////////////////////// */}
+
                         {/* // big image preview  */}
                         {
                             viewImage && 
@@ -299,8 +306,8 @@ const PostDetails = ({searchParams}) => {
                 </div>
             }
 
-            <section className={`${modal ? "visible" : "hidden"}`}>
-                <Modal handleCloseModal={setModal} size={50}>
+            <section className={`${answerModal ? "visible" : "hidden"}`}>
+                <Modal handleCloseModal={setAnswerModal} size={50}>
                     <TiptapDetailsPage
                         id="detailss"
                         content={content}

@@ -11,10 +11,11 @@ import HomePosts from './HomePosts/HomePosts';
 import axios from 'axios';
 import PostPlaceholderLoading from './PostPlaceholderLoading';
 import useGlobalFetch from '@/Hooks/useGlobalPostFetch';
+import LoginPageComponent from '../Authentication/LoginPageComponent';
 
 const HomeLayout = ({children}) => {
     const router = useRouter()
-
+    
     const searchParams = useSearchParams()
     const query_name = searchParams.get("category") || ""
     
@@ -24,8 +25,6 @@ const HomeLayout = ({children}) => {
     // let pathname = '/'
 
     const [openMenu, setOpenMenu] = useState(false)
-
-    // const { user, isLoggedIn, loading } = useAuthenticated()
 
     const [categoryName, setcategoryName] = useState(query_name || "")
 
@@ -78,6 +77,7 @@ const HomeLayout = ({children}) => {
         await handleSortDataByCategory(title|| "")
         // await window.location.reload()
     }
+
 
     return (
         <div>

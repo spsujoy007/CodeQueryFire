@@ -3,7 +3,9 @@ import LoadingPage from '../loading';
 
 const loading = () => {
     return (
-        <LoadingPage></LoadingPage>
+        <div className='w-full h-full z-[100]'>
+            <LoadingPage></LoadingPage>
+        </div>
     );
 };
 

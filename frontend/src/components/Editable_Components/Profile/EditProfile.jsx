@@ -1,5 +1,4 @@
 import useAuthenticated from '@/Hooks/useAuthenticated'
-import ServerUrl from '@/Hooks/useServerUrl';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { use, useEffect, useState } from 'react'

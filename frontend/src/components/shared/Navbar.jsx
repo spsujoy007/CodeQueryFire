@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 import useSiteName from '@/Hooks/useSiteName';
 import useAuthenticated from '@/Hooks/useAuthenticated';
 import Image from 'next/image';
-import ServerUrl from '@/Hooks/useServerUrl';
 import axios from 'axios';
 const null_avatar = '/images/null_avatar.jpeg'
 
@@ -55,7 +54,9 @@ const Navbar = () => {
         })
         .then(data => {
             console.log(data)
-            location.reload()
+            if(data){
+                location.reload()
+            }
         })
         .catch(e => {
             location.reload()

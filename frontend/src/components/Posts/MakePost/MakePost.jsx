@@ -7,7 +7,6 @@ import { LuSend } from 'react-icons/lu';
 import { FaAngleDown, FaPlus } from 'react-icons/fa6';
 import Image from 'next/image';
 import axios from 'axios';
-import ServerUrl from '@/Hooks/useServerUrl';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import useGlobalFetch from '@/Hooks/useGlobalPostFetch';

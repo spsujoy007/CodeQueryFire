@@ -1,7 +1,6 @@
 import LoadingPage from "@/app/loading"
 import axios from "axios"
 import { useEffect, useState } from "react"
-import ServerUrl from "./useServerUrl"
 
 export default function useAuthenticated (req) {
     const [loading, setLoading] = useState(true)
@@ -10,7 +9,6 @@ export default function useAuthenticated (req) {
 
     // const cookies = req.cookies;
     // console.log(cookies, "COOKIES")
-
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     const [dataFetched, setDataFetched] = useState(false)
@@ -39,7 +37,7 @@ export default function useAuthenticated (req) {
 
     useEffect(() => {
         fetchUserData()
-    })
+    }, [])
 
     const refetch = async() => {
        await fetchUserData()

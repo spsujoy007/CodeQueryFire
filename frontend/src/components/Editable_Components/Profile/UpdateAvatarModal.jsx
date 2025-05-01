@@ -1,5 +1,4 @@
 import useAuthenticated from '@/Hooks/useAuthenticated';
-import ServerUrl from '@/Hooks/useServerUrl';
 import axios from 'axios';
 import Image from 'next/image';
 import React, { useState } from 'react';

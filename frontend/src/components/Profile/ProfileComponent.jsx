@@ -141,7 +141,7 @@ const ProfileComponent = () => {
                                     className="absolute inset-0 backdrop-blur-xl"
                                     style={{
                                         backgroundImage: `
-                                        linear-gradient(180deg, rgb(245, 245, 245, 0.55), rgb(245, 245, 245)),
+                                        linear-gradient(180deg, rgb(245, 245, 245, 0.30), rgb(245, 245, 245)),
                                         url(${profile?.avatar ? profile.avatar?.url : null_avatar})
                                       `,
                                     backgroundSize: "cover",

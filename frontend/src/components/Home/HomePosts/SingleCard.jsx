@@ -117,7 +117,7 @@ const SingleCard = ({post, profile, index, refetch, setDataFetched}) => {
                 </Link>
             </div> */}
 
-            <div className="pt-2 mt-3 inline-flex items-center gap-2 relative group">
+            <div className="pt-2 mt-3 inline-flex items-center gap-2 relative group transition-all duration-700">
                 {/* <div className="w-[35px] h-[35px] rounded-full">
                     <Image alt="avatar" src={author?.avatar ?  author?.avatar?.url : null_avatar} width={35} height={35} className="rounded-full bg-gray-200 w-full h-full object-cover"></Image>
                 </div> */}
@@ -127,7 +127,13 @@ const SingleCard = ({post, profile, index, refetch, setDataFetched}) => {
                 </div>
 
                 {/* // hovered profile info */}
-                <div className="w-[400px] absolute -top-[125px] drop-shadow-lg shadow-gray-400 hidden group-hover:block  bg-gray-100 border-[1px] border-gray-300 p-2 rounded-md">
+                <div className="w-[400px] absolute -top-[125px] drop-shadow-lg shadow-gray-400 
+               opacity-0 group-hover:opacity-100 
+               scale-105 group-hover:scale-100 
+               pointer-events-none group-hover:pointer-events-auto 
+               transition-all duration-500 hover:duration-75
+               bg-gray-100 border border-gray-300 
+               p-2 rounded-md z-50">
                     <section className="flex items-start gap-2">
                         <div>
                             <div className="w-[35px] h-[35px] rounded-full">

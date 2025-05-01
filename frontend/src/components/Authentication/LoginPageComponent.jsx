@@ -1,7 +1,6 @@
 "use client"
 import LoadingPage from "@/app/loading";
 import useAuthenticated from "@/Hooks/useAuthenticated";
-import ServerUrl from "@/Hooks/useServerUrl";
 import useSiteName from "@/Hooks/useSiteName";
 import axios from "axios";
 import Link from "next/link";
@@ -10,7 +9,7 @@ import { useState } from "react";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 const LoginPageComponent = () => {
     const getHistoryPath = useSearchParams()
-
+    // const navigate = useNa 
     const router = useRouter()
     const name = useSiteName()
     
@@ -47,16 +46,13 @@ const LoginPageComponent = () => {
             setError(false)
             setLoading(false)
 
-            console.log(encodeURI(HistoryPath)+ "?id="+ PostID)
-            if(HistoryPath && PostID === "undefined") {
-                router.push(encodeURI(HistoryPath))
-            }
-            else if(PostID) {
-                router.push(encodeURI(HistoryPath) + "?id=" + PostID)
-            }
-            else{
-                router.push('/')
-            }
+            if (HistoryPath && typeof PostID === "undefined") {
+                router.push(`${encodeURI(HistoryPath)}`);
+              } else if (PostID) {
+                router.push(`${encodeURI(HistoryPath)}?id=${PostID}`);
+              } else {
+                router.push('/');
+              }
         })
         .catch(err => {
             console.error(err)

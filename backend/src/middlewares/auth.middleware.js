@@ -7,7 +7,6 @@ import jwt from 'jsonwebtoken'
 export const verifyJWT = asyncHandler ( async ( req, res, next ) => {
     try {
         const token = req.cookies?.access_token || (req.headers['authorization'] ? req.headers['authorization'].replace('Bearer ', '') : '');
-        console.log("MY TOKEN::-: ", token)
         // refresh token
         if ( !token ) {
             //when access_token expired then request through the refresh token.

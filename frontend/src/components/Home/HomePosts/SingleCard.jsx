@@ -129,7 +129,7 @@ const SingleCard = ({post, profile, index, refetch, setDataFetched}) => {
                 {/* // hovered profile info */}
                 <div className="w-[400px] absolute -top-[125px] drop-shadow-lg shadow-gray-400 
                opacity-0 group-hover:opacity-100 
-               scale-105 group-hover:scale-100 
+               scale-100 group-hover:scale-100 
                pointer-events-none group-hover:pointer-events-auto 
                transition-all duration-500 hover:duration-75
                bg-gray-100 border border-gray-300 

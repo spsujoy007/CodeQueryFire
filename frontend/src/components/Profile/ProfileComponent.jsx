@@ -134,9 +134,9 @@ const ProfileComponent = () => {
         <div className={`${editProfileModal || avatarModal && "h-[80vh] overflow-hidden"}`}>
             <main className="pb-10 min-h-screen bg-background">
                     <section>
-                        <section className="relative py-10">
+                        <section className="relative pb-10">
                         <ContainMargin box_width={"md"}>
-                            <div className="flex gap-10 items-center ">
+                            <div className="flex gap-10 items-center pt-10">
                                 <div
                                     className="absolute inset-0 backdrop-blur-xl"
                                     style={{
@@ -153,7 +153,7 @@ const ProfileComponent = () => {
                                 <div
                                     className="absolute inset-0 bg-white/20 backdrop-blur-xl z-10"
                                     style={{
-                                        backdropFilter: 'blur(30px)',
+                                        backdropFilter: 'blur(25px)',
                                     }}
                                 />
                                 <ProfilePicture></ProfilePicture>

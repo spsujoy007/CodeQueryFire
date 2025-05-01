@@ -98,7 +98,9 @@ const HomeLayout = ({children}) => {
                                 pathname === '/' ?
                                 <div className="border-x-[1px] border-primary md:w-[70%] min-h-screen w-full">
                                 {/* search and post section  */}
-                                <section className=''>
+                                {
+                                    !postLoading &&
+                                    <section className=''>
                                     <div className='p-4 bg-background m-3 rounded-md'>
                                         <h1 className='text-[3em] uppercase'>{mainTitle?.title?.tag}</h1>
                                             <p>Ask a question or share your opinion</p>
@@ -133,6 +135,7 @@ const HomeLayout = ({children}) => {
                                         </div>
                                     </div>
                                 </section>
+                                }
 
                                 {/* {children} */}
                                 {

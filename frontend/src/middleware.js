@@ -36,9 +36,9 @@ export async function middleware(request) {
 
 export const config = {
   matcher: [
-    '/profile', 
-    '/profile/:username*', 
-    '/post/makepost',
-    '/post/:path*'
+    // '/profile', 
+    // '/profile/:username*', 
+    // '/post/makepost',
+    // '/post/:path*'
   ],
 };

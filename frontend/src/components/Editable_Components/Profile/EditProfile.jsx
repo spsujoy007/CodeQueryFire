@@ -290,7 +290,7 @@ export default function EditProfile({modal, refetch: FetchProfileData}) {
           <div className='flex justify-end mt-2'>
             {
               saveLoading ?
-              <button className='w-[150px] py-2 rounded-md bg-black hover:bg-gray-800 text-white animate-pulse duration-200'>saving...</button>
+              <button className='w-[150px] py-2 rounded-md bg-black hover:bg-gray-800 text-white animate-pulse duration-200'>Saving...</button>
               :
               <button onClick={handleSaveProfile} className='w-[150px] py-2 rounded-md bg-primary hover:bg-gray-800 text-white'>Save</button>
             }

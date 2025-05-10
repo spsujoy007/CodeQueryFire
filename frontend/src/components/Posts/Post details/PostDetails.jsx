@@ -263,7 +263,7 @@ const PostDetails = ({searchParams}) => {
                                 {/* comments section  */}
                                 <section className='mt-2 bg-white rounded-md overflow-hidden'>
                                     <div onClick={() => setAnswerModal(true)}>
-                                        <textarea className='w-full pt-4 h-[80px] max-h-[80px] overscroll-auto outline-none pl-8' type="text" placeholder='answer...' />
+                                        <textarea className='w-full pt-4 min-h-[50px] max-h-[50px] overscroll-auto outline-none pl-8' type="text" placeholder='answer...' />
                                         
                                         <div className='px-8 pb-5 flex gap-6 items-center'>
                                             <button className='cursor-auto'><FaBold /></button>

@@ -1,4 +1,5 @@
 import useAuthenticated from '@/Hooks/useAuthenticated';
+import useHandleModal from '@/Hooks/useHandleModal';
 import axios from 'axios';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -10,6 +11,8 @@ const UpdateAvatarModal = ({refetch, setAvatarModel}) => {
     const [avatarBlob, setAvatarBlob] = useState(undefined);
     const [imageFile, setImageFile] = useState(null);
     const [uploadLoading, setUploadLoading] = useState(false)
+
+    const {setCloseModalHook} = useHandleModal()
 
     const handleChange = (e) => {
         e.preventDefault()
@@ -38,6 +41,7 @@ const UpdateAvatarModal = ({refetch, setAvatarModel}) => {
             if(data.status === 200){
                 refetch()
                 setAvatarModel(false)
+                setCloseModalHook()
             }
         })
         .catch(e => {
@@ -71,18 +75,22 @@ const UpdateAvatarModal = ({refetch, setAvatarModel}) => {
                     </div>
 
                     <div className='mt-6 '>
-                        <label 
-                            className='bg-black text-white w-full py-2 rounded-md block text-center hover:bg-gray-800' 
-                            htmlFor="avatar">
-                            Select avatar
-                        </label>
+                        {
+                            !uploadLoading &&
+                            <label 
+                                className='bg-black text-white w-full py-2 rounded-md block text-center hover:bg-gray-800' 
+                                htmlFor="avatar">
+                                {user?.avatar ? "Update" : "Select"} avatar
+                            </label>
+                        }
                         <input 
                             onChange={handleChange}
                             id='avatar' 
                             name='avatar' 
                             className='hidden' 
-                            type="file" 
-                            accept='.jpg, .jpeg' 
+                            type="file"
+                            disabled={uploadLoading}
+                            accept='.jpg, .jpeg, .gif' 
                         />
 
                         {
@@ -90,7 +98,7 @@ const UpdateAvatarModal = ({refetch, setAvatarModel}) => {
                             <>
                                 {
                                     uploadLoading ?
-                                    <button className='bg-primary text-white w-full py-2 rounded-md block text-center hover:opacity-90 mt-2 animate-pulse duration-200'>
+                                    <button disabled className='bg-primary text-white w-full py-2 rounded-md block text-center hover:opacity-90 mt-2 animate-pulse duration-200'>
                                         saving...
                                     </button>
                                     :

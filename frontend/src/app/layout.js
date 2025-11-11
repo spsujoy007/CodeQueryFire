@@ -6,6 +6,7 @@ import { Suspense, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Modal from "@/components/shared/Modal/Modal";
 import useModal from "@/components/shared/Modal/useModal";
+import useHandleModal from "@/Hooks/useHandleModal";
 
  
 // export const metadata = {
@@ -19,6 +20,10 @@ export default function RootLayout({ children }) {
   const route = usePathname()
   const showNavRoutes = ['/signup', '/login']
   const isShowNav =  showNavRoutes.some((path) => path === route)
+
+  const { setOpenModalHook, setCloseModal, isOpened} = useHandleModal()
+  console.log(isOpened)
+
   // const isShowNav = showNavRoutes.includes(route)
 
   // console.log(route, isShowNav)
@@ -28,7 +33,7 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body >
+      <body className={`${isOpened && "h-[90vh] overflow-hidden"}`} >
         <Suspense>
             {
               !isShowNav && 

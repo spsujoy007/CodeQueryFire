@@ -5,10 +5,13 @@ import React, { use, useEffect, useState } from 'react'
 import { FaCheck, FaCode, FaCross, FaFacebook, FaHackerrank, FaInstagram, FaLinkedinIn, FaPlus, FaReddit, FaSnapchat, FaTelegram, FaTwitter, FaWhatsapp, FaX, FaXTwitter, FaYoutube } from 'react-icons/fa6';
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { FaGithub, FaInstagramSquare } from 'react-icons/fa';
+import useHandleModal from '@/Hooks/useHandleModal';
 
 export default function EditProfile({modal, refetch: FetchProfileData}) {
   const router = useRouter()
   const {user, loading, setLoading, refetch} = useAuthenticated()
+
+  const {setCloseModalHook} = useHandleModal()
 
 
   const [formData, setFormData] = useState({
@@ -81,6 +84,7 @@ export default function EditProfile({modal, refetch: FetchProfileData}) {
           setErrorMsg("")
           FetchProfileData()
           setLoading(false)
+
         })
         .catch(e => {
           console.error("Something went wrong: ", e?.response?.data?.message)
@@ -142,6 +146,8 @@ export default function EditProfile({modal, refetch: FetchProfileData}) {
       setSaveLoading(false)
       FetchProfileData()
       modal(false)
+        setCloseModalHook()
+
     })
     .catch(e => {
       setSaveLoading(false)

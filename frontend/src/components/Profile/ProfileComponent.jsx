@@ -17,6 +17,7 @@ import useAuthenticated from "@/Hooks/useAuthenticated";
 import UpdateAvatarModal from "../Editable_Components/Profile/UpdateAvatarModal";
 import { usePathname } from "next/navigation";
 import useGlobalFetch from "@/Hooks/useGlobalPostFetch";
+import useHandleModal from "@/Hooks/useHandleModal";
 const null_avatar = '/images/null_avatar.jpeg'
 
 const ProfileComponent = () => {
@@ -43,10 +44,14 @@ const ProfileComponent = () => {
     const [editProfileModal, setEditProfile] = useState(false)
     const [avatarModal, setAvatarModel] = useState(false)
 
+    const {setOpenModalHook, setCloseModalHook} = useHandleModal()
 
     const handleAvatarModal = () => {
-        if( editProfileModal ) setAvatarModel(false);
+        if( editProfileModal ) {
+            setAvatarModel(false)
+        };
         setAvatarModel(true)
+        setOpenModalHook()
     }
 
 
@@ -74,10 +79,12 @@ const ProfileComponent = () => {
     }, [pathname])
 
     const handleEditProfileModal = () => {
+        setOpenModalHook()
         if(user?.username !== profile?.username){
             location.reload()
         }
         if( avatarModal ) setAvatarModel(false);
+
         setEditProfile(true)
     }
     
@@ -269,7 +276,10 @@ const ProfileComponent = () => {
             <section>
                 {
                     editProfileModal &&
-                    <Modal handleCloseModal={setEditProfile}>
+                    <Modal handleCloseModal={() => {
+                            setEditProfile()
+                            setCloseModalHook()
+                        }}>
                         <EditProfile modal={setEditProfile} refetch={fetchUserProfile}></EditProfile>
                     </Modal>
                 }
@@ -277,7 +287,10 @@ const ProfileComponent = () => {
                 {/* update avatar  */}
                 {
                     avatarModal &&
-                    <Modal size="25" handleCloseModal={setAvatarModel}>
+                    <Modal size="25" handleCloseModal={ () => {
+                        setAvatarModel()
+                        setCloseModalHook()
+                        }}>
                         <UpdateAvatarModal refetch={fetchUserProfile} setAvatarModel={setAvatarModel}></UpdateAvatarModal>
                     </Modal> 
                 }
